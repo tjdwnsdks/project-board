@@ -14,6 +14,10 @@ spring:
     username: bitstudy
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:h2:mem:testdb
+#    username: sa
+#    driver-class-name: org.h2.Driver
+
   jpa:
     defer-datasource-initialization: true # test 용 데이터베이스 데이터를 생성할수 있게 해줄거임. 나중에 resources 안에 (무조건)data.sql 파일 만들어서 DB 에 초기 데이터를 테스트용으로 넣을수 있다. 지금은 DB 구성이 다 안되서 못보여줌
     hibernate.ddl-auto: create # 엔티티를 보고 테이블 데이터를 유추해서 자동으로 DDL 데이터를 만든다. domain > Article 엔티티를 보고 create table 문을 만들어서 테스트 실행될때 자동으로 Article 과  ArticleComment 생성해서 만들어줌. 우리가 짜지 않아도 되게끔.
@@ -23,7 +27,8 @@ spring:
       hibernate.default_batch_fetch_size: 100 # JPA 에서 연관관계가 맵핑이 되어 있는 쿼리를 사용해야 할때 한번에 벌크로 select 를 해올수 있게 해주는거.
       # 예를들어 테이블에서 join 으로 가져와야 하는 row 수가 10개정도 되면 쿼리가 10개정도 만들어질수도 있는데 그걸 해결해줌.
       # 복잡한 조회쿼리 작성시, 지연로딩으로 발생해야 하는 쿼리를  IN 절로 한번에  모아보내는 기능이다.
-  h2.console.enabled: false # h2 콘솔을 활성하 할거냐고 하는거임.
+  h2.console.enabled: false # h2 콘솔을 활성화 할거냐고 하는거임.
+#  h2.console.enabled: true # h2 콘솔을 사용하겠다는 뜻
   sql.init.mode: always # 아까 만든 data.sql 를 언제 작동시킬건가 하는거
   # naver(절대 사용 안함), always(리얼 환경에서), Embedded(테스트 때만)
   # 우리는 강의 예제라서 실제 화면에서 볼때도 테스트때 사용했던 데이터들도 이용할거라서 always 로 한다.

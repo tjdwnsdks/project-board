@@ -68,8 +68,7 @@ public class Ex06_3_ArticleComment_공통필드_분리하기 extends AuditingFie
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
+    } 
 }
 
 

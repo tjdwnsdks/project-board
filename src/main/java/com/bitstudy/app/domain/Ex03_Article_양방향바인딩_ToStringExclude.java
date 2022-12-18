@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -43,6 +44,8 @@ import java.util.Set;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
+
+@EntityListeners(AuditingEntityListener.class) /* 이건 TDD Ex04 때 할거임. 지금 하지 말것. */
 @Entity
 public class Ex03_Article_양방향바인딩_ToStringExclude {
 
@@ -101,7 +104,7 @@ public class Ex03_Article_양방향바인딩_ToStringExclude {
     *           (.repository 에서 빨간줄 생겨도 괜찮음. 해당 패키지가 없어서 그럼)
     * */
 
-    // 이건 평생 쓰이지 않을거라서 public 말고 protected 쓰자. private dms dksehlsek.
+    // 이건 평생 쓰이지 않을거라서 public 말고 protected 쓰자. private 은 안된다.
     protected Ex03_Article_양방향바인딩_ToStringExclude() {}
     private Ex03_Article_양방향바인딩_ToStringExclude(String title, String content, String hashtag) {
         this.title = title;
