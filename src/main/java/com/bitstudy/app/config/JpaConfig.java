@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import java.util.Optional;
 
 @EnableJpaAuditing /*  JPA 에서 auditing 을 가능하게 하는 어노테이션
-                        jpa auditing 이란:  jpa 에서 자동으로 셋팅하게 해줄때 사용하는 기능
+                      jpa auditing 이란:
+                        Audit은 감시하다, 감사하다라는 뜻으로 Spring Data JPA에서 자동으로 값을 넣어주는 기능.
+                        간단히 말해서, jpa 에서 자동으로 셋팅하게 해줄때 사용하는 기능인데, 해당 데이터를 보고 있다가 생성 또는 수정이 발생하면 자동으로 값을 넣어주는 편리한 기능.
                         이거 하려면 config 파일이 별도로 있어야 한다.
                         config 패키지 만들고 JpaConfig 클래스 만들자 */
 @Configuration

@@ -3,21 +3,18 @@ package com.bitstudy.app.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
+
 /**  공통되는 필드(속성)들 빼기 -
  *  Ex06_Article_공통필드_분리하기 처럼
  * 1) 맨 아래쪽에 있는 4개 필드 빼고 (createdAt , createdBy, modifiedAt, modifiedBy)
  * 2) @EntityListeners 빼고
- * 3) AuditingFields 상속받기 */
-/* 4) 다 되면 TDD >  Ex04_JpaRepositoryTest 파일 다시 돌려보기 */
+ * 3) AuditingFields 상속받기
+ * 
+ * 4) 다 되면 TDD >  Ex04_JpaRepositoryTest 파일 다시 돌려보기
+* */
 
 // 1) 엔티티 등록
 @Getter
@@ -33,7 +30,7 @@ import java.util.Objects;
 @Entity /** 테이블과의 매핑. @Entity가 붙은 클래스는 JPA가 관리하게 되며, 엔티티 라고 불린다.
             @Entity 를 쓰게되면 PK 를 만들어줘야 한다. */
 /* 3) AuditingFields 상속받기 */
-public class ArticleComment extends AuditingFields {
+public class Ex06_3_ArticleComment_공통필드_분리하기 extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,23 +47,23 @@ public class ArticleComment extends AuditingFields {
 
 
 
-    public ArticleComment() {}
+    public Ex06_3_ArticleComment_공통필드_분리하기() {}
 
     // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
-    private ArticleComment(Article article, String content) {
+    private Ex06_3_ArticleComment_공통필드_분리하기(Article article, String content) {
         this.article = article;
         this.content = content;
     }
 
-    public ArticleComment of(Article article, String content) {
-        return new ArticleComment(article, content);
+    public Ex06_3_ArticleComment_공통필드_분리하기 of(Article article, String content) {
+        return new Ex06_3_ArticleComment_공통필드_분리하기(article, content);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ArticleComment that = (ArticleComment) o;
+        Ex06_3_ArticleComment_공통필드_분리하기 that = (Ex06_3_ArticleComment_공통필드_분리하기) o;
         return id.equals(that.id);
     }
 

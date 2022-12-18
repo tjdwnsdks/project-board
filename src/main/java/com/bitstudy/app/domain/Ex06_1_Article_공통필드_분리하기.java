@@ -1,19 +1,10 @@
 package com.bitstudy.app.domain;
 
-import com.bitstudy.app.config.JpaConfig;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.core.annotation.Order;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -69,7 +60,7 @@ import java.util.Set;
 
 // @EntityListeners(AuditingEntityListener.class) /* AuditingFields.java 로 옮겨감 */
 @Entity
-public class Article extends AuditingFields { /* AuditingFields 파일 다 만들면 Article 에서는 그걸 상속받아서 연결하면 됨. 이렇게 하면 4개의 필드(속성)가 Article 에 연결이 됨. 아까 Embedded 와 비슷한 방식으로 필드 4개가 추가가 된거다.
+public class Ex06_1_Article_공통필드_분리하기 extends AuditingFields { /* AuditingFields 파일 다 만들면 Article 에서는 그걸 상속받아서 연결하면 됨. 이렇게 하면 4개의 필드(속성)가 Article 에 연결이 됨. 아까 Embedded 와 비슷한 방식으로 필드 4개가 추가가 된거다.
 
   (!! 안해도 됨!! )둘의 차이: 별반 다르진 않지만 @Embedded 방식으로 하게 되면 필드 하나가 추가되는 거고, 우리가 할건 아니지만 영속성 컨텍스를 통해서 데이터를 넘겨 받아서 애플리케이션에서 열었을 때에는 어짜피 AuditingFields 로 보인다. 중간에 한단계가 더 생긴다는 뜻.
   @MappedSuperclass 는 표준 JPA 에서 제공해주는 클래스이고 중간단계 없이 바로 감.  */
@@ -104,21 +95,21 @@ public class Article extends AuditingFields { /* AuditingFields 파일 다 만�
 //    }
 //    @Embedded Tmp tmp; //이렇게 하면 이 코드가 있는 자리에 저 Tmp 클래스 안에 있는것들이 있는것처럼 치환됨
 
-    protected Article() {}
-    private Article(String title, String content, String hashtag) {
+    protected Ex06_1_Article_공통필드_분리하기() {}
+    private Ex06_1_Article_공통필드_분리하기(String title, String content, String hashtag) {
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
     }
-    public static Article of(String title, String content, String hashtag) {
-        return new Article(title, content, hashtag);
+    public static Ex06_1_Article_공통필드_분리하기 of(String title, String content, String hashtag) {
+        return new Ex06_1_Article_공통필드_분리하기(title, content, hashtag);
     }
 
     @Override
     public boolean equals(Object o) { // 동등성 비교
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Article article = (Article) o;
+        Ex06_1_Article_공통필드_분리하기 article = (Ex06_1_Article_공통필드_분리하기) o;
         return id!= null &&  id.equals(article.id); // 이건 혹시라도 id가 null 이 아니면 해라. 라는 뜻
     }
 
