@@ -11,10 +11,8 @@ import java.util.Objects;
  *  Ex06_Article_공통필드_분리하기 처럼
  * 1) 맨 아래쪽에 있는 4개 필드 빼고 (createdAt , createdBy, modifiedAt, modifiedBy)
  * 2) @EntityListeners 빼고
- * 3) AuditingFields 상속받기
- * 
- * 4) 다 되면 TDD >  Ex04_JpaRepositoryTest 파일 다시 돌려보기
-* */
+ * 3) AuditingFields 상속받기 */
+/* 4) 다 되면 TDD >  Ex04_JpaRepositoryTest 파일 다시 돌려보기 */
 
 // 1) 엔티티 등록
 @Getter
@@ -71,8 +69,7 @@ public class Ex06_3_ArticleComment_공통필드_분리하기 extends AuditingFie
     public int hashCode() {
         return Objects.hash(id);
     }
-    
-    /*   */
+
 }
 
 
