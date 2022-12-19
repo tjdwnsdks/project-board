@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-/* 완성본 - Ex07_3_3 이랑 같은거임 */
+/* 완성본 - Ex07_3_3 이랑 같은거임  */
 
 @SpringBootTest
 @AutoConfigureMockMvc
