@@ -13,7 +13,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 /* 워드 "API 테스트 정의" 부분 끝내고 시작하는 코드.
     클래스 맨 위에 @RepositoryRestResource 이거삽입 */
 @RepositoryRestResource
-public interface ArticleCommentRepository extends
+public interface Ex07_4_ArticleCommentRepository_검색기능 extends
         JpaRepository<ArticleComment, Long>,
         QuerydslPredicateExecutor<ArticleComment>
         , QuerydslBinderCustomizer<QArticleComment> // 이부분 처음에는 주석처리 하고 아래 빨간 '설명' 부분 설명하기

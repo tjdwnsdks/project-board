@@ -14,7 +14,7 @@ import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
-public interface ArticleRepository extends
+public interface Ex07_3_ArticleRepository_검색기능 extends
         JpaRepository<Article, Long>,
         QuerydslPredicateExecutor<Article>
         ,QuerydslBinderCustomizer<QArticle> // 이부분 처음에는 주석처리 하고 아래 빨간 '설명' 부분 설명하기
