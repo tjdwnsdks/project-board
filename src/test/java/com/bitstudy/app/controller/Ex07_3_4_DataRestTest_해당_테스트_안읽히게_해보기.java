@@ -23,6 +23,8 @@ data rest 와 관련된 AutoConfigration을 불러올수 있게끔 @SpringBootTe
 모든 bean 들을 읽은 상태에서 진행했었다. 그래서 좀 무겁고 DB 쪽에 Mocking 을 할 수 없는 상태로 만들다보니까
 어쩔수 없이 실제 DB까지 접근을 하는 테스트를 만들어버렸었다. */
 
+/* 다 하면 워드로 돌아가고 ('검색기능 추가하기' 부분임) , 깃크라켄에 커밋하기 */
+
 @Disabled("Spring Data REST 통합테스트는 불필요하므로 제외시킴") // 클래스 레벨에 이걸 붙이면 해당 테스트 클래스의 밑에 있는 모든 메서드 들은 실행되지 않게 될거다.
 @SpringBootTest
 @AutoConfigureMockMvc
