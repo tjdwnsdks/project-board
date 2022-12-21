@@ -24,7 +24,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/articles") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
-public class ArticleController {
+public class Ex08_4_ArticleController_뷰_파일_작성하고_온거 {
 
     @GetMapping
     public  String articles(ModelMap map) {  /* ModelMap 쓰는 이유: 테스트파일에서 ".andExpect(model().attributeExists("articles"))" 를
