@@ -26,7 +26,7 @@ import java.util.List;
 @RequestMapping("/articles") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
 public class ArticleController {
 
-    @GetMapping
+    @GetMapping("/")
     public  String articles(ModelMap map) {  /* ModelMap 쓰는 이유: 테스트파일에서 ".andExpect(model().attributeExists("articles"))" 를
                                                 이용해서 모델에 articles 라는 키값으로 데이터를 넣어주기로 했으니까 필요함.
                                                 원래 쓰던 Model 이랑 같은거임. 차이점으로는 Model은 인터페이스, ModelMap은 클래스(구현체) 
