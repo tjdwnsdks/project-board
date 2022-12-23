@@ -53,11 +53,11 @@ class Ex08_2_ArticleControllerTest_게시판_뷰_테스트 {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML)) // 뷰 만들고 있으니까 html 로 코드를 짜고 있을거다. /articles 로 받아온 데이터가 미디어 타입이 html 타입으로 되어 있는 애인지 확인.
                 .andExpect(view().name("articles/index")) // 이건 해당 뷰 파일명이 index 인지 확인
                 .andExpect(model().attributeExists("articles"));// 이 뷰에서는 게시글들 목록들이 쫙 떠야 하는데, 그 얘기는 서버에서 게시글 데이터들을 가져왔다는 말이다. 그러면 모델 어트리뷰트로 데이터를 밀어넣어줬다는 말인데, 그게 있는지 없는지 검사할 수 있다. 사용법은 아래.
-        // model().attributeExists("articles") <- 여기서 "articles 는 내가 임의로 걸어주는 키값. 맵에 articles 라는 키가 있는지 검사해라 라는 뜻
+        // model().attributeExists("article") <- 여기서 "articles 는 내가 임의로 걸어주는 키값. 맵에 articles 라는 키가 있는지 검사해라 라는 뜻
         // 모델에     "articles" 라는 attribute 가 있는지 확인 하라는 뜻
     }
 
-    @Disabled("구현 중")
+    //@Disabled("구현 중")
     @Test
     @DisplayName("[view][GET] 게시글 상세 페이지 - 정상호출")
     public void articlesOne() throws Exception {
@@ -65,7 +65,7 @@ class Ex08_2_ArticleControllerTest_게시판_뷰_테스트 {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/detail")) // 이건 해당 뷰 파일명이 detail 인지 확인
-                .andExpect(model().attributeExists("articles"))
+                .andExpect(model().attributeExists("article"))
                 .andExpect(model().attributeExists("articleComments")); // 상세페이지에는 댓글들도 여러개 있을수도 있으니까 모델 어트리뷰트에 articleComments 라는 키값으로 된게 있냐 라고 물어보는거
     }
 
