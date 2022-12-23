@@ -50,6 +50,19 @@ spring:
       # " Ex07_1_ArticleRepository_api_테스트_정의_관련 " 가서 작업 시작   #################
       ####################################################################################
 
+  thymeleaf3: # 이 이름은 ThymeleafConfig.java 파일 아래 메서드에 @ConfigurationProperties("spring.thymeleaf3") 부분에서 따온거임.
+    decoupled-logic: true # false 주면 타임리프 기능 이용 안한다는 뜻
+# !!!!! 중요! !!!!!
+# 이 decoupled-logic 는 원래 스프링부트에서 몰랐던 속성이기 때문에 자동완성 기능 안되고, 경고문이 나올수도 있다.
+# 하지말것: 스프링 이니셜라이져 사이트 가서 Spring Configration Processor 디펜던시 설치하면 자동완성기능 사용할 수 있다.
+
+#### 다 했으면  templates  >  articles  > Ex09_1_index.html  로 가기
+
+
+
+
+
+
 
 
 ---

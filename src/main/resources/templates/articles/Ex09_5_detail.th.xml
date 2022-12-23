@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- decoupled 로직의 문법을 따라서 코드 작성 이거 다 타임리프 사이트 > DOCS > deCouple 검색하면 다 있음 -->
+
+<thlogic>
+    <attr sel="#header" th:replace="header :: #header" />
+    <attr sel="#footer" th:replace="footer :: #footer" />
+</thlogic>
+
+<!-- 이거 하면 서버 올리고
+
+    http://localhost:8080/articles/1  주소 쳐보면 해당글 상세 나옴
+
+    브라우저 확인 했으면, 워드로 돌아가기
+ -->

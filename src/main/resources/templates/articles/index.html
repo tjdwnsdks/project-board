@@ -1,0 +1,98 @@
+<!-- 타임리프의 deCoupled 로직을 적용시켜볼거다. 여기 파일은 싹 다 기본 HTML 로만 구성할거다.
+  <html>, <header>, <footer>  부분에서 th 지우면 됨
+ -->
+
+
+<!DOCTYPE html>
+
+<!-- 이거 지우고 아래꺼로-->
+<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org">-->
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>게시판 페이지</title>
+</head>
+<body>
+
+<!-- 이거 지우고 아래꺼로-->
+<!--<header th:replace="header :: #header"></header>-->
+<header id="header"></header>
+
+<main>
+  <form action="#">
+    <label for="search-type" hidden>유형</label>
+    <select id="search-type">
+      <option value="">제목</option>
+      <option value="">본문</option>
+      <option value="">id</option>
+      <option value="">닉네임</option>
+      <option value="">해시태그</option>
+    </select>
+
+    <label for="search-value" hidden>검색어</label>
+    <input type="search" placeholder="검색어를 입력하세요" name="search-value" id="search-value">
+    <button type="submit">검색</button>
+  </form>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th>제목</th>
+        <th>해시태그</th>
+        <th>작성자</th>
+        <th>작성일</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1번글</td>
+        <td>#java</td>
+        <td>bitstudy</td>
+        <td>2022-12-22</td>
+      </tr>
+      <tr>
+        <td>2번글</td>
+        <td>#spring</td>
+        <td>bitstudy</td>
+        <td>2022-12-22</td>
+      </tr>
+      <tr>
+        <td>3번글</td>
+        <td>#mysql</td>
+        <td>bitstudy</td>
+        <td>2022-12-22</td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  <nav>
+    <table>
+      <tbody>
+        <tr>
+          <td>prev</td>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>next</td>
+        </tr>
+      </tbody>
+    </table>
+  </nav>
+
+</main>
+
+<!-- 이거 지우고 아래꺼로-->
+<!--<footer th:replace="footer :: #footer"></footer> -->
+<footer id="footer"></footer>
+
+
+<!-- 다 하면 templates 안에 articles 안에 index.th.xml 파일 만들기     -->
+
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+
+
+<!--controller > Ex08_4 하고 오기 -->
+
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!-- xmlns:th="http://www.thymeleaf.org"
+  이걸 넣으면 이 문서는 이제부터 타임리프 템플릿이다. 라고 알려준다.
+  그런데 회색 처리 되어 있다. 2.x 버전에서는 이게 없으면 안됐었는데
+  이제 생략되어도 문제는 없다. (그래도 공식 문서에는 있으니....)
+-->
+<head>
+  <meta charset="UTF-8">
+  <title>게시판 페이지</title>
+</head>
+<body>
+
+<!--<header>header 삽입부</header>-->
+<!-- 이부분을 컴포넌트 방식으로 바꿔볼거다. th:insert 또는 th:replace 로 다른 페이지를 끌어올거다.
+  사용법: th:replace="~{templatename::selector}"
+        templatename 는 해당 파일명(컴포넌트명)
+        selector 는 css때처럼 그대로 하면 됨
+
+  ********************************************************************************
+  ** 이부분 바꾸고 templates 폴더 안에 header.html, index.html, footer.html 파일 만들자
+  ** template 안에  Ex08_5_2_header, Ex08_5_3_footer 만들자
+  ********************************************************************************
+
+  -->
+<!--<header th:replace="~{header :: header}"></header>-->
+<!-- ~{} 생략 가능(아래처럼 써도 됨) -->
+<header th:replace="header :: #header"></header>
+<!-- 이거 하고 맨 아래 footer 도 하기-->
+
+<main>
+  <form action="#">
+    <label for="search-type" hidden>유형</label>
+    <select id="search-type">
+      <option value="">제목</option>
+      <option value="">본문</option>
+      <option value="">id</option>
+      <option value="">닉네임</option>
+      <option value="">해시태그</option>
+    </select>
+
+    <label for="search-value" hidden>검색어</label>
+    <input type="search" placeholder="검색어를 입력하세요" name="search-value" id="search-value">
+    <button type="submit">검색</button>
+  </form>
+
+
+  <!-- 게시판 리스트도 보여줄거다 - 테이블 태그 사용-->
+  <table>
+    <thead>
+      <tr>
+        <th>제목</th>
+        <th>해시태그</th>
+        <th>작성자</th>
+        <th>작성일</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1번글</td>
+        <td>#java</td>
+        <td>bitstudy</td>
+        <td>2022-12-22</td>
+      </tr>
+      <tr>
+        <td>2번글</td>
+        <td>#spring</td>
+        <td>bitstudy</td>
+        <td>2022-12-22</td>
+      </tr>
+      <tr>
+        <td>3번글</td>
+        <td>#mysql</td>
+        <td>bitstudy</td>
+        <td>2022-12-22</td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  <!-- 게시판 리스트 아래 페이지네이션도 만들거다 -->
+  <nav>
+    <table>
+      <tbody>
+        <tr>
+          <td>prev</td>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>next</td>
+        </tr>
+      </tbody>
+    </table>
+  </nav>
+
+<!-- 다 하면 브라우저에서 이 html 파일 돌려서 확인해보고 깃크라켄에 올리기 ( 워드파일로 돌아가기) -->
+</main>
+
+<footer th:replace="footer :: #footer"></footer>
+
+<!-- footer 바꾸면 리컴파일 하기. (ctrl + shift + F9)
+  리컴파일 해도 화면의 변화가 없으면 잘 된거임.
+  확인차 footer 컴포넌트에 글자 바꿔서 다시 리컴파일 해서 확인해보기
+-->
+
+<!-- 다 했으면 워드파일로 돌아가기. 깃크라켄으로 커밋 할거임 -->
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<thlogic>
+    <attr sel="#header" th:replace="header :: #header" />
+    <attr sel="#footer" th:replace="footer :: #footer" />
+
+</thlogic>
+<!-- 다 했으면 저장하고 리컴파일(ctrl + shift + F9) 하고
+    서비스 올리기(pojectApplication.java 파일 실행)
+-->

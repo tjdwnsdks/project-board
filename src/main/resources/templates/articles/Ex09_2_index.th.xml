@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- decoupled 로직의 문법을 따라서 코드 작성 이거 다 타임리프 사이트 > DOCS > deCouple 검색하면 다 있음 -->
+
+<thlogic>
+    <attr sel="#header" th:replace="header :: #header" />
+    <attr sel="#footer" th:replace="footer :: #footer" />
+</thlogic>
+<!-- 연결이 잘 됐으면 header 나 footer 에 ctrl + 클릭으로 해당 html 파일로 이동 가능하다 -->
+
+<!-- 다 했으면 저장하고 리컴파일(ctrl + shift + F9) 하고
+    서비스 올리기(pojectApplication.java 파일 실행)
+
+    http://localhost:8080/articles  이거 넣으면 게시글 리스트 페이지 나옴
+
+    화면 돌아가는거 확인 하면, 워드파일로 돌아가기
+-->
+
+
+
+<!--<thlogic>-->
+<!--<attr sel="#연결할 요소잡기" th:필요한문법="all-but-first">-->
+<!--    <attr sel="/tr[0]" th:each="user : ${users}"> -->
+<!--        <attr sel="td.username" th:text="${user.name}" /> -->
+<!--        <attr sel="td.usertype" th:text="#{|user.type.${user.type}|}" /> -->
+<!--    </attr>-->
+<!--</attr>-->
+<!--</thlogic>-->
