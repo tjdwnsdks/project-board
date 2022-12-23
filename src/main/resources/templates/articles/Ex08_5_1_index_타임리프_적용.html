@@ -22,7 +22,11 @@
         templatename 는 해당 파일명(컴포넌트명)
         selector 는 css때처럼 그대로 하면 됨
 
-  이부분 바꾸고 templates 폴더 안에 header.html, index.html, footer.html 파일 만들자
+  ********************************************************************************
+  ** 이부분 바꾸고 templates 폴더 안에 header.html, index.html, footer.html 파일 만들자
+  ** template 안에  Ex08_5_2_header, Ex08_5_3_footer 만들자
+  ********************************************************************************
+
   -->
 <!--<header th:replace="~{header :: header}"></header>-->
 <!-- ~{} 생략 가능(아래처럼 써도 됨) -->
@@ -96,7 +100,7 @@
     </table>
   </nav>
 
-<!-- 다 하면 테스트 돌려서 확인해보고 깃크라켄에 올리기 ( 워드파일로 돌아가기) -->
+<!-- 다 하면 브라우저에서 이 html 파일 돌려서 확인해보고 깃크라켄에 올리기 ( 워드파일로 돌아가기) -->
 </main>
 
 <footer th:replace="footer :: #footer"></footer>

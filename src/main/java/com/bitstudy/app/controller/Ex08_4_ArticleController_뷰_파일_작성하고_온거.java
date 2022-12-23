@@ -9,6 +9,8 @@ import java.util.List;
 
 /* template > articles > Ex08_3 뷰 파일 만들고 와서 보기 */
 
+/** index 테스트코드랑 뷰파일(index.html) 만들었으니까 게시글 다 불러오는 메서드 하나 하나 만들어보자 */
+
 /** 뷰 엔드포인트 관련 컨트롤러
  * 엑셀 api 에 보면 우리가 정의해놓은 URL 부분들 있다. 그거 보면서 하면 됨(아래 있는거)
      /articles	                GET	게시판 페이지
@@ -33,4 +35,5 @@ public class Ex08_4_ArticleController_뷰_파일_작성하고_온거 {
         return "articles/index";
     }
 
+    /* 다 했으면 워드로 돌아가기 - 커밋 할거임*/
 }

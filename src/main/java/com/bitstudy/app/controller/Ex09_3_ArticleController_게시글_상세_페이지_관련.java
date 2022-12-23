@@ -24,7 +24,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/articles") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
-public class ArticleController {
+public class Ex09_3_ArticleController_게시글_상세_페이지_관련 {
 
     // 게시판 리스트 관련
     @GetMapping("/")
@@ -43,6 +43,9 @@ public class ArticleController {
         map.addAttribute("articleComments",  List.of());
         return "articles/detail"; // 이 경로는 test 파일 가서 보면 "andExpect(view().name("articles/detail"))" 이부분의 경로 참고
     }
-    /* 여기까지 했으면 templates > articles > detail.html (뷰파일) 만들러 가자*/
+    /* 여기까지 했으면 templates > articles > detail.html (뷰파일) 만들러 가자
+    * 
+    *  Ex09_4_detail.html 로 ㄱㄱ
+    * */
 
 }

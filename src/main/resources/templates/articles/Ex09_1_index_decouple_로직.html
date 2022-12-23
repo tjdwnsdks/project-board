@@ -1,5 +1,13 @@
+<!-- 할일: 타임리프의 deCoupled 로직을 적용시켜볼거다. 여기 파일은 싹 다 기본 HTML 로만 구성할거다.
+          <html>, <header>, <footer>  부분에서 th 지우면 됨
+ -->
+
+
 <!DOCTYPE html>
-<html lang="en">
+
+<!-- 이거 지우로 아래꺼로-->
+<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org">-->
+<html lang="ko">
 
 <head>
   <meta charset="UTF-8">
@@ -7,23 +15,11 @@
 </head>
 <body>
 
-<!-- 이 파일 완성하고 컨트롤러 가서 완성하면 테스트 돌릴수 있음.
-
-   이건 바꿀때마다 리컴파일 해야함 (Ctrl + Shift + F9), 혹시라도 안되면  ctrl + S 하고 해보기
-
-  같이 쓰면 편한 웹스토어 앱 - liveReload (이걸 쓰면 비주얼스튜디오코드의 live server 같은거)
-                          안써도 되긴 함.
-
-  * 디자인은 나중에 테스트 끝나고 할거임
-    다 하면 테스트 돌려서 확인해보고 깃크라켄에 올리기 ( 워드파일로 돌아가기)
--->
-
-<header>header 삽입부</header>
+<!-- 이거 지우로 아래꺼로-->
+<!--<header th:replace="header :: #header"></header>-->
+<header id="header"></header>
 
 <main>
-  <!-- 본문에는 검색부분도 나올거다.
-      필터: 제목, 본문, id, 닉네임, 해시태그
--->
   <form action="#">
     <label for="search-type" hidden>유형</label>
     <select id="search-type">
@@ -40,7 +36,6 @@
   </form>
 
 
-  <!-- 게시판 리스트도 보여줄거다 - 테이블 태그 사용-->
   <table>
     <thead>
       <tr>
@@ -73,7 +68,6 @@
 
   </table>
 
-  <!-- 게시판 리스트 아래 페이지네이션도 만들거다 -->
   <nav>
     <table>
       <tbody>
@@ -90,14 +84,18 @@
     </table>
   </nav>
 
-<!-- 다 하면 테스트 돌려서 확인해보고 깃크라켄에 올리기 ( 워드파일로 돌아가기) -->
 </main>
 
-<footer>
-  <hr>
-  footer 삽입부
-</footer>
+<!-- 이거 지우로 아래꺼로-->
+<!--<footer th:replace="footer :: #footer"></footer> -->
+<footer id="footer"></footer>
+
+
+<!-- 다 하면 templates 안에 articles 안에 index.th.xml 파일 만들기
+
+     ** Ex09_2_index.th.xml  ㄱㄱ
+  -->
+
+
 </body>
 </html>
-
-<!-- controller > Ex08_4_ArticleController  ㄱㄱ -->

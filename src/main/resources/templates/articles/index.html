@@ -1,28 +1,23 @@
+<!-- 타임리프의 deCoupled 로직을 적용시켜볼거다. 여기 파일은 싹 다 기본 HTML 로만 구성할거다.
+  <html>, <header>, <footer>  부분에서 th 지우면 됨
+ -->
+
+
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<!-- xmlns:th="http://www.thymeleaf.org"
-  이걸 넣으면 이 문서는 이제부터 타임리프 템플릿이다. 라고 알려준다.
-  그런데 회색 처리 되어 있다. 2.x 버전에서는 이게 없으면 안됐었는데
-  이제 생략되어도 문제는 없다. (그래도 공식 문서에는 있으니....)
--->
+
+<!-- 이거 지우고 아래꺼로-->
+<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org">-->
+<html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <title>게시판 페이지</title>
 </head>
 <body>
 
-<!--<header>header 삽입부</header>-->
-<!-- 이부분을 컴포넌트 방식으로 바꿔볼거다. th:insert 또는 th:replace 로 다른 페이지를 끌어올거다.
-  사용법: th:replace="~{templatename::selector}"
-        templatename 는 해당 파일명(컴포넌트명)
-        selector 는 css때처럼 그대로 하면 됨
-
-  이부분 바꾸고 templates 폴더 안에 header.html, index.html, footer.html 파일 만들자
-  -->
-<!--<header th:replace="~{header :: header}"></header>-->
-<!-- ~{} 생략 가능(아래처럼 써도 됨) -->
-<header th:replace="header :: #header"></header>
-<!-- 이거 하고 맨 아래 footer 도 하기-->
+<!-- 이거 지우고 아래꺼로-->
+<!--<header th:replace="header :: #header"></header>-->
+<header id="header"></header>
 
 <main>
   <form action="#">
@@ -41,7 +36,6 @@
   </form>
 
 
-  <!-- 게시판 리스트도 보여줄거다 - 테이블 태그 사용-->
   <table>
     <thead>
       <tr>
@@ -74,7 +68,6 @@
 
   </table>
 
-  <!-- 게시판 리스트 아래 페이지네이션도 만들거다 -->
   <nav>
     <table>
       <tbody>
@@ -91,15 +84,15 @@
     </table>
   </nav>
 
-<!-- 다 하면 테스트 돌려서 확인해보고 깃크라켄에 올리기 ( 워드파일로 돌아가기) -->
 </main>
 
-<footer th:replace="footer :: #footer"></footer>
+<!-- 이거 지우고 아래꺼로-->
+<!--<footer th:replace="footer :: #footer"></footer> -->
+<footer id="footer"></footer>
 
-<!-- footer 바꾸면 리컴파일 하기. (ctrl + shift + F9)
-  리컴파일 해도 화면의 변화가 없으면 잘 된거임.
-  확인차 footer 컴포넌트에 글자 바꿔서 다시 리컴파일 해서 확인해보기
--->
+
+<!-- 다 하면 templates 안에 articles 안에 index.th.xml 파일 만들기     -->
+
 
 </body>
 </html>
