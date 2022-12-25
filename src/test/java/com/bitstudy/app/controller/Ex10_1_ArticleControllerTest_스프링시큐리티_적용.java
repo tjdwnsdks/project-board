@@ -24,16 +24,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  @Import(SecurityConfig.class) 를 넣어서 SecurityConfig 에서 설정한 내용이 이 test 코드에서도 읽히게끔 하면 된다.
  */
 @Import(SecurityConfig.class)
-/* 이거 하고 AuthControllerTest 파일 만들기 */
+/* 이거 하고 'Ex10_2_AuthControllerTest_스프링시큐리티_적용' 파일 만들기 */
 
 @WebMvcTest(ArticleController.class)
 
 @DisplayName("view 컨트롤러 - 게시글")
-class ArticleControllerTest {
+class Ex10_1_ArticleControllerTest_스프링시큐리티_적용 {
 
     private final MockMvc mvc;
 
-    public ArticleControllerTest(@Autowired MockMvc mvc) {
+    public Ex10_1_ArticleControllerTest_스프링시큐리티_적용(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
 
@@ -90,11 +90,9 @@ class ArticleControllerTest {
     }
 }
 
-/* 이상태로 테스트를 돌려보면 해당 내용들이 DB에 없기 때문에 404 에러 나야한다.
-* 일단 테스트는 작성 되었다. 데이터는 깃크라켄 가서 커밋 하고 오자 -  워드파일 돌아가기*/
 
 
-
+/* 이거 하고 'Ex10_2_AuthControllerTest_스프링시큐리티_적용' 파일 만들기 */
 
 
 

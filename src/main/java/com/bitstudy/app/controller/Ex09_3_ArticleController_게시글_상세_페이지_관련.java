@@ -22,7 +22,7 @@ import java.util.List;
  * 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
  * */
 
-@Controller
+//@Controller
 @RequestMapping("/articles") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
 public class Ex09_3_ArticleController_게시글_상세_페이지_관련 {
 
