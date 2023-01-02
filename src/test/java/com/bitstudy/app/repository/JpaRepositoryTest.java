@@ -2,6 +2,7 @@ package com.bitstudy.app.repository;
 
 import com.bitstudy.app.config.JpaConfig;
 import com.bitstudy.app.domain.Article;
+import com.bitstudy.app.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Import;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 
 // @ActiveProfiles("testdb") /* 이건 당장 하지 말고, 다 끝난다음 application.yaml 파일의 맨 아래 testdb 부분 보고 와서 하기 */
 @DisplayName("JPA 연결 테스트") // 현재 테스트 이름- 이게 원래 나와야 하는데 버그가 있어서 현재 제트브레인에서 고치고 있다고 함. 다른 메서드 부분에서는 제대로 나옴
@@ -24,6 +26,8 @@ class JpaRepositoryTest {
     private final Ex04_ArticleRepository articleRepository;
     private final Ex05_ArticleCommentRepository articleCommentRepository;
 
+/* 새로 삽입 */ private final UserAccountRepository userAccountRepository;
+
     /*
         원래는 각각 앞에 @Autowired 를 붙여야 하는데, JUnit5 버전과 최신버전 스프링부트를 이용하면 Test 에서도 생성자 주입패턴을 사용할 수 있다.
         맨 위에 @DataJpaTest 어노테이션에 마우스 호버해서 확장해보면, 그 안에 @ExtendWith 가 있는데
@@ -33,9 +37,12 @@ class JpaRepositoryTest {
             @Autowired private Ex05_ArticleCommentRepository articleCommentRepository; */
 
     // 생성자 만들기. 여기선 다른 파일에서 매개변수로 보내주는거를 받는거라서 위에랑 상관 없이 @Autowired 붙여야함
-    public JpaRepositoryTest(@Autowired Ex04_ArticleRepository articleRepository, @Autowired Ex05_ArticleCommentRepository articleCommentRepository) {
+    public JpaRepositoryTest(@Autowired Ex04_ArticleRepository articleRepository,
+                             @Autowired Ex05_ArticleCommentRepository articleCommentRepository,
+                             @Autowired UserAccountRepository userAccountRepository) {
         this.articleRepository = articleRepository;
         this.articleCommentRepository = articleCommentRepository;
+/* 새로 삽입 */this.userAccountRepository = userAccountRepository;
     }
 
 
@@ -116,12 +123,17 @@ class JpaRepositoryTest {
         /* 기존카운트 구하고 */
         long previousCount = articleRepository.count();
 
+/* 새로 삽입*/
+        UserAccount userAccount = userAccountRepository.save(UserAccount.of("bitstudy","asdf",null,null,null));
+
         /* Article 에 정보 넣고 */
-        Article article = Article.of("new article", "new content", "#spring");
+/* 이거 삭제*/// Article article = Article.of("new article", "new content", "#spring");
+/* 새로 삽입*/ Article article = Article.of(userAccount,"new article", "new content", "#spring");
 
         // When - 테스트 해야 하는 내용
         /* 윗줄에서 셋팅한 article 을 insert(save) 해라 */
-        Article savedArticle = articleRepository.save(article);
+/* 이거 삭제*/// Article savedArticle = articleRepository.save(article);
+        articleRepository.save(article);
 
         // Then
         /** 여기서 할 일은 윗줄에서 save를 했으니 맨 처음 구한 previousCount 보다 1개 더 커야 한다.

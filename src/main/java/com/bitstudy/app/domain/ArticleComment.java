@@ -12,54 +12,51 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-/**  공통되는 필드(속성)들 빼기 -
- *  Ex06_Article_공통필드_분리하기 처럼
- * 1) 맨 아래쪽에 있는 4개 필드 빼고 (createdAt , createdBy, modifiedAt, modifiedBy)
- * 2) @EntityListeners 빼고
- * 3) AuditingFields 상속받기 */
-/* 4) 다 되면 TDD >  Ex04_JpaRepositoryTest 파일 다시 돌려보기 */
 
 // 1) 엔티티 등록
 @Getter
-@ToString
+/* 이거 없앱 */ // @ToString
+/* 새로 삽입 */ @ToString(callSuper = true) // 저 아래 '유저 정보' 부분을 새로 넣었고, 상속받는 AuditingFields의 toString까지도 출력할 수 있도록 callSuper 넣음
 @Table(indexes = {
         @Index(columnList = "content"),
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
 
-/* 2) @EntityListeners 빼고 */
+/** 2) @EntityListeners 빼고 */
 // @EntityListeners(AuditingEntityListener.class) /** 이건 TDD Ex04 때 할거임. 지금 하지 말것 */
 @Entity /** 테이블과의 매핑. @Entity가 붙은 클래스는 JPA가 관리하게 되며, 엔티티 라고 불린다.
             @Entity 를 쓰게되면 PK 를 만들어줘야 한다. */
-/* 3) AuditingFields 상속받기 */
+/** 3) AuditingFields 상속받기 */
 public class ArticleComment extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter @ManyToOne(optional = false) private Article article;
+    @Setter @ManyToOne(optional = false) private Article article; // 게시글 (ID)
+    /* 새로 삽입 */@Setter @ManyToOne(optional = false) private UserAccount userAccount; // 유저 정보 (ID)
     @Setter @Column(nullable = false, length = 500) private String content; // 본문
 
-    /* 1) 맨 아래쪽에 있는 4개 필드 빼고 (createdAt , createdBy, modifiedAt, modifiedBy) */
-    /* 여기 4개 필드 다 빼기 - 이미 Ex06_2_AuditingFiles 에 다 뺴놨음 */
-//    @CreatedDate @Column(nullable = false) private LocalDateTime createdAt; // 생성일시
-//    @CreatedBy @Column(nullable = false, length = 100) private String createdBy; // 생성자
-//    @LastModifiedDate @Column(nullable = false) private LocalDateTime modifiedAt; // 수정일시
-//    @LastModifiedBy @Column(nullable = false, length = 100) private String modifiedBy; // 수정자
 
 
+    protected ArticleComment() {}
 
-    public ArticleComment() {}
-
-    // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
-    private ArticleComment(Article article, String content) {
+    /* 이거 없앰 */
+//    private ArticleComment(Article article, String content) { // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
+//        this.article = article;
+//        this.content = content;
+//    }
+    /* 새로 삽입 */
+    private ArticleComment(Article article, UserAccount userAccount,  String content) { // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
         this.article = article;
+        this.userAccount = userAccount;
         this.content = content;
     }
 
-    public ArticleComment of(Article article, String content) {
-        return new ArticleComment(article, content);
+    /* 새로 삽입 */
+    /* 위에 private Article 부분 바꼈으니까 여기도 바꿔야함*/
+    public ArticleComment of(Article article,UserAccount userAccount, String content) {
+        return new ArticleComment(article, userAccount, content);
     }
 
     @Override
