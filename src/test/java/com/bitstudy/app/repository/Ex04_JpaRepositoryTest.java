@@ -2,16 +2,15 @@ package com.bitstudy.app.repository;
 
 import com.bitstudy.app.config.JpaConfig;
 import com.bitstudy.app.domain.Article;
+import com.bitstudy.app.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 // @ActiveProfiles("testdb") /* 이건 당장 하지 말고, 다 끝난다음 application.yaml 파일의 맨 아래 testdb 부분 보고 와서 하기 */
@@ -26,18 +25,17 @@ class Ex04_JpaRepositoryTest {
     private final Ex04_ArticleRepository articleRepository;
     private final Ex05_ArticleCommentRepository articleCommentRepository;
 
-    /*
-        원래는 각각 앞에 @Autowired 를 붙여야 하는데, JUnit5 버전과 최신버전 스프링부트를 이용하면 Test 에서도 생성자 주입패턴을 사용할 수 있다.
-        맨 위에 @DataJpaTest 어노테이션에 마우스 호버해서 확장해보면, 그 안에 @ExtendWith 가 있는데
-        (junit4 인 경우 RunWith 였음)
+    /* 새로 삽입 */ private final UserAccountRepository userAccountRepository;
 
-            @Autowired private Ex04_ArticleRepository articleRepository;
-            @Autowired private Ex05_ArticleCommentRepository articleCommentRepository; */
 
     // 생성자 만들기. 여기선 다른 파일에서 매개변수로 보내주는거를 받는거라서 위에랑 상관 없이 @Autowired 붙여야함
-    public Ex04_JpaRepositoryTest(@Autowired Ex04_ArticleRepository articleRepository, @Autowired Ex05_ArticleCommentRepository articleCommentRepository) {
+    public Ex04_JpaRepositoryTest(
+            @Autowired Ex04_ArticleRepository articleRepository,
+            @Autowired Ex05_ArticleCommentRepository articleCommentRepository,
+/* 새로 삽입 */ @Autowired UserAccountRepository userAccountRepository) {
         this.articleRepository = articleRepository;
         this.articleCommentRepository = articleCommentRepository;
+/* 새로 삽입 */ this.userAccountRepository = userAccountRepository;
     }
 
 
@@ -45,46 +43,9 @@ class Ex04_JpaRepositoryTest {
     @DisplayName("select 테스트") // 이 메소드의 테스트 이름은 'select 테스트'
     @Test // 테스트 데이터가 주어진 상태에서 selecting 할때 잘 동작하는 경우
     void selectTest() {
-        /**
-         given_when_then 이름으로 메서드 만들고 테스트 해볼거다. 이 패턴은 따로 지정되어 있는게 아니고 내가 세트를 만들거다
-         Setting(Ctrl + Alt + S) 에서 live template 검색해보자.
-         단축코드 만들어주는건데 대표적으로 'Java' 에 sout 을 찾아서 눌러보면 System.out ~ 이 구문을 볼 수 있다.
-         우측 상단 끝에 + 버튼 > Template Group 으로 그룹 생성하고, Live Template 로 안쪽에 단축키를 설정한다.
-         Abbreviation 에 단축코드 넣고 (gw 라고 넣기), Description 에 설명 써놓고 (Given - When & Then)
-         Tamplate text 에는
-         // Given
-
-         // When & Then
-         이라고 넣자. 그리고 맨 아래 'Applicable 어쩌구'의 change 눌러서 Java 부분 열어보면 그 안에
-         comment, consumer function , Expression, Statement 체크하고 저장하자.
-         그럼 앞으로 gw 라고 치면 주석을 자동완성기능으로 쓸 수 있다.
-
-         gwt 로도 만들어보자
-         // Given
-
-         // When
-
-         // Then 이렇게 되게.
-
-         * */
-
         // Given
 
         // When
-        /* 셀렉팅을 할거니까 articleRepository 를 기준으로 테스트 할거고 findAll() 을 사용해서 모든 컬럼을 조회할거다.
-         *
-         *  - 트랜잭션시 사용하는 메서드
-         *   사용법: repository명.findAll(Sort.by(Sort.Direction.DESC, "기준컬럼명"));
-         *       1) findAll() - 모든 컬럼을 조회할때 사용. 페이징(pageable) 가능
-         *                       당연히 select 작업을 하지만, 잠깐 사이에 해당 테이블에 어떤 변화가 있었는지 알 수 없기 때문에
-         *                       select 전에 먼저 최신 데이터를 잡기 위해서 update 를 한다.
-         *                       순서: update -> select
-         *       2) findById() - 한 건에 대한 데이터 조회시 사용
-         *                       primary key로 레코드 한건 찾기
-         *       3) save() - 레코드 저장할떄 사용 (insert, update)
-         *       4) count() - 레코드 개수 뽑을때 사용
-         *       5) delete() - 레코드 삭제
-         * */
         List<Article> articles = articleRepository.findAll();
 
         // Then
@@ -115,14 +76,17 @@ class Ex04_JpaRepositoryTest {
         /** 기존의 개수를 센 다음에 insert 하고 기존거보다 하나 더 늘었다. 라는 시나리오로 테스트 할거임 */
 
         // Given
-        /* 기존카운트 구하고 */
+        /** 기존카운트 구하고 */
         long previousCount = articleRepository.count();
 
-        /* Article 에 정보 넣고 */
-        Article article = Article.of("new article", "new content", "#spring");
+/*새로 삽입*/
+        UserAccount userAccount = userAccountRepository.save(UserAccount.of("bitstudy","asdf",null,null,null));
+
+        /** Article 에 정보 넣고 */
+        Article article = Article.of(userAccount, "new article", "new content", "#spring");
 
         // When - 테스트 해야 하는 내용
-        /* 윗줄에서 셋팅한 article 을 insert(save) 해라 */
+        /** 윗줄에서 셋팅한 article 을 insert(save) 해라 */
         Article savedArticle = articleRepository.save(article);
 
         // Then
@@ -133,7 +97,7 @@ class Ex04_JpaRepositoryTest {
         assertThat(articleRepository.count()).isEqualTo(previousCount + 1);
         // 카운트를 새로 구했더니 기존 카운트에 1 더해진거랑 같냐? 라는 말임.
 
-        /* !!주의: 이상태로 테스트 돌리면 createdAt 이거 못찾는다고 에러남.
+        /** !!주의: 이상태로 테스트 돌리면 createdAt 이거 못찾는다고 에러남.
          * 이유: jpaConfig 파일에 auditing 을 쓰겠다고 셋업을 해놨는데
          *      해당 엔티티(지금은 Article.java)에서도 auditing 을 쓴다고 명시해줘야 한다.
          *       Article.java 가서 클래스 맨 위에 어노테이션
