@@ -1,3 +1,8 @@
+-- 테스트 계정
+-- TODO: 비밀번호 노출됨. 추후 수정 필요
+insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values ('bitstudy', 'asdf', 'bitstudy', 'bitstudy@email.com','I am bitstudy', now(), 'bitstudy', now(), 'bitstudy');
+
+
 -- 게시글(Article) 100 개
 insert into article (title, content, hashtag, created_at, created_by, modified_at, modified_by) values ('Integer a nibh.', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 'Yellow', '2022-06-20 17:00:33', 'Grayce', '2022-10-15 08:10:21', 'Keefer');
 insert into article (title, content, hashtag, created_at, created_by, modified_at, modified_by) values ('Phasellus sit amet erat.', 'Sed ante. Vivamus tortor. Duis mattis egestas metus.', 'Yellow', '2022-05-20 07:36:22', 'Garvy', '2022-06-29 16:12:13', 'Kylie');

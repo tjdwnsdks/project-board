@@ -37,7 +37,7 @@ public class ThymeleafConfig {
     }
 
 
-    @RequiredArgsConstructor // 필수 필드에 대한 생성자를 자동으로 만들어주는 롬복 애너테이션
+    @RequiredArgsConstructor
     @Getter
     @ConstructorBinding
     @ConfigurationProperties("spring.thymeleaf3") /* prefix 로 이름을 thymeleaf3 로 설정함.(나중에 application.yaml 가서 사용할거임) */
