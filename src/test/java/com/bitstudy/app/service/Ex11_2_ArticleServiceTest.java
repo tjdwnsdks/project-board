@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("비지니스 로직 - 게시글")
 @ExtendWith(MockitoExtension.class)
-class ArticleServiceTest {
+class Ex11_2_ArticleServiceTest {
 
     /* Mock을 주입하는 거에다가 @InjectMocks 를 달아줘야 한다. 그 외의 모든 Mock은 @Mock 을 달아준다. */
     @InjectMocks

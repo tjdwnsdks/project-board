@@ -40,20 +40,20 @@ public class AuditingFields {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) // 날짜 형식 맞춰주려고 하는거.
     @CreatedDate
     @Column(nullable = false, updatable = false) // updatable = false => 이 필드는 업데이트 불가 하다는 뜻. 이거 말고 insertable 도 있음
-    private LocalDateTime createdAt; // 생성일시
+    protected LocalDateTime createdAt; // 생성일시
 
     @CreatedBy
     @Column(nullable = false, length = 100)
-    private String createdBy; // 생성자
+    protected String createdBy; // 생성자
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) // 날짜 형식 맞춰주려고 하는거.
     @LastModifiedDate
     @Column(nullable = false)
-    private LocalDateTime modifiedAt; // 수정일시
+    protected LocalDateTime modifiedAt; // 수정일시
 
     @LastModifiedBy
     @Column(nullable = false, length = 100)
-    private String modifiedBy; // 수정자
+    protected String modifiedBy; // 수정자
 
 
 
