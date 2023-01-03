@@ -28,18 +28,11 @@ class JpaRepositoryTest {
 
 /* 새로 삽입 */ private final UserAccountRepository userAccountRepository;
 
-    /*
-        원래는 각각 앞에 @Autowired 를 붙여야 하는데, JUnit5 버전과 최신버전 스프링부트를 이용하면 Test 에서도 생성자 주입패턴을 사용할 수 있다.
-        맨 위에 @DataJpaTest 어노테이션에 마우스 호버해서 확장해보면, 그 안에 @ExtendWith 가 있는데
-        (junit4 인 경우 RunWith 였음)
-
-            @Autowired private Ex04_ArticleRepository articleRepository;
-            @Autowired private Ex05_ArticleCommentRepository articleCommentRepository; */
 
     // 생성자 만들기. 여기선 다른 파일에서 매개변수로 보내주는거를 받는거라서 위에랑 상관 없이 @Autowired 붙여야함
     public JpaRepositoryTest(@Autowired Ex04_ArticleRepository articleRepository,
                              @Autowired Ex05_ArticleCommentRepository articleCommentRepository,
-                             @Autowired UserAccountRepository userAccountRepository) {
+/* 새로 삽입 */               @Autowired UserAccountRepository userAccountRepository) {
         this.articleRepository = articleRepository;
         this.articleCommentRepository = articleCommentRepository;
 /* 새로 삽입 */this.userAccountRepository = userAccountRepository;
@@ -76,7 +69,7 @@ class JpaRepositoryTest {
         // Given
 
         // When
-        /* 셀렉팅을 할거니까 articleRepository 를 기준으로 테스트 할거고 findAll() 을 사용해서 모든 컬럼을 조회할거다.
+        /** 셀렉팅을 할거니까 articleRepository 를 기준으로 테스트 할거고 findAll() 을 사용해서 모든 컬럼을 조회할거다.
          *
          *  - 트랜잭션시 사용하는 메서드
          *   사용법: repository명.findAll(Sort.by(Sort.Direction.DESC, "기준컬럼명"));
@@ -93,7 +86,7 @@ class JpaRepositoryTest {
         List<Article> articles = articleRepository.findAll();
 
         // Then
-        /* assertJ 를 이용해서 테스트를 한다.
+        /** assertJ 를 이용해서 테스트를 한다.
             articles가 isNotNull 이고 사이즈가 0개 면 테스트 통과다 */
         // assertThat(articles).isNotNull().hasSize(0);
         /** 이건 테스트니까 그냥 Run 에서 돌리자(Ctrl + Shift + F10) 에서 스크롤 맨 아래에 결과가 Completed initialization  라고 나오면 된거고
@@ -109,7 +102,9 @@ class JpaRepositoryTest {
          3) assertThat(articles).isNotNull().hasSize(0); 에서 hasSize(0) 을 hasSize(100) 으로 바꾸기
          (데이터 100개 가져올거니께)
          */
-        assertThat(articles).isNotNull().hasSize(100); // 게시글은 100개
+        assertThat(articles)
+                .isNotNull()
+                .hasSize(100); // 게시글은 100개
     }
 
 
@@ -120,7 +115,7 @@ class JpaRepositoryTest {
         /** 기존의 개수를 센 다음에 insert 하고 기존거보다 하나 더 늘었다. 라는 시나리오로 테스트 할거임 */
 
         // Given
-        /* 기존카운트 구하고 */
+        /** 기존카운트 구하고 */
         long previousCount = articleRepository.count();
 
 /* 새로 삽입*/
@@ -133,7 +128,7 @@ class JpaRepositoryTest {
         // When - 테스트 해야 하는 내용
         /* 윗줄에서 셋팅한 article 을 insert(save) 해라 */
 /* 이거 삭제*/// Article savedArticle = articleRepository.save(article);
-        articleRepository.save(article);
+/* 새로 삽입*/ articleRepository.save(article);
 
         // Then
         /** 여기서 할 일은 윗줄에서 save를 했으니 맨 처음 구한 previousCount 보다 1개 더 커야 한다.
@@ -143,7 +138,7 @@ class JpaRepositoryTest {
         assertThat(articleRepository.count()).isEqualTo(previousCount + 1);
         // 카운트를 새로 구했더니 기존 카운트에 1 더해진거랑 같냐? 라는 말임.
 
-        /* !!주의: 이상태로 테스트 돌리면 createdAt 이거 못찾는다고 에러남.
+        /** !!주의: 이상태로 테스트 돌리면 createdAt 이거 못찾는다고 에러남.
          * 이유: jpaConfig 파일에 auditing 을 쓰겠다고 셋업을 해놨는데
          *      해당 엔티티(지금은 Article.java)에서도 auditing 을 쓴다고 명시해줘야 한다.
          *       Article.java 가서 클래스 맨 위에 어노테이션
@@ -163,14 +158,14 @@ class JpaRepositoryTest {
          * */
 
         // Given
-        /* 순서 - 1) 기존의 영속성 컨텍스트로부터 하나 엔티티 객체를 가져온다.
+        /** 순서 - 1) 기존의 영속성 컨텍스트로부터 하나 엔티티 객체를 가져온다.
             1. 기존의 영속성 컨텍스트로부터 하나 엔티티 객체를 가져올건데 => articleRepository.findById
             2. 글번호 1번은 보통 무조건 있으니까 => findById(1L)
             3. 없으면 throw 시켜서 일단 테스트가 끝나게 하자. => .orElseThrow();
         * */
         Article article = articleRepository.findById(1L).orElseThrow();
 
-        /* 2) 업데이트로 해시태그를 가공해보자
+        /** 2) 업데이트로 해시태그를 가공해보자
             순서: 엔티티에 있는 setter 를 이용해서 변수 updateHashtag 에 있는 문자열로 업데이트 해보자
                 1. 변수 updateHashtag 에 문자열 #springboot 를 넣고
                 2. 엔티티(article)에 있는 setter 를 이용해서 변수 updateHashtag 에 있는 문자열로 업데이트 해보자
@@ -220,14 +215,14 @@ class JpaRepositoryTest {
          * */
 
         // Given
-        /* 1) 기존의 영속성 컨텍스트로부터 하나 엔티티 객체를 가져온다. */
-        /*  순서 -   1. 기존의 영속성 컨텍스트로부터 하나 엔티티 객체를 가져올건데 => articleRepository.findById
+        /** 1) 기존의 영속성 컨텍스트로부터 하나 엔티티 객체를 가져온다. */
+        /**  순서 -   1. 기존의 영속성 컨텍스트로부터 하나 엔티티 객체를 가져올건데 => articleRepository.findById
             2. 글번호 1번은 보통 무조건 있으니까 => findById(1L)
             3. 없으면 throw 시켜서 일단 테스트가 끝나게 하자. => .orElseThrow();
         * */
         Article article = articleRepository.findById(1L).orElseThrow();
 
-        /* 2) 지우면 DB에서 하나가 사라지는거니까 count 를 구해놓고 */
+        /** 2) 지우면 DB에서 하나가 사라지는거니까 count 를 구해놓고 */
         /** 게시글(articleRepository) 뿐만 아니라, 연관된 댓글(articleCommentRepository) 까지 삭제할거라서 두개의 개수를 다 알아낼거다.
          * 그래서 이 클래스 이름을 ArticleRepositoryTest 이라고 안하고 그냥 독립적인 JpaRepositoryTest 라고 이름을 지은거다.
          * 나중에 Repository 전용 테스트가 필요하면 그때 만들면 된다.
@@ -238,12 +233,12 @@ class JpaRepositoryTest {
         // size()에 마우스 올려보면 리턴타입이 int 라고 되어 있음 그래서 맨 앞에 int 라고 붙임
 
         // When - 테스트 해야 하는 내용
-        /* 게시글(article) 삭제하기 */
+        /** 게시글(article) 삭제하기 */
         articleRepository.delete(article); // delete 에 마우스 올려보면 리턴타입이 void라고 나옴. 별도로 저장할 값 없어서 저장 안함
 
 
         // Then
-        /* 2번에서 구한거랑 지금 순간의 갯수 비교해서 1 차이나면 테스트 통과한거임. */
+        /** 2번에서 구한거랑 지금 순간의 갯수 비교해서 1 차이나면 테스트 통과한거임. */
 
         /** 현재 게시글(articleRepository) 의 개수(count()) 가 아까구한 previousArticleCount 보다 1 적으면 테스트 통과 라는 뜻 */
         assertThat(articleRepository.count()).isEqualTo(previousArticleCount - 1);
@@ -253,18 +248,7 @@ class JpaRepositoryTest {
         // 원 게시글에 달려있는 댓글의 개수를 알 수 없기때문에 이렇게 따로따로 구해야 함
     }
 }
-/* delete 테스트 통과 하면 
-    1) 맨 위에 가서 전체 테스트 돌려보기
-    2) 다 돌려서 Run 패털에 @DisplayName 로 걸어놓은 이름 제대로나오는지 확인하기
-*/
-
-/* 다 했으면 워드파일에 ' 테스트 이후 강의 ' 부분으로 가서 진행하기 (끝난 코드들 다 깃크라켄에 올리기)
-    깃크라켄으로 올리면서 설명하기
-    3) application.yaml 파일 가서 맨 아래 testdb 부분 주석처리 했던거 풀면서 설명하기 */
-
-
-
-
+/* 다 했으면  main > controller > MainController  가서 forward 로 바꾸기 */
 
 
 

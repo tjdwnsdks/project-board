@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 /*
@@ -27,12 +27,21 @@ class MainControllerTest {
         this.mvc = mvc;
     }
 
-
     @Test
     void rootPathTest() throws Exception {
+        // Given
 
+        // When & Then
+/* 이거 없앰*/
+        /** mvc.perform(get("/"))
+                .andExpect(status().is3xxRedirection()); // 상태코드300 - 리다이렉션이 제대로 동작하는지 확인*/
+
+/* 새로 생성*/
         mvc.perform(get("/"))
-                .andExpect(status().is3xxRedirection()); // 상태코드300 - 리다이렉션이 제대로 동작하는지 확인
+                .andExpect(status().isOk())
+                .andExpect(view().name("forward:/articles"))
+                .andExpect(forwardedUrl("/articles"))
+                .andDo(MockMvcResultHandlers.print());
 
     }
 }

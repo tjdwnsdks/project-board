@@ -19,10 +19,10 @@ import java.time.LocalDateTime;
 
 
  * */
-public record Ex11_3_ArticleDto(String title, String content, String hashtag, LocalDateTime createAt, String createBy) implements Serializable {
+public record Ex11_3_ArticleDto(String title, String content, String hashtag, LocalDateTime createdAt, String createdBy) implements Serializable {
 
-    public static Ex11_3_ArticleDto of(String title, String content, String hashtag, LocalDateTime createAt, String createBy) {
-        return new Ex11_3_ArticleDto(title, content, hashtag, createAt, createBy);
+    public static Ex11_3_ArticleDto of(String title, String content, String hashtag, LocalDateTime createdAt, String createdBy) {
+        return new Ex11_3_ArticleDto(title, content, hashtag, createdAt, createdBy);
     }
 
 }
