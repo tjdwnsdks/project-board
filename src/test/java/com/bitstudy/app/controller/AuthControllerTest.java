@@ -27,7 +27,9 @@ public class AuthControllerTest {
     @Test
     @DisplayName("[view][GET] 로그인 페이지 - 정상호출") // 로그인 뷰 페이지 호출하는 메서드
     public void articlesAll() throws Exception {
+        // Given
 
+        // When & Then
         mvc.perform(get("/login"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));

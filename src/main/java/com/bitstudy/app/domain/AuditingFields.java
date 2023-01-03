@@ -43,7 +43,7 @@ public class AuditingFields {
     protected LocalDateTime createdAt; // 생성일시
 
     @CreatedBy
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, updatable = false, length = 100)
     protected String createdBy; // 생성자
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) // 날짜 형식 맞춰주려고 하는거.

@@ -18,18 +18,26 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @Table(indexes = {
+        @Index(columnList = "userId"),
         @Index(columnList = "email", unique = true),
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
 @Entity
 public class UserAccount extends AuditingFields {
+    /* 새로 생성 */
     @Id
-    @Column(length = 50)
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Setter
-    @Column(nullable = false) private String userPassword;
+/* 이거 없앰*/
+/** @Id
+    @Column(length = 50)
+    private String userId;*/
+
+/* 새로 생성 - userId 를 일반 필드로 바꾸고 저 위에 id 필드에 @Id 붙임 */
+    @Setter @Column(nullable = false, length = 50) private String userId;
+    @Setter @Column(nullable = false) private String userPassword;
 
     @Setter @Column(length = 100) private String email;
     @Setter @Column(length = 100) private String nickname;
@@ -38,23 +46,25 @@ public class UserAccount extends AuditingFields {
 
     protected UserAccount() {}
 
-    private UserAccount(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
+    private UserAccount(String userId, String userPassword, String email, String nickname, String memo
+/* 이거 없앰, String createdBy*/) {
         this.userId = userId;
         this.userPassword = userPassword;
         this.email = email;
         this.nickname = nickname;
         this.memo = memo;
-        this.createdBy = createdBy;
-        this.modifiedBy = createdBy;
+/* 이거 없앰*/ /*this.createdBy = createdBy;
+        this.modifiedBy = createdBy;*/
     }
 
+    
     public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo) {
-        return UserAccount.of(userId, userPassword, email, nickname, memo, null);
+        return UserAccount.of(userId, userPassword, email, nickname, memo/* 이거 없앰, null*/);
     }
-
-    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
+/* 이거 없앰 */
+    /**public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
         return new UserAccount(userId, userPassword, email, nickname, memo, createdBy);
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

@@ -1,5 +1,7 @@
 package com.bitstudy.app.dto;
 
+import com.bitstudy.app.domain.Article;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -19,10 +21,64 @@ import java.time.LocalDateTime;
 
 
  * */
-public record ArticleDto(String title, String content, String hashtag, LocalDateTime createAt, String createBy) implements Serializable {
 
-    public static ArticleDto of(String title, String content, String hashtag, LocalDateTime createAt, String createBy) {
-        return new ArticleDto(title, content, hashtag, createAt, createBy);
+
+public record ArticleDto( /* 우선 엔티티가 가지고 있는 모든 정보들을 dto 도 가지고 있게 해서, 나중에 응답할때 어떤걸 보내줄지 선택해서 가공하게 할거임 */
+        Long id,
+        UserAccountDto userAccountDto,
+        String title,
+        String content,
+        String hashtag,
+        LocalDateTime createdAt,
+        String createdBy,
+        LocalDateTime modifiedAt,
+        String modifiedBy
+) {
+
+
+    public static ArticleDto of(Long id,
+                                UserAccountDto userAccountDto,
+                                String title,
+                                String content,
+                                String hashtag,
+                                LocalDateTime createdAt,
+                                String createdBy,
+                                LocalDateTime modifiedAt,
+                                String modifiedBy) {
+        return new ArticleDto(id, userAccountDto, title, content, hashtag, createdAt, createdBy, modifiedAt, modifiedBy);
+    }
+
+    
+    /* entity 를 매개변수로 입력하면 ArticleDto 로 변환해주는 메서드.
+    * entity 를 받아서 new 한다음에 인스턴스에다가 entity. 해가면서 맵핑시켜서 return 하고 있는거.
+    * 맵퍼처럼 사용할 수 있게 만든거. */
+    public static ArticleDto from(Article entity) {
+        return new ArticleDto( // 이게 저 위에 record ArticleDto 부르는거
+                entity.getId(),
+                UserAccountDto.from(entity.getUserAccount()),
+                entity.getTitle(),
+                entity.getContent(),
+                entity.getHashtag(),
+                entity.getCreatedAt(),
+                entity.getCreatedBy(),
+                entity.getModifiedAt(),
+                entity.getModifiedBy()
+        );
+    }
+
+    /* 위에꺼랑 반대로, dto 가 있다면 dto 로부터 엔티티를 생성하는 메서드.
+    * 이걸 쓰면 좋은점은 이렇게 되면 Article.java 는 DTO의 존재를 몰라도 되게 된다.
+    * 실제로 Article.java 가서 맨 위에 import 부분 보면 Dto 에 관련된게 없다. 딱 domain에 관련된 코드만 가지고 있다.
+    * 이 파일에서만 연관관계 맵핑을 하기 위해서 Article.java 의 존재를 알고 있다.
+    * (맨 위에 import 에 Article 관련 있음)
+    * 그래서 domain 안에 있는 Article 이 바뀌면 이 ArticleDto 는 영향을 받겠지만, 반대의 경우에는 도메인코드(Article) 는 영향을 받지 않는다. 왜 이렇게 짜냐면 domain 에 있는 코드들은 다 DB에 영향을 주는 코드들이라서 다른 애들한테 영향을 안받게 짜주는게 좋다. */
+    public Article toEntity() {
+        return Article.of(
+                userAccountDto.toEntity(),
+                title,
+                content,
+                hashtag
+        );
     }
 
 }

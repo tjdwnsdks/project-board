@@ -21,7 +21,7 @@ import java.util.Set;
 // 1) 엔티티 등록
 @Getter
 /* 이거 없앱 */ // @ToString
-/* 새로 삽입 */ @ToString(callSuper = true) // 저 아래 '유저 정보' 부분을 새로 넣었고, 상속받는 AuditingFields의 toString까지도 출력할 수 있도록 callSuper 넣음
+/* 새로 삽입 */ @ToString(callSuper = true) // 저 아래 '유저 정보 (ID)' 부분을 새로 넣었고, 상속받는 AuditingFields의 toString까지도 출력할 수 있도록 callSuper 넣음
 /** @Index - 엔티티와 매핑할 테이블을 지정.데이터베이스 인덱스는 추가 쓰기 및 저장 공간을 희생 하여 테이블에 대한 데이터 검색 작업의 속도를 향상시키는 데이터 구조
 *   밑에 @Entity 와 셋트로 사용 */
 @Table(indexes = {
@@ -54,7 +54,6 @@ public class Article extends AuditingFields {
     @OrderBy("createdAt desc") /** 양방향 바인딩으로 게시글에 연관된 댓글리스트 뽑으려고 만든건데 우선 시간순으로 정렬되도록 이거로 바꿈 */
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     @ToString.Exclude /** lazy loaded 를 막고, circular reference(순환참조) 해결하는거 */
-
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
     protected Article() {}
@@ -76,10 +75,14 @@ public class Article extends AuditingFields {
 
     @Override
     public boolean equals(Object o) { // 동등성 비교
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Article article = (Article) o;
+//        return id!= null &&  id.equals(article.id); // 이건 혹시라도 id가 null 이 아니면 해라. 라는 뜻
+
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Article article = (Article) o;
-        return id!= null &&  id.equals(article.id); // 이건 혹시라도 id가 null 이 아니면 해라. 라는 뜻
+        if (!(o instanceof Article article)) return false;
+        return id != null && id.equals(article.id);
     }
 
     @Override
@@ -88,7 +91,7 @@ public class Article extends AuditingFields {
     }
 }
 
-
+/* 이거 다 바꾸고 ArticleComment.java 로 이동 */
 
 
 

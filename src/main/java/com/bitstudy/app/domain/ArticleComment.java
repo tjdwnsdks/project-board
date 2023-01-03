@@ -47,7 +47,7 @@ public class ArticleComment extends AuditingFields {
 //        this.content = content;
 //    }
     /* 새로 삽입 */
-    private ArticleComment(Article article, UserAccount userAccount,  String content) { // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
+    private ArticleComment(Article article, UserAccount userAccount, String content) { // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
         this.article = article;
         this.userAccount = userAccount;
         this.content = content;
@@ -55,24 +55,30 @@ public class ArticleComment extends AuditingFields {
 
     /* 새로 삽입 */
     /* 위에 private Article 부분 바꼈으니까 여기도 바꿔야함*/
-    public ArticleComment of(Article article,UserAccount userAccount, String content) {
+    public static ArticleComment of(Article article, UserAccount userAccount, String content) {
         return new ArticleComment(article, userAccount, content);
     }
 
     @Override
     public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        ArticleComment that = (ArticleComment) o;
+//        return id.equals(that.id);
+
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ArticleComment that = (ArticleComment) o;
-        return id.equals(that.id);
+        if (!(o instanceof ArticleComment that)) return false;
+        return id != null && id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
-    
-    /*   */
+
+    /* 이거 다 바꾸고 data.sql 로 이동
+    *  jpaRepositoryTest.java 로 이동
+    * */
 }
 
 

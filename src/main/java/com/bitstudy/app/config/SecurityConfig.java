@@ -28,7 +28,7 @@ public class SecurityConfig {
 
 
         return http
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // HttpSecurity 의 authorizeHttpRequests 에서 모든 요청이 인증을 거쳐야 함을 설정해준다
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // HttpSecurity 의 authorizeHttpRequests 에서 모든 요청이 인증을 거쳐야 함을 설정해준다. 풀어서 말하자면 모든 요청에 대한 인증을(auth.anyRequest()) 허용(통과)하겠다 (permitAll()) 라는 뜻임
                 .formLogin().and() // formLogin() : 로그인 페이지를 만들어준다. 
                                    // .and() 는 앞에꺼 하고 and() 다음꺼 해 라는 의미임 
                 .build(); // 빌드 해라
