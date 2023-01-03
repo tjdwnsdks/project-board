@@ -81,4 +81,5 @@ public record ArticleDto( /* 우선 엔티티가 가지고 있는 모든 정보�
         );
     }
 
+    /* 이것과 비슷한 전략으로 dto > response > ArticleCommentRespose 같은거다. */
 }

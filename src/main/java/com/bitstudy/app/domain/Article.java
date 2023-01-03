@@ -43,20 +43,22 @@ public class Article extends AuditingFields {
     /* 새로 삽입 */
     @Setter @ManyToOne(optional = false) private UserAccount userAccount; // 유저 정보 (ID)
 
-
     @Setter @Column(nullable = false) private String title; // 제목
     @Setter @Column(nullable = false, length = 10000) private String content; // 본문
+
     @Setter private String hashtag; // 해시태그
+
 
     /** 양방향 바인딩 */
     /* 이거 없앰 *///@OrderBy("id") // 양방향 바인딩을 할건데 정렬 기준은 id로 하겠다 라는 뜻
     /* 새로 삽입 */
+    @ToString.Exclude /** lazy loaded 를 막고, circular reference(순환참조) 해결하는거 */
     @OrderBy("createdAt desc") /** 양방향 바인딩으로 게시글에 연관된 댓글리스트 뽑으려고 만든건데 우선 시간순으로 정렬되도록 이거로 바꿈 */
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-    @ToString.Exclude /** lazy loaded 를 막고, circular reference(순환참조) 해결하는거 */
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
     protected Article() {}
+
     /* 이거 없앰 */ // private Article(String title, String content, String hashtag) {
     /* 새로 삽입 */private Article(UserAccount userAccount, String title, String content, String hashtag) {
         /* 새로 삽입 */

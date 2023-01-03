@@ -50,9 +50,9 @@ class ArticleCommentServiceTest {
 /* 이거 삭제 */// given(articleRepository.findById(1L)).willReturn(Article.of("title","content","#hashtag"));
         // 그냥 이렇게만 쓰면 편한다. findById 는 Optional 로 포장해야한다.
         Long articleId = 1L;
-/* 새로 삽입*/ ArticleComment expected = createArticleComment("content");
+/* 새로 삽입*/ ArticleComment expected = createArticleComment("content"); // 저 밑에 테스트용 데이터 셋팅해놨음.
 /* 새로 삽입*/ given(articleCommentRepository.findByArticle_Id(articleId)).willReturn(List.of(expected));
-
+            /** given()은 어떤 메서드가 실행되었을 때(!!!!!)의 테스트를 위한 상황을설정할 수 있다. */
 
         // When
         // 받아오는 댓글들을 List에 담을거라서 List<ArticleComment>에 저장함.
@@ -160,7 +160,11 @@ class ArticleCommentServiceTest {
 
     ////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////
-// 단순히 테스트용 데이터 세팅한거. 픽스쳐 라고 함
+// 단순히 테스트용 데이터 세팅한거. 픽스쳐 라고 함.
+// 테스트코드 내내 반복적으로 활용될 가능성이 큰 경우 별도로 이렇게 메서드나 클래스로 두고 불러다 쓰는 방식인데
+// 이 방식을 쓰면 테스트 코드의 부피를 줄일수 있고, 반복을 피할 수 있다.
+// 우리 강의에서는 그렇게까지 일일히는 하지 않지만 리팩토링의 여지를 남겨두기 위해서 이렇게 한다.
+// 실무 가면 하게 될거임.
 
     private ArticleCommentDto createArticleCommentDto(String content) {
         return ArticleCommentDto.of(
@@ -169,24 +173,24 @@ class ArticleCommentServiceTest {
                 createUserAccountDto(),
                 content,
                 LocalDateTime.now(),
-                "uno",
+                "bitstudy",
                 LocalDateTime.now(),
-                "uno"
+                "bitstudy"
         );
     }
 
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
                 1L,
-                "uno",
+                "bitstudy",
                 "password",
-                "uno@mail.com",
-                "Uno",
+                "bitstudy@email.com",
+                "bitstudy",
                 "This is memo",
                 LocalDateTime.now(),
-                "uno",
+                "bitstudy",
                 LocalDateTime.now(),
-                "uno"
+                "bitstudy"
         );
     }
 
@@ -200,10 +204,10 @@ class ArticleCommentServiceTest {
 
     private UserAccount createUserAccount() {
         return UserAccount.of(
-                "uno",
+                "bitstudy",
                 "password",
-                "uno@email.com",
-                "Uno",
+                "bitstudy@email.com",
+                "bitstudy",
                 null
         );
     }

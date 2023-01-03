@@ -70,8 +70,11 @@ class ArticleServiceTest {
     @Test
     void returnArticlesAll() {
         // Given - 페이징 기능을 넣어볼거다.
-        Pageable pageable = Pageable.ofSize(20);
+        Pageable pageable = Pageable.ofSize(20); // 한페이지에 몇개 가져올건지 결정.
         given(articleRepository.findAll(pageable)).willReturn(Page.empty());
+        /** findAll 추천리스트 보면 'findAll(Pageable pageable)' 이라는게 있다. 이걸 PageRequest 라고 하는데, PageRequest는 Pageable 클래스를 implements한 AbstractPageReqeust 추상 클래스의 구현체이므로 findAll의 인자로 넣을 수 있다.
+         * Repository의 findAll 메서드의 인자에 PageRequest를 넣어주면 된다.
+         * 그러면 반환은 Page이 된다. */
 
         // When - 입력인자가 없는경우(null) 를 테스트 하는거
         Page<ArticleDto> articles = sut.searchArticles(null, null, pageable);
@@ -108,11 +111,11 @@ class ArticleServiceTest {
 
 
     /*  2. 각 게시글 페이지로 이동  */
-    @DisplayName("게시글을 조회하면, 게시글을 반환한다.")
+    @DisplayName("게시글을 조회하면, 게시글을(하나) 반환한다.")
     @Test
     void givenArticleId_whenSearchingArticle_thenReturnsArticle() {
         // Given
-        Long articleId = 1L;
+        Long articleId = 1L;  /* 아이디 하나 (1번) 넣었을때 */
         Article article = createArticle();
         given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
 
@@ -120,7 +123,7 @@ class ArticleServiceTest {
         ArticleWithCommentsDto dto = sut.getArticle(articleId);
 
         // Then
-        assertThat(dto)
+        assertThat(dto)  /* 게시글을 하나 반환할건데, 그때 필드는 제목, 본문, 해시태그가 있을거다. */
                 .hasFieldOrPropertyWithValue("title", article.getTitle())
                 .hasFieldOrPropertyWithValue("content", article.getContent())
                 .hasFieldOrPropertyWithValue("hashtag", article.getHashtag());
@@ -210,10 +213,10 @@ class ArticleServiceTest {
 
     private UserAccount createUserAccount() {
         return UserAccount.of(
-                "uno",
+                "bitstudy",
                 "password",
-                "uno@email.com",
-                "Uno",
+                "bitstudy@email.com",
+                "bitstudy",
                 null
         );
     }
@@ -238,23 +241,23 @@ class ArticleServiceTest {
                 content,
                 hashtag,
                 LocalDateTime.now(),
-                "Uno",
+                "bitstudy",
                 LocalDateTime.now(),
-                "Uno");
+                "bitstudy");
     }
 
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
                 1L,
-                "uno",
+                "bitstudy",
                 "password",
-                "uno@mail.com",
-                "Uno",
+                "bitstudy@email.com",
+                "bitstudy",
                 "This is memo",
                 LocalDateTime.now(),
-                "uno",
+                "bitstudy",
                 LocalDateTime.now(),
-                "uno"
+                "bitstudy"
         );
     }
 

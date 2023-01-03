@@ -7,7 +7,9 @@ import java.time.LocalDateTime;
 
 /** 댓글 요청하는 컨트롤러에 응답으로 내보내는 전용 DTO 임*/
 
-/** Dto 같은건데 정보의 일부만 들고 있거나 가공된 형태로 정보를 가지고 있다. */
+/* Dto와 동작원리는 비슷하지만, 다른점은 정보의 일부만 들고 있거나 가공된 형태로 정보를 가지고 있다.
+* 예를들어 nickname 의 경우 댓글테이블에 있는게 아니라 user_account 테이블이 가지고 있는건데
+* 저 아래 ArticleCommentResponse from() 메서드 를 이용해서 가공한 다음 셋팅하는거임. */
 
 public record ArticleCommentResponse(
         Long id,

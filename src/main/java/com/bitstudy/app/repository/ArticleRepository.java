@@ -22,14 +22,18 @@ public interface ArticleRepository extends
         ,QuerydslBinderCustomizer<QArticle> // 이부분 처음에는 주석처리 하고 아래 빨간 '설명' 부분 설명하기
 {
 
-/* 새로 삽입*/Page<Article> findByTitleContaining(String title, Pageable pageable);
-/* 새로 삽입*/Page<Article> findByContentContaining(String content, Pageable pageable);
-/* 새로 삽입*/Page<Article> findByUserAccount_UserIdContaining(String userId, Pageable pageable);
-/* 새로 삽입*/Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
-/* 새로 삽입*/Page<Article> findByHashtag(String hashtag, Pageable pageable);
+/* 새로 삽입 - 제목으로 검색할때
+   게시글을 제목으로 검색할때 사용 할거임. test > ArticleServiceTest.java 에서 ("검색어와 함께 게시글을 검색하면, 게시글 페이지를 반환한다.") 이 부분에서 SearchType.TITLE 부분에서 쓰임*/
+    Page<Article> findByTitleContaining(String title, Pageable pageable);
+/* 새로 삽입 - 내용으로 검색할때 */
+    Page<Article> findByContentContaining(String content, Pageable pageable);
+/* 새로 삽입 - 유저아이디로 검색할때 */
+    Page<Article> findByUserAccount_UserIdContaining(String userId, Pageable pageable);
+/* 새로 삽입 - 닉네임으로 검색할때 */
+    Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
+/* 새로 삽입 - 해시태그로 검색할때 */
+    Page<Article> findByHashtag(String hashtag, Pageable pageable);
 
-/* 새로 삽입*/ Page<Article> findByTitle(String title, Pageable pageable);
-// 게시글을 제목으로 검색할때 사용 할거임. test > ArticleServiceTest.java 에서 ("검색어와 함께 게시글을 검색하면, 게시글 페이지를 반환한다.") 이 부분에서 SearchType.TITLE 부분에서 쓰임
 
     @Override
     default void customize(QuerydslBindings bindings, QArticle root) {

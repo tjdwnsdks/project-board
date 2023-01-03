@@ -57,9 +57,10 @@ public class UserAccount extends AuditingFields {
         this.modifiedBy = createdBy;*/
     }
 
-    
+
     public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo) {
-        return UserAccount.of(userId, userPassword, email, nickname, memo/* 이거 없앰, null*/);
+/* 새로 추가 - new 키워드*/
+        return new UserAccount(userId, userPassword, email, nickname, memo /* 이거 없앰, null*/);
     }
 /* 이거 없앰 */
     /**public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
