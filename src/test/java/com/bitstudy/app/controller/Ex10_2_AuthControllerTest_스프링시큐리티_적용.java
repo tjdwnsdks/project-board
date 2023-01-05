@@ -13,7 +13,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+
 /* 'Ex10_1_ArticleControllerTest_스프링시큐리티_적용'  하고 온거임*/
+
+/** 로그인 페이지 기능 테스트
+ *
+ * 로그인 페이지는 스프링시큐리티 와 부트가 만들어서 준거다. 한마디로 이미 테스트가 다 되서 검증된 기능이라서 사실 우리가 테스트를 할건 없다.
+ * 그래서 최소한의 테스트, 저 기능이 우리 서비스에 존재하는가만 확인하면 된다.
+ * 그래서 이 AuthControllerTest 는 별도로 controller 패키지에 실물 파일로 존재하지 않아도 된다.
+ * (여태까지는 controller 패키지에 실제 컨트롤러들을 만들어서 테스트를 돌렸었다)
+ *
+ * 그래서 get("/login") 로 페이지를 날렸을때 status 가 200 이 반환 되는가만 확인하는 테스트 코드를 짤거다.
+ * */
 
 
 @Import(SecurityConfig.class) /* ArticleControllerTest 와 동일한 환경에서 테스트 해야 하니까 이거 넣기 */
