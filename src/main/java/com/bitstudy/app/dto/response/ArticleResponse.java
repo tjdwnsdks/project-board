@@ -20,9 +20,10 @@ public record ArticleResponse(
         return new ArticleResponse(id, title, content, hashtag, createdAt, email, nickname);
     }
 
+
     public static ArticleResponse from(ArticleDto dto) {
-        String nickname = dto.userAccountDto().nickname();
-        if (nickname == null || nickname.isBlank()) {
+        String nickname = dto.userAccountDto().nickname(); /* 게시판에 보여줄때 작성자가 닉네임으로 나왔으면 좋겠어서 nickname 을 받아온다. 그런데 닉네임은 null 이 가능한 필드이기 때문에  */
+        if (nickname == null || nickname.isBlank()) { /* if 문에서 null 이거나 빈칸으로만 되어 있으면 userId를 가져와서 nickname 으로 쓴다. */
             nickname = dto.userAccountDto().userId();
         }
 

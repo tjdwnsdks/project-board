@@ -40,13 +40,3 @@ public interface ArticleCommentRepository extends
         bindings.bind(root.createdBy).first(StringExpression::containsIgnoreCase); // 대소문자 상관 없이 검색
     }
 }
-
-/* 다 했으면 
-1) 빌드 (Ctrl + F9) 
-2) HAL 가서 확인해보기
-    ex) http://localhost:8080/api/articles?title=제목 부분적으로
-
-3) 다 하면 워드파일 "검색기능 추가하기" 의 '다 하면' 부분으로 돌아가기
-
-*/
-

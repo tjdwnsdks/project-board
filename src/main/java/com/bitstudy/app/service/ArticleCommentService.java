@@ -2,6 +2,7 @@ package com.bitstudy.app.service;
 
 import com.bitstudy.app.dto.ArticleCommentDto;
 import com.bitstudy.app.repository.ArticleCommentRepository;
+import com.bitstudy.app.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,9 @@ import java.util.List;
 @Transactional // 이 클래스 동작할때 하나라도 잘못되면 다시 롤백 시켜라 라는말
 public class ArticleCommentService {
 
+    private final ArticleRepository articleRepository;
     private final ArticleCommentRepository articleCommentRepository;
+
 
     @Transactional(readOnly = true) // 조회만 하는거니까 readonly 걸어주면 됨
     public List<ArticleCommentDto> searchArticleComment(long l) {

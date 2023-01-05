@@ -21,7 +21,9 @@ import java.util.Set;
 // 1) 엔티티 등록
 @Getter
 /* 이거 없앱 */ // @ToString
-/* 새로 삽입 */ @ToString(callSuper = true) // 저 아래 '유저 정보 (ID)' 부분을 새로 넣었고, 상속받는 AuditingFields의 toString까지도 출력할 수 있도록 callSuper 넣음
+/* 새로 삽입 */
+@ToString(callSuper = true) // 저 아래 '유저 정보 (ID)' 부분을 새로 넣었고, 상속받는 AuditingFields의 toString까지도 출력할 수 있도록 callSuper 넣음
+
 /** @Index - 엔티티와 매핑할 테이블을 지정.데이터베이스 인덱스는 추가 쓰기 및 저장 공간을 희생 하여 테이블에 대한 데이터 검색 작업의 속도를 향상시키는 데이터 구조
 *   밑에 @Entity 와 셋트로 사용 */
 @Table(indexes = {

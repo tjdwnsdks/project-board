@@ -1,11 +1,5 @@
-<!-- 할일: 부트스트랩을 이용해서 index 페이지 레이아웃 구성하기
 
-  1) 홈페이지에서 CDN 방식으로 css, js 가져오기
-  2) 현재 index.html 에 있는 게시판 리스트 영역(main 의 table 태그 있는 부분)을 디자인 할건데 부트스트랩에서 제공하는 css 를 적용해볼거다.
-    부트스트랩 홈페이지의 메뉴바에서 Docs 선택 > 왼쪽 스크롤 탭 영역에서 Content > Tables 눌러보면 아래 이미지 화면 나온다.
-    클래스만 복사해서 우리 코드에 넣고
-  3) 리컴파일 (Ctrl + Shift + F9)
-  4) 실행해보기
+<!-- 할일:  실제로 데이터가 들어가야 하는 부분들을 건드려볼거다.
  -->
 
 
@@ -28,26 +22,13 @@
 </head>
 <body>
 
-<header id="header"></header>
+<!--<header id="header"></header>-->  <!--이걸 아래꺼로 바꿔서 넣으면 로컬에서 돌릴때는 아래꺼 그대로 나오고, 서버로 돌릴때는 저번에 만든 header 컴포넌트가 나오게 된다. -->
+<header id="header">
+  헤더 삽입부
+  <hr>
+</header>
 
-<!-- /* 부트스트랩은 맨 바깥쪽 본분에는 container 클래스 달아줘야한다. */ -->
 <main class="container">
-  <!--  원래 있던건 삭제 -->
-  <!--  <form action="#">
-      <label for="search-type" hidden>유형</label>
-      <select id="search-type">
-        <option value="">제목</option>
-        <option value="">본문</option>
-        <option value="">id</option>
-        <option value="">닉네임</option>
-        <option value="">해시태그</option>
-      </select>
-
-      <label for="search-value" hidden>검색어</label>
-      <input type="search" placeholder="검색어를 입력하세요" name="search-value" id="search-value">
-      <button type="submit">검색</button>
-    </form>
-  -->
 
   <!--  검색 영역 bootbey 에서 가져오기 (css 는 외부파일로 resources > static 폴더 안에 css 폴더 만들어서 외부css파일 생성하기)-->
   <div class="row">
@@ -85,13 +66,11 @@
   </div>
 
 
-
-
-
-  <table class="table">
+  <!-- 이 테이블에 정보를 넣어줄건데, 테이블에 decoupled 로직으로 index.th.xml 에서 데이터를 밀어넣어줄거기 떄문에 th 로직에서 요소선택을 할 수 있게 table 에 id를 달아주자. (id="article-table" 부분)-->
+  <table class="table" id="article-table">
     <thead>
       <tr>
-        <th class="col-6">제목</th> <!-- col 쓰면 어떻게 되는지 설명 필요. 부트스트랩 > Docs > (사이드메뉴)Layout > Grid 에 있음 -->
+        <th class="col-6">제목</th>
         <th class="col-2">해시태그</th>
         <th class="col-2">작성자</th>
         <th class="col-2">작성일</th>
@@ -99,10 +78,10 @@
     </thead>
     <tbody>
       <tr>
-        <td>1번글</td>
-        <td>#java</td>
-        <td>bitstudy</td>
-        <td>2022-12-22</td>
+        <td class="title"><a>1번글</a></td>
+        <td class="hashtag"><a>#java</a></td>
+        <td class="user-id"><a>bitstudy</a></td>
+        <td class="created-at"><time>2022-12-22</time></td>
       </tr>
       <tr>
         <td>2번글</td>
@@ -120,23 +99,7 @@
 
   </table>
 
-<!--  페이지네이션 달기 -->
-<!--  원래꺼 삭제-->
-<!--  <nav>
-    <table>
-      <tbody>
-        <tr>
-          <td>prev</td>
-          <td>1</td>
-          <td>2</td>
-          <td>3</td>
-          <td>4</td>
-          <td>5</td>
-          <td>next</td>
-        </tr>
-      </tbody>
-    </table>
-  </nav>-->
+<!--  페이징은 나중에 따로 다룰거다. 지금은 데이터만 넣는 작업만 할거임-->
   <nav class="d-flex justify-content-center">
     <ul class="pagination pagination-base pagination-boxed pagination-square mb-0">
       <li class="page-item">
@@ -160,9 +123,13 @@
 
 </main>
 
-<footer id="footer"></footer>
+<!-- 헤더처럼 안에 내용만 채우기-->
+<footer id="footer">
+  <hr>
+  푸터 삽입부
+</footer>
 
-<!-- 다 하면 header.html 가서 부트스트랩꺼 가져다 쓰기-->
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>

@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 
 public record ArticleDto( /* 우선 엔티티가 가지고 있는 모든 정보들을 dto 도 가지고 있게 해서, 나중에 응답할때 어떤걸 보내줄지 선택해서 가공하게 할거임 */
         Long id,
-        UserAccountDto userAccountDto,
+        UserAccountDto userAccountDto, /* 회원정보는 꼭 가지고 있어서 억지로 땡겨와서 넣음 */
         String title,
         String content,
         String hashtag,
@@ -51,7 +51,8 @@ public record ArticleDto( /* 우선 엔티티가 가지고 있는 모든 정보�
     
     /* entity 를 매개변수로 입력하면 ArticleDto 로 변환해주는 메서드.
     * entity 를 받아서 new 한다음에 인스턴스에다가 entity. 해가면서 맵핑시켜서 return 하고 있는거.
-    * 맵퍼처럼 사용할 수 있게 만든거. */
+    * 맵퍼처럼 사용할 수 있게 만든거.
+    * 실제로 맵퍼라고 부른다. 별도의 파일로 만드는 사람들도 있는데 굳이 안해도 된다.*/
     public static ArticleDto from(Article entity) {
         return new ArticleDto( // 이게 저 위에 record ArticleDto 부르는거
                 entity.getId(),
@@ -72,7 +73,7 @@ public record ArticleDto( /* 우선 엔티티가 가지고 있는 모든 정보�
     * 이 파일에서만 연관관계 맵핑을 하기 위해서 Article.java 의 존재를 알고 있다.
     * (맨 위에 import 에 Article 관련 있음)
     * 그래서 domain 안에 있는 Article 이 바뀌면 이 ArticleDto 는 영향을 받겠지만, 반대의 경우에는 도메인코드(Article) 는 영향을 받지 않는다. 왜 이렇게 짜냐면 domain 에 있는 코드들은 다 DB에 영향을 주는 코드들이라서 다른 애들한테 영향을 안받게 짜주는게 좋다. */
-    public Article toEntity() {
+    public Article toEntity() { // DTO 정보로 부터 엔티티를 하나 만들어서 세이브 하는 코드임
         return Article.of(
                 userAccountDto.toEntity(),
                 title,

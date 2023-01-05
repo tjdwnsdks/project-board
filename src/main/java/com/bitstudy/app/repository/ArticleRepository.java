@@ -23,15 +23,20 @@ public interface ArticleRepository extends
 {
 
 /* 새로 삽입 - 제목으로 검색할때
-   게시글을 제목으로 검색할때 사용 할거임. test > ArticleServiceTest.java 에서 ("검색어와 함께 게시글을 검색하면, 게시글 페이지를 반환한다.") 이 부분에서 SearchType.TITLE 부분에서 쓰임*/
-    Page<Article> findByTitleContaining(String title, Pageable pageable);
+   게시글을 제목으로 검색할때 사용 할거임. test > ArticleServiceTest.java 에서 ("검색어와 함께 게시글을 검색하면, 게시글 페이지를 반환한다.") 이 부분에서 SearchType.TITLE 부분에서 쓰임.*/
+    Page<Article> findByTitleContaining(String title, Pageable pageable); // findByContentContaining 을 써야 or검색 한다.
+
 /* 새로 삽입 - 내용으로 검색할때 */
     Page<Article> findByContentContaining(String content, Pageable pageable);
-/* 새로 삽입 - 유저아이디로 검색할때 */
+
+/* 새로 삽입 - 유저아이디로 검색할때인데.. 지금 여기는 Article 관련 데이터들만 취급하는 곳이기 때문에 원래는 UserID 를 가지고 있지 않다.
+   그런데 Article.java 가보면 @ManyToOne 부분에 UserAccount 를 들고 있다.(영속성) 그래서 그 UserAccount 를 타고 들어가서 그 안에있는 userId 를 가져올 수 있다. 그래서 findByUserAccount 하고 _(언더바) 로 연결한거임.  */
     Page<Article> findByUserAccount_UserIdContaining(String userId, Pageable pageable);
+
 /* 새로 삽입 - 닉네임으로 검색할때 */
     Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
-/* 새로 삽입 - 해시태그로 검색할때 */
+
+/* 새로 삽입 - 해시태그로 검색할때. 해시태그는 정확한 이름으로만 검색 되게 할거라서 Contining 을 쓰지 않는다. */
     Page<Article> findByHashtag(String hashtag, Pageable pageable);
 
 

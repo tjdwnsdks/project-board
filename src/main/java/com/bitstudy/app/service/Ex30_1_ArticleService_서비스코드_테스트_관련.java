@@ -16,18 +16,22 @@
  import javax.persistence.EntityNotFoundException;
 
  /* ArticleDto 랑 ArticleRepository.java  미리 만들고 와야함!!!*/
+ 
+ /*!!  ArticleService.java  랑  ArticleServiceTest.java 파일 양쪽에 나눠서 열고 보기  !!*/
 
  /** 기능 관련된 로직을 다 여기다가 짤건데 엄청 왔다갔다 할거라서 헷갈릴수 있다. 잘 보기
   *
   * 우선 칸반보드의 '뷰 기능 구현' > '게시판 페이지 기능 구현' 을 해볼거다. */
 
- /* 메서드 하나하나 만들면서 ArticleServiceTest 에 있는 메서드들 하나씩 테스트 해볼거다. */
+ /* 메서드 하나하나 만들면서 ArticleServiceTest 에 있는 메서드들 하나씩 테스트 해볼거다.
+ *  
+ * */
 
  @Slf4j /* 맨 아래쪽에 updateArticle() 메서드의 catch 에서 log() 메서드 쓸때 필요 */
  @Service // 이렇게 하면 서비스 빈으로 등록되어서 사용할 수 있게 된다.
  @RequiredArgsConstructor  // 필수 필드에 대한 생성자를 자동으로 만들어주는 롬복 애너테이션
  @Transactional // 이 클래스 동작할때 하나라도 잘못되면 다시 롤백 시켜라 라는말
- public class ArticleService {
+ public class Ex30_1_ArticleService_서비스코드_테스트_관련 {
 
      private final ArticleRepository articleRepository; // 아티클 서비스는 당연히 ArticleRepository 쓸거다.
 
@@ -79,7 +83,7 @@
          *  */
      }
 
-     /* 게시글 하나 호출 */
+
      @Transactional(readOnly = true) // 트랜잭션을 읽기 전용 모드로 설정하면 트랜잭션을 커밋하더라도 영속성 컨텍스트가 flush 되지 않아서 엔티티가 등록, 수정, 삭제 가 동작하지 않는다.
      public ArticleWithCommentsDto getArticle(Long articleId) {
 

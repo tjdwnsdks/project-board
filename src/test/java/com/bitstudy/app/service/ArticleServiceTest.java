@@ -151,7 +151,7 @@ class ArticleServiceTest {
     @Test
     void givenArticleInfo_whenSavingArticle_thenSavesArticle() {
         // Given
-        ArticleDto dto = createArticleDto();
+        ArticleDto dto = createArticleDto(); // 게시글 정보를 입력하면 게시글을 생성한다
         given(articleRepository.save(any(Article.class))).willReturn(createArticle());
 
         // When
@@ -168,6 +168,14 @@ class ArticleServiceTest {
         Article article = createArticle();
         ArticleDto dto = createArticleDto("새 타이틀", "새 내용", "#springboot");
         given(articleRepository.getReferenceById(dto.id())).willReturn(article);
+        /* getReferenceById: dto에 담겨있는(지금은 게시글) 레퍼런스(참조)를 가져온다
+                            이건 findByID 랑 비슷한데 findByID는 단건조회 할때 사용하고, 조회시 필요 없는경우에도 무조건 엔티티 조회를 하는 쿼리를 날려야 한다. 무슨 말이냐면 findById(dto.id()) 같이 넣어주면 jpa 가 select 쿼리를 만들어서 특정 게시글을 조회 하고, 그 다음에 update 를 하던 뭘 하던 한다는건데, 지금처럼 수정에 관련된 작업을 한다는건 개발자 입장에서 해당 게시글이 존재한다 라는 가정하에 코드를 짜고 있는중이라서 select 까지 괜히 돌릴 필요가 없다.
+                            혹시라도 해당 id가 존재하지 않으면 그부분은 별도로 코드를 짜면 된다.
+                            그래서 getReferenceById 는 그런 불필요한 작업들 하지 말고 그냥 참조만 해라(지금 당장 불러오지는 말아라) 라는 작업을 할거다. 얘는 lazy loading 을 하는 애라서 필요할때 DB에 접근만 하고 만다. 별도의 쿼리는 날리지 않는다. (연결책 정도??)
+
+                    요약하면 findByID 는 select 쿼리를 가져와서 내 주머니에 넣는거.
+                            getReferenceById 는 내가 원하는게 어디 있는지만 알려줘서 나중에 그거 건드려야 할때 내가 거기에 가서 건드릴수 있게 해주는거
+        * */
 
         // When
         sut.updateArticle(dto);
