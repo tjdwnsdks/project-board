@@ -59,7 +59,7 @@ import java.util.Set;
 })
 
 // @EntityListeners(AuditingEntityListener.class) /* AuditingFields.java 로 옮겨감 */
-@Entity
+//@Entity
 public class Ex06_1_Article_공통필드_분리하기 extends AuditingFields { /* AuditingFields 파일 다 만들면 Article 에서는 그걸 상속받아서 연결하면 됨. 이렇게 하면 4개의 필드(속성)가 Article 에 연결이 됨. 아까 Embedded 와 비슷한 방식으로 필드 4개가 추가가 된거다.
 
   (!! 안해도 됨!! )둘의 차이: 별반 다르진 않지만 @Embedded 방식으로 하게 되면 필드 하나가 추가되는 거고, 우리가 할건 아니지만 영속성 컨텍스를 통해서 데이터를 넘겨 받아서 애플리케이션에서 열었을 때에는 어짜피 AuditingFields 로 보인다. 중간에 한단계가 더 생긴다는 뜻.

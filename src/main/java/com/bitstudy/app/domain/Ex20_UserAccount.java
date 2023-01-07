@@ -23,7 +23,7 @@ import java.util.Objects;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
-@Entity
+//@Entity
 public class Ex20_UserAccount extends AuditingFields {
     /* 새로 생성 */
     @Id

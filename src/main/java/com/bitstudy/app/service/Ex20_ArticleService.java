@@ -25,6 +25,9 @@
      @Transactional(readOnly = true) // 트랜잭션을 읽기 전용 모드로 설정하면 트랜잭션을 커밋하더라도 영속성 컨텍스트가 flush 되지 않아서 엔티티가 등록, 수정, 삭제 가 동작하지 않는다.
      public Page<ArticleDto> searchArticles(SearchType searchType, String searchKeyword, Pageable pageable) {
          return Page.empty();
+         
+         /* Page: 전체 데이터 건수를 조화하는 count  쿼리 결과를 포함 하는 페이징 
+         Pageable : 페이징 기능 */
      }
 
      @Transactional(readOnly = true) // 트랜잭션을 읽기 전용 모드로 설정하면 트랜잭션을 커밋하더라도 영속성 컨텍스트가 flush 되지 않아서 엔티티가 등록, 수정, 삭제 가 동작하지 않는다.

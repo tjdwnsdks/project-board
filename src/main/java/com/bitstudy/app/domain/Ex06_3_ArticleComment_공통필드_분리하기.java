@@ -25,8 +25,8 @@ import java.util.Objects;
 
 /* 2) @EntityListeners 빼고 */
 // @EntityListeners(AuditingEntityListener.class) /** 이건 TDD Ex04 때 할거임. 지금 하지 말것 */
-@Entity /** 테이블과의 매핑. @Entity가 붙은 클래스는 JPA가 관리하게 되며, 엔티티 라고 불린다.
-            @Entity 를 쓰게되면 PK 를 만들어줘야 한다. */
+//@Entity /** 테이블과의 매핑. @Entity가 붙은 클래스는 JPA가 관리하게 되며, 엔티티 라고 불린다.
+//            @Entity 를 쓰게되면 PK 를 만들어줘야 한다. */
 /* 3) AuditingFields 상속받기 */
 public class Ex06_3_ArticleComment_공통필드_분리하기 extends AuditingFields {
     @Id

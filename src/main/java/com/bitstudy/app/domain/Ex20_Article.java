@@ -25,7 +25,7 @@ import java.util.Set;
 })
 
 // @EntityListeners(AuditingEntityListener.class) /* AuditingFields.java 로 옮겨감 */
-@Entity
+//@Entity
 public class Ex20_Article extends AuditingFields {
 
     @Id

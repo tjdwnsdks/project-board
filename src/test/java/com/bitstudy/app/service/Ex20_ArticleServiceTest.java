@@ -68,6 +68,12 @@ class Ex20_ArticleServiceTest {
         /** findAll 추천리스트 보면 'findAll(Pageable pageable)' 이라는게 있다. 이걸 PageRequest 라고 하는데, PageRequest는 Pageable 클래스를 implements한 AbstractPageReqeust 추상 클래스의 구현체이므로 findAll의 인자로 넣을 수 있다.
          * Repository의 findAll 메서드의 인자에 PageRequest를 넣어주면 된다.
          * 그러면 반환은 Page이 된다. */
+        /* Page: 전체 데이터 건수를 조회하는 count  쿼리 결과를 포함 하는 페이징
+                 데이터 다 가져오기 때문에 getTotalElements() 를 이용해서 개수를뽑거나,
+                 getTotalPages() 메서드에 별도의 size 를 줘서 총 페이지 개수를 구할수도 있다.
+                 getNumber() 를 이용해서 가져온 페이지의 번호를 뽑을수도 있다.
+         Pageable : 페이징 기능.
+                    Spring JPA에서 DB 쿼리에 limit 쿼리를 날려서 데이터를 가져온다.*/
 
         // When - 입력인자가 없는경우(null) 를 테스트 하는거
         Page<ArticleDto> articles = sut.searchArticles(null, null, pageable);

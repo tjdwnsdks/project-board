@@ -48,8 +48,8 @@ import java.util.Objects;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
-@Entity /* 테이블과의 매핑. @Entity가 붙은 클래스는 JPA가 관리하게 되며, 엔티티 라고 불린다.
-            @Entity 를 쓰게되면 PK 를 만들어줘야 한다. */
+//@Entity /* 테이블과의 매핑. @Entity가 붙은 클래스는 JPA가 관리하게 되며, 엔티티 라고 불린다.
+//            @Entity 를 쓰게되면 PK 를 만들어줘야 한다. */
 public class Ex01_Article_데이터베이스_접근_로직_정의 {
 
     /* private Long id 의 경우 auto-increment 처럼 데이터베이스에 값을 저장하고 나서야 기본 키 값을 구할 수 있을 때 사용한다. 기본키 전략 이라고 한다.  */

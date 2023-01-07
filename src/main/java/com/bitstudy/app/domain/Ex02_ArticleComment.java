@@ -20,8 +20,8 @@ import java.util.Objects;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
-@Entity /* 테이블과의 매핑. @Entity가 붙은 클래스는 JPA가 관리하게 되며, 엔티티 라고 불린다.
-            @Entity 를 쓰게되면 PK 를 만들어줘야 한다. */
+//@Entity /* 테이블과의 매핑. @Entity가 붙은 클래스는 JPA가 관리하게 되며, 엔티티 라고 불린다.
+//            @Entity 를 쓰게되면 PK 를 만들어줘야 한다. */
 public class Ex02_ArticleComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
