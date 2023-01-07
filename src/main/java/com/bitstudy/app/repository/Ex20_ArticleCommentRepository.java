@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RepositoryRestResource
-public interface ArticleCommentRepository extends
+public interface Ex20_ArticleCommentRepository extends
         JpaRepository<ArticleComment, Long>,
         QuerydslPredicateExecutor<ArticleComment>
         , QuerydslBinderCustomizer<QArticleComment> // 이부분 처음에는 주석처리 하고 아래 빨간 '설명' 부분 설명하기

@@ -31,5 +31,10 @@
 
 </thlogic>
 <!-- 다 했으면 저장하고 리컴파일(ctrl + shift + F9) 하고
-    서비스 올리기(pojectApplication.java 파일 실행)
+    서비스 올리기(pojectApplication.java 파일 실행) 하고
+    localhost:8080/articles/글번호   넣어보기
+
+    메인화면에서 이제 게시글 클릭해도 해당 화면으로 넘어가진다.
+
+    다 했으면 워드로 돌아가기
 -->

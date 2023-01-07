@@ -46,7 +46,7 @@ import java.util.Set;
 })
 
 @EntityListeners(AuditingEntityListener.class) /* 이건 TDD Ex04 때 할거임. 지금 하지 말것. */
-@Entity
+//@Entity
 public class Ex03_Article_양방향바인딩_ToStringExclude {
 
     @Id

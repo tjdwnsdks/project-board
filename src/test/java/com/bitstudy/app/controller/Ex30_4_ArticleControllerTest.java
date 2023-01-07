@@ -26,6 +26,8 @@ import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+// 이 파일은 test > controller > Ex30_3_ArticleController 랑 세트임
+
 /**  현재 이 컨트롤러 테스트에서는 기본적인 입출력은 완성된 상태다.
  * 다만 서비스코드에 대한 표현이 안되어 있기 때문에, 이제 서비스코드 관련된것들을 테스트에 반영해볼거다.
  * 그렇다고 실제 서비스코드 (ArticleService) 에 있는 로직을 반영할게 아니고, 그 파일에서 만들어놓은 상황들
@@ -35,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 @WebMvcTest(ArticleController.class)
 @DisplayName("view 컨트롤러 - 게시글")
-class ArticleControllerTest {
+class Ex30_4_ArticleControllerTest {
 
     private final MockMvc mvc;
 
@@ -45,7 +47,7 @@ class ArticleControllerTest {
 
  ArticleController 에 있는 실제 "private final ArticleService articleService;" 부분의 articleService 를 배제하기 위해서 @MockBean 을 사용했다. 배재하는 이유는 이 테스트에서 MockMvc 가 api 의 입출력만 보게 하기 위해서 서비스 로직을 끊어줘야 하는데 이때 @MockBean 애너테이션을 사용한다.*/
 
-    public ArticleControllerTest(@Autowired MockMvc mvc) {
+    public Ex30_4_ArticleControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
 
@@ -101,7 +103,15 @@ class ArticleControllerTest {
             // articleService 가 한번 호출해야 한다 getArticle(articleId) 를.
     }
 
-/* 이제 ArticleController 가서 구현부 만들고 테스트 해보자.*/
+/* '게시글 검색 전용 페이지' 와  '해시태그'는 아직 계획이 분명하진 않으니까 넘어간다.
+   이제 ArticleController 가서 구현부 만들고 테스트 해보자.*/
+
+
+/**************************************************************/
+/**  다 하면 뷰 파일로 넘어가자.
+    main > resource > templates > articles > Ex30_5_index.html 랑 Ex30_6_index.th.xml 켜자
+*/
+/**************************************************************/
 
 /*/////////////  '게시글 검색 전용 페이지' 와  '해시태그'는 아직 계획이 분명하진 않으니까 넘어간다.     ////////////////*/
 /*/////////////  '게시글 검색 전용 페이지' 와  '해시태그'는 아직 계획이 분명하진 않으니까 넘어간다.     ////////////////*/
@@ -139,8 +149,6 @@ class ArticleControllerTest {
 //    }
 /*/////////////  '게시글 검색 전용 페이지' 와  '해시태그'는 아직 계획이 분명하진 않으니까 넘어간다.     ////////////////*/
 
-
-
     /* 아티클 코멘트 만드는 메서드 */
     private ArticleWithCommentsDto createArticleWithCommentsDto() {
         return ArticleWithCommentsDto.of(
@@ -173,12 +181,6 @@ class ArticleControllerTest {
     }
 
 }
-/* 이상태로 테스트를 돌려보면 해당 내용들이 DB에 없기 때문에 404 에러 나야한다.
-* 일단 테스트는 작성 되었다. 데이터는 깃크라켄 가서 커밋 하고 오자 -  워드파일 돌아가기*/
-
-
-
-
 
 
 

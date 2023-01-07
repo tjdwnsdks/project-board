@@ -3,14 +3,8 @@ package com.bitstudy.app.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 // 1) 엔티티 등록
@@ -25,10 +19,10 @@ import java.util.Objects;
 
 /** 2) @EntityListeners 빼고 */
 // @EntityListeners(AuditingEntityListener.class) /** 이건 TDD Ex04 때 할거임. 지금 하지 말것 */
-@Entity /** 테이블과의 매핑. @Entity가 붙은 클래스는 JPA가 관리하게 되며, 엔티티 라고 불린다.
-            @Entity 를 쓰게되면 PK 를 만들어줘야 한다. */
+//@Entity /** 테이블과의 매핑. @Entity가 붙은 클래스는 JPA가 관리하게 되며, 엔티티 라고 불린다.
+           // @Entity 를 쓰게되면 PK 를 만들어줘야 한다. */
 /** 3) AuditingFields 상속받기 */
-public class ArticleComment extends AuditingFields {
+public class Ex20_ArticleComment extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,7 +33,7 @@ public class ArticleComment extends AuditingFields {
 
 
 
-    protected ArticleComment() {}
+    protected Ex20_ArticleComment() {}
 
     /* 이거 없앰 */
 //    private ArticleComment(Article article, String content) { // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
@@ -47,7 +41,7 @@ public class ArticleComment extends AuditingFields {
 //        this.content = content;
 //    }
     /* 새로 삽입 */
-    private ArticleComment(Article article, UserAccount userAccount, String content) { // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
+    private Ex20_ArticleComment(Article article, UserAccount userAccount, String content) { // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
         this.article = article;
         this.userAccount = userAccount;
         this.content = content;
@@ -55,8 +49,8 @@ public class ArticleComment extends AuditingFields {
 
     /* 새로 삽입 */
     /* 위에 private Article 부분 바꼈으니까 여기도 바꿔야함*/
-    public static ArticleComment of(Article article, UserAccount userAccount, String content) {
-        return new ArticleComment(article, userAccount, content);
+    public static Ex20_ArticleComment of(Article article, UserAccount userAccount, String content) {
+        return new Ex20_ArticleComment(article, userAccount, content);
     }
 
     @Override
@@ -67,7 +61,7 @@ public class ArticleComment extends AuditingFields {
 //        return id.equals(that.id);
 
         if (this == o) return true;
-        if (!(o instanceof ArticleComment that)) return false;
+        if (!(o instanceof Ex20_ArticleComment that)) return false;
         return id != null && id.equals(that.id);
     }
 

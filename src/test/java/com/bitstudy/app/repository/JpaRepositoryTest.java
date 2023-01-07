@@ -23,16 +23,22 @@ import static org.assertj.core.api.Assertions.assertThat;
         // (이부분은 아래 update 관련 메소드 에서 한번 더 말해야함)
 class JpaRepositoryTest {
 
-    private final Ex04_ArticleRepository articleRepository;
-    private final Ex05_ArticleCommentRepository articleCommentRepository;
+//    private final Ex04_ArticleRepository articleRepository;
+//    private final Ex05_ArticleCommentRepository articleCommentRepository;
 
+
+    private final ArticleRepository articleRepository;
+    private final ArticleCommentRepository articleCommentRepository;
 /* 새로 삽입 */ private final UserAccountRepository userAccountRepository;
 
 
     // 생성자 만들기. 여기선 다른 파일에서 매개변수로 보내주는거를 받는거라서 위에랑 상관 없이 @Autowired 붙여야함
-    public JpaRepositoryTest(@Autowired Ex04_ArticleRepository articleRepository,
-                             @Autowired Ex05_ArticleCommentRepository articleCommentRepository,
-/* 새로 삽입 */               @Autowired UserAccountRepository userAccountRepository) {
+    public JpaRepositoryTest(
+                /**@Autowired Ex04_ArticleRepository articleRepository,
+                @Autowired Ex05_ArticleCommentRepository articleCommentRepository,*/
+                @Autowired ArticleRepository articleRepository,
+                @Autowired ArticleCommentRepository articleCommentRepository,
+/* 새로 삽입 */   @Autowired UserAccountRepository userAccountRepository) {
         this.articleRepository = articleRepository;
         this.articleCommentRepository = articleCommentRepository;
 /* 새로 삽입 */this.userAccountRepository = userAccountRepository;

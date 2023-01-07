@@ -9,27 +9,20 @@ import com.bitstudy.app.dto.ArticleWithCommentsDto;
 import com.bitstudy.app.dto.UserAccountDto;
 import com.bitstudy.app.repository.ArticleRepository;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.BDDAssertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
@@ -47,7 +40,7 @@ import static org.mockito.BDDMockito.*;
 
 @DisplayName("비지니스 로직 - 게시글")
 @ExtendWith(MockitoExtension.class)
-class ArticleServiceTest {
+class Ex20_ArticleServiceTest {
 
     /* Mock을 주입하는 거에다가 @InjectMocks 를 달아줘야 한다. 그 외의 모든 Mock은 @Mock 을 달아준다. */
     @InjectMocks private ArticleService sut; // sut - system under test 라고 해서. 실무에서 테스트 짤대 사용하는 이름중 하나다. 이게 테스트 대상이다 라는뜻임.
@@ -75,6 +68,12 @@ class ArticleServiceTest {
         /** findAll 추천리스트 보면 'findAll(Pageable pageable)' 이라는게 있다. 이걸 PageRequest 라고 하는데, PageRequest는 Pageable 클래스를 implements한 AbstractPageReqeust 추상 클래스의 구현체이므로 findAll의 인자로 넣을 수 있다.
          * Repository의 findAll 메서드의 인자에 PageRequest를 넣어주면 된다.
          * 그러면 반환은 Page이 된다. */
+        /* Page: 전체 데이터 건수를 조회하는 count  쿼리 결과를 포함 하는 페이징
+                 데이터 다 가져오기 때문에 getTotalElements() 를 이용해서 개수를뽑거나,
+                 getTotalPages() 메서드에 별도의 size 를 줘서 총 페이지 개수를 구할수도 있다.
+                 getNumber() 를 이용해서 가져온 페이지의 번호를 뽑을수도 있다.
+         Pageable : 페이징 기능.
+                    Spring JPA에서 DB 쿼리에 limit 쿼리를 날려서 데이터를 가져온다.*/
 
         // When - 입력인자가 없는경우(null) 를 테스트 하는거
         Page<ArticleDto> articles = sut.searchArticles(null, null, pageable);
@@ -151,7 +150,7 @@ class ArticleServiceTest {
     @Test
     void givenArticleInfo_whenSavingArticle_thenSavesArticle() {
         // Given
-        ArticleDto dto = createArticleDto(); // 게시글 정보를 입력하면 게시글을 생성한다
+        ArticleDto dto = createArticleDto();
         given(articleRepository.save(any(Article.class))).willReturn(createArticle());
 
         // When
@@ -168,14 +167,6 @@ class ArticleServiceTest {
         Article article = createArticle();
         ArticleDto dto = createArticleDto("새 타이틀", "새 내용", "#springboot");
         given(articleRepository.getReferenceById(dto.id())).willReturn(article);
-        /* getReferenceById: dto에 담겨있는(지금은 게시글) 레퍼런스(참조)를 가져온다
-                            이건 findByID 랑 비슷한데 findByID는 단건조회 할때 사용하고, 조회시 필요 없는경우에도 무조건 엔티티 조회를 하는 쿼리를 날려야 한다. 무슨 말이냐면 findById(dto.id()) 같이 넣어주면 jpa 가 select 쿼리를 만들어서 특정 게시글을 조회 하고, 그 다음에 update 를 하던 뭘 하던 한다는건데, 지금처럼 수정에 관련된 작업을 한다는건 개발자 입장에서 해당 게시글이 존재한다 라는 가정하에 코드를 짜고 있는중이라서 select 까지 괜히 돌릴 필요가 없다.
-                            혹시라도 해당 id가 존재하지 않으면 그부분은 별도로 코드를 짜면 된다.
-                            그래서 getReferenceById 는 그런 불필요한 작업들 하지 말고 그냥 참조만 해라(지금 당장 불러오지는 말아라) 라는 작업을 할거다. 얘는 lazy loading 을 하는 애라서 필요할때 DB에 접근만 하고 만다. 별도의 쿼리는 날리지 않는다. (연결책 정도??)
-
-                    요약하면 findByID 는 select 쿼리를 가져와서 내 주머니에 넣는거.
-                            getReferenceById 는 내가 원하는게 어디 있는지만 알려줘서 나중에 그거 건드려야 할때 내가 거기에 가서 건드릴수 있게 해주는거
-        * */
 
         // When
         sut.updateArticle(dto);

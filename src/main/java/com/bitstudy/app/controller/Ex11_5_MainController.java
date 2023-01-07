@@ -3,7 +3,7 @@ package com.bitstudy.app.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+//@Controller
 public class Ex11_5_MainController {
 
 //    @GetMapping("/")
