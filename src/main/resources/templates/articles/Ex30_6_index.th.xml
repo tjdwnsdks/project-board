@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<thlogic>
+    <attr sel="#header" th:replace="header :: #header" />
+    <attr sel="#footer" th:replace="footer :: #footer" />
+
+    <!-- 데이터 맵핑 - table 에 직접 넣을거다-->
+    <attr sel="#article-table"> <!-- 요소잡기 <table class="table" id="article-table"> 부분-->
+        <attr sel="tbody" th:remove="all-but-first"> <!-- tbody 안의 tr 들을 다 지울건데 첫번째꺼만 남기고 지우겠다 라는 뜻.
+                                                        하나만 남겨놓는 이유는 그 포멧을 살려서 안에 내용물만 가져온 데이터로 치환할거기 때문임.  아래 코드들이 치환 하는 코드들임.-->
+
+            <!-- 이건 자바스크립트 때의 foreach와 같은거다.-->
+            <attr sel="tr[0]" th:each="article : ${articles}"> <!-- 0번째 tr 을 잡아서 foreach 로 articles를 돌릴건데, articles 는 아까 ArticleController 에서 모델에 addAttribute 로 넣어준거다. articles 에서 받아온 article 안에 있는 title, hashtag 등을 순차적으로 뿌려준다. -->
+                <attr sel="td.title/a" th:text="${article.title}" th:href="@{'/articles/'+${article.id}}" />
+                <!-- 해설: th:text="${article.title} =>  td 태그 이면서 클래스가 title 인 요소의 자식인 a 태그에 article 안의 title 값을 넣어준다.
+                          th:href="@{'/articles/'+${article.id}}" =>  a 태그에 href 속성을 달아주는데 /articles/1 이런식으로 넣어준다.  -->
+                <attr sel="td.hashtag" th:text="${article.hashtag}" />
+                <attr sel="td.user-id" th:text="${article.nickname}" />
+                <attr sel="td.created-by/time" th:datetime="${article.createdAt}" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}" />
+                <!-- 해설: temporals 라는 유틸리티가 있는데 여러가지 포맷팅 기능을 지원하고 시간관련 정보를 다루는 함수들을 제공하는데, 그중에 하나가 format 이다.-->
+            </attr>
+        </attr>
+    </attr>
+</thlogic>
+
+<!-- 여기까지 다 하고,
+        1) 저장(Ctrl + S)
+        2) 리빌드 (ctrl + Shift + F9) 하고
+        3) service 탭 가서 실행 (ctrl + Shift + F10) 하고
+        4) 브라우저 가서 http://localhost:8080/articles 치면  DB 연결되서 나옴
+
+        링크도 이제 연결해서 게시글 클릭하면 상세페이지로 넘어가는데 아직 그건 안했으니깐 아무것도 안나올거임.
+-->
