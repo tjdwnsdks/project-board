@@ -1,14 +1,15 @@
 -- 테스트 계정
 -- TODO: 비밀번호 노출됨. 추후 수정 필요
-insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values (1, 'asdf', 'bitstudy', 'bitstudy@email.com','I am bitstudy', now(), 'bitstudy', now(), 'bitstudy');
+insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values ('bitstudy', 'asdf', 'bitstudy', 'bitstudy@email.com','I am bitstudy', now(), 'bitstudy', now(), 'bitstudy');
+insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values ('goodjob', 'asdf', 'goodjob', 'goodjob@email.com','I am goodjob', now(), 'goodjob', now(), 'goodjob');
 
 -- 게시글(Article) 100 개
 insert into article (user_account_id, title,
-                     content, hashtag, created_at, created_by, modified_at, modified_by) values (1,'Integer a nibh.', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 'Yellow', '2022-06-20 17:00:33', 'Grayce', '2022-10-15 08:10:21', 'Keefer');
+                     content, hashtag, created_at, created_by, modified_at, modified_by) values (2,'Integer a nibh.', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 'Yellow', '2022-06-20 17:00:33', 'Grayce', '2022-10-15 08:10:21', 'Keefer');
 insert into article (user_account_id, title,
-                     content, hashtag, created_at, created_by, modified_at, modified_by) values (1,'Phasellus sit amet erat.', 'Sed ante. Vivamus tortor. Duis mattis egestas metus.', 'Yellow', '2022-05-20 07:36:22', 'Garvy', '2022-06-29 16:12:13', 'Kylie');
+                     content, hashtag, created_at, created_by, modified_at, modified_by) values (2,'Phasellus sit amet erat.', 'Sed ante. Vivamus tortor. Duis mattis egestas metus.', 'Yellow', '2022-05-20 07:36:22', 'Garvy', '2022-06-29 16:12:13', 'Kylie');
 insert into article (user_account_id, title,
-                     content, hashtag, created_at, created_by, modified_at, modified_by) values (1,'Vestibulum rutrum rutrum neque.', 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.', 'Pink', '2021-12-21 22:26:26', 'Reidar', '2022-01-15 18:43:39', 'Nathanial');
+                     content, hashtag, created_at, created_by, modified_at, modified_by) values (2,'Vestibulum rutrum rutrum neque.', 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.', 'Pink', '2021-12-21 22:26:26', 'Reidar', '2022-01-15 18:43:39', 'Nathanial');
 insert into article (user_account_id, title,
                      content, hashtag, created_at, created_by, modified_at, modified_by) values (1,'Morbi vel lectus in quam fringilla rhoncus.', 'Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.', null, '2022-02-24 23:56:33', 'Rhody', '2022-06-03 05:03:27', 'Lem');
 insert into article (user_account_id, title,

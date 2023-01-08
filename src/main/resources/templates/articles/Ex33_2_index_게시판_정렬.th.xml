@@ -64,6 +64,10 @@
 
 <!-- 여기까지 하고 브라우저 가서 확인해보기.
      아마 각 컬럼들 타이틀이 a 태그때문에 파란색으로 바껴있을거다. 그부분 CSS 바꿔주면 됨
+     resources > static > css > index.css
+     *충격고백: 사실 그냥 templates > articles 안에 html 이랑 같이 둬도 되긴 된다....
+
+     data.sql 에 user 데이터 하나 더 넣어서 정렬할때 구분되게 해도 된다
 -->
 
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////-->
@@ -92,9 +96,6 @@
     <attr sel="#tmp_length" th:value="${#lists.size(paginationBarNumbers)}"/> <!-- 배열 길이-->
     <attr sel="#tmp_start" th:value="${paginationBarNumbers[0]}"/> <!-- 0번방 값-->
     <attr sel="#tmp_end" th:value="${paginationBarNumbers[#lists.size(paginationBarNumbers) - 1]}"/> <!-- 마지막번방 값-->
-
-
-
 
 <!--    페이지네이션 - 우선 페이지네이션은 현재 보고있는 페이지 번호가 가운데에 오게 할거다.
         ex) 현재 6페이지에 들어와 있으면 출력이 '이전' 4 5 6 7 8 '다음' 이렇게 나오게.-->
