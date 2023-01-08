@@ -5,7 +5,6 @@ import com.bitstudy.app.dto.ArticleWithCommentsDto;
 import com.bitstudy.app.dto.UserAccountDto;
 import com.bitstudy.app.service.ArticleService;
 import com.bitstudy.app.service.PaginationService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 @WebMvcTest(ArticleController.class)
 @DisplayName("view 컨트롤러 - 게시글")
-class ArticleControllerTest {
+class Ex31_4_ArticleControllerTest {
 
     private final MockMvc mvc;
 
@@ -52,7 +51,7 @@ class ArticleControllerTest {
 
 /* 새로 생성 - 이제 페이징을 사용하는 부분에 모두 paginationService 를 이용하게 될거다. Page 를 리턴하는 곳엔 다 들어가야한다. */
     @MockBean private PaginationService paginationService;
-    public ArticleControllerTest(@Autowired MockMvc mvc) {
+    public Ex31_4_ArticleControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
 
@@ -96,8 +95,7 @@ class ArticleControllerTest {
 
 /* 새로 생성 - 페이징이나 정렬을 하는 테스트를 만들긴 할건데, 원래 정렬 기능 구현은 칸반보드에 보면 바로 다음차례에 있긴 한데 이미 ArticleService.java 에서 Page 를 사용하고 있어서 페이징이랑 sorting(정렬) 기능이 이미 준비 되어 있다. ( Page<ArticleDto> 이부분) 그래서 잠깐 맛보기로도 테스트를 할 수 있다.
   이것도 구현부가 없어서 테스트를 돌리면 실패할거다. 테스트 코드 작성하고 실제 구현부 만들러 갈거다. (ArticleController.java)
-
-    28분  */
+ */
     @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 페이징, 정렬 기능")
     @Test
     void givenPagingAndSortingParams_whenSearchingArticlesPage_thenReturnsArticlesPage() throws Exception {
@@ -132,7 +130,7 @@ class ArticleControllerTest {
         then(articleService).should().searchArticles(null, null, pageable);
         then(paginationService).should().getPaginationBarNumbers(pageable.getPageNumber(), Page.empty().getTotalPages());
         
-        /* 요거 하고 ArticleController.java ㄱㄱ*/
+        /* 요거 하고 Ex31_5_ArticleController.java ㄱㄱ*/
     }
 
 

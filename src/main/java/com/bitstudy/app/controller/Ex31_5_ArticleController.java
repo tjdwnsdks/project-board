@@ -23,8 +23,8 @@ import java.util.List;
 @RequiredArgsConstructor // 필수 필드에 대한 생성자를 자동으로 만들어주는 롬복 애너테이션
         //@RequiredArgsConstructor는 초기화 되지않은 final 필드나, @NonNull 이 붙은 필드에 대해 생성자를 생성해 줍니다.
 @Controller
-@RequestMapping("/articles") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
-public class ArticleController {
+@RequestMapping("/articles31") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
+public class Ex31_5_ArticleController {
 
     /** @RequiredArgsConstructor 로 만들어진 생성자(여기선 articlaService)를 사용할거다.
          쉽게 말하면 @RequiredArgsConstructor 로 만들어진 생성자를 얘가 읽어서 정보의 전달을 할 수 있게 해준다.
@@ -68,7 +68,9 @@ public class ArticleController {
 
         return "articles/index";
 
-/* 이거 하고 테스트 하러 가기 */
+/* 이거 하고 Ex31_4_ArticleControllerTest 테스트 하러 가기
+*
+* 그리고 뷰파일에 반영하기 index.html ㄱㄱ */
     }
 
     
@@ -86,3 +88,6 @@ public class ArticleController {
     }
 
 }
+/* 이거 하고 Ex31_4_ArticleControllerTest 테스트 하러 가기
+ *
+ * 그리고 뷰파일에 반영하기 resource > templates > articles > Ex31_6_index.html ㄱㄱ */
