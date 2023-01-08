@@ -124,8 +124,8 @@ class JpaRepositoryTest {
         /** 기존카운트 구하고 */
         long previousCount = articleRepository.count();
 
-/* 새로 삽입*/
-        UserAccount userAccount = userAccountRepository.save(UserAccount.of("bitstudy","asdf",null,null,null));
+/* 새로 삽입 - UserAccount.java 에서 userId 를 UK 키로 바꿔서 여기서 테스트 할때도 중복 에러 안터지게 하려고 new_bitstudy 로 아이디 변경 */
+        UserAccount userAccount = userAccountRepository.save(UserAccount.of("new_bitstudy","asdf",null,null,null));
 
         /* Article 에 정보 넣고 */
 /* 이거 삭제*/// Article article = Article.of("new article", "new content", "#spring");
