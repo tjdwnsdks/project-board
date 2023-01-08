@@ -9,27 +9,20 @@ import com.bitstudy.app.dto.ArticleWithCommentsDto;
 import com.bitstudy.app.dto.UserAccountDto;
 import com.bitstudy.app.repository.ArticleRepository;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.BDDAssertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
@@ -42,7 +35,7 @@ import static org.mockito.BDDMockito.*;
 
 @DisplayName("비지니스 로직 - 게시글")
 @ExtendWith(MockitoExtension.class)
-class ArticleServiceTest {
+class Ex32_2_ArticleServiceTest_게시글_상세_페이징 {
 
     /** Mock을 주입하는 거에다가 @InjectMocks 를 달아줘야 한다. 그 외의 모든 Mock은 @Mock 을 달아준다. */
     @InjectMocks private ArticleService sut; // sut - system under test 라고 해서. 실무에서 테스트 짤대 사용하는 이름중 하나다. 이게 테스트 대상이다 라는뜻임.
@@ -209,6 +202,7 @@ class ArticleServiceTest {
         then(articleRepository).should().deleteById(articleId);
     }
 
+/* 새로 추가 ***********************************/
 /* 새로 추가 */
     @DisplayName("게시글 수를 조회하면, 게시글 수를 반환한다")
     @Test
@@ -224,6 +218,7 @@ class ArticleServiceTest {
         assertThat(actual).isEqualTo(expected);
         then(articleRepository).should().count();
     }
+/*  여기까지 하고 테스트 돌리고,  Ex32_3_ArticleController 가기 */
     /////////////////////
 
 

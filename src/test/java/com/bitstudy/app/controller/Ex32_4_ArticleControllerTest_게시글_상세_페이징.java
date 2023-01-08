@@ -5,7 +5,6 @@ import com.bitstudy.app.dto.ArticleWithCommentsDto;
 import com.bitstudy.app.dto.UserAccountDto;
 import com.bitstudy.app.service.ArticleService;
 import com.bitstudy.app.service.PaginationService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 @WebMvcTest(ArticleController.class)
 @DisplayName("view 컨트롤러 - 게시글")
-class ArticleControllerTest {
+class Ex32_4_ArticleControllerTest_게시글_상세_페이징 {
 
     private final MockMvc mvc;
 
@@ -46,7 +45,7 @@ class ArticleControllerTest {
 
 /** 이제 페이징을 사용하는 부분에 모두 paginationService 를 이용하게 될거다. Page 를 리턴하는 곳엔 다 들어가야한다. */
     @MockBean private PaginationService paginationService;
-    public ArticleControllerTest(@Autowired MockMvc mvc) {
+    public Ex32_4_ArticleControllerTest_게시글_상세_페이징(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
 
@@ -163,7 +162,10 @@ class ArticleControllerTest {
 /* 새로 생성*/
         then(articleService).should().getArticleCount();
 
-/* ArticleController 에 ("[view][GET] 게시글 상세 페이지 - 정상호출") 관련 부분에 새로 map.addAttribute("totalCount", articleService.getArticleCount()); 해줘야 함 */
+/* 여기까지 하고 테스트 돌리면 pass 떠야함. 
+   혹시 실패 뜨면  ArticleController 에 ("[view][GET] 게시글 상세 페이지 - 정상호출") 관련 부분에 새로 map.addAttribute("totalCount", articleService.getArticleCount()); 해줘야 함.
+    
+    다 했으면 Ex32_5_detail  이랑 Ex32_6_detail.th.xml  두개 같이 켜놓고 하기*/
     }
 
 

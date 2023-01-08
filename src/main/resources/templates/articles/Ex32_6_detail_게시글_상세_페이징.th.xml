@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 
+<!-- 할일: 맨 아래 '페이징 부분' -->
+
 <thlogic>
     <attr sel="#header" th:replace="header :: #header" />
     <attr sel="#footer" th:replace="footer :: #footer" />
@@ -28,6 +30,8 @@
         </attr>
     </attr>
 
+<!--******************************************************************-->
+<!-- 새로 한거 -->
     <!-- 페이징 부분-->
     <attr sel="#pagination">
         <attr sel="ul">
