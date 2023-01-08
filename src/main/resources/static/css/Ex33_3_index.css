@@ -1,0 +1,6 @@
+
+/* 게시판 리스트 테이블 컬럼 타이틀 부분 */
+#article-table > thead a {
+    text-decoration: none;
+    color: inherit;
+}

@@ -16,7 +16,7 @@
                           th:href="@{'/articles/'+${article.id}}" =>  a 태그에 href 속성을 달아주는데 /articles/1 이런식으로 넣어준다.  -->
                 <attr sel="td.hashtag" th:text="${article.hashtag}" />
                 <attr sel="td.user-id" th:text="${article.nickname}" />
-                <attr sel="td.created-by/time" th:datetime="${article.createdAt}" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}" />
+                <attr sel="td.created-at/time" th:datetime="${article.createdAt}" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}" />
                 <!-- 해설: temporals 라는 유틸리티가 있는데 여러가지 포맷팅 기능을 지원하고 시간관련 정보를 다루는 함수들을 제공하는데, 그중에 하나가 format 이다.-->
             </attr>
         </attr>
