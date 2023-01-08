@@ -5,7 +5,6 @@ import com.bitstudy.app.dto.ArticleWithCommentsDto;
 import com.bitstudy.app.dto.UserAccountDto;
 import com.bitstudy.app.service.ArticleService;
 import com.bitstudy.app.service.PaginationService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +28,18 @@ import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/* 저 아래쪽에 ("[view][GET] 게시글 상세 페이지 - 정상호출") 하는 테스트꺼 articlesOne() 메서드 부분 수정함 */
+/*  */
+
+/**  현재 이 컨트롤러 테스트에서는 기본적인 입출력은 완성된 상태다.
+ * 다만 서비스코드에 대한 표현이 안되어 있기 때문에, 이제 서비스코드 관련된것들을 테스트에 반영해볼거다.
+ * 그렇다고 실제 서비스코드 (ArticleService) 에 있는 로직을 반영할게 아니고, 그 파일에서 만들어놓은 상황들
+ * 예를들어 searchKeyword 없을때, searchKeyword 있을때 같이 이런 상황들에 대한것들을 테스트코드에 추가해볼거다. */
+
 
 @Import(SecurityConfig.class)
 @WebMvcTest(ArticleController.class)
 @DisplayName("view 컨트롤러 - 게시글")
-class ArticleControllerTest {
+class Ex31_4_ArticleControllerTest {
 
     private final MockMvc mvc;
 
@@ -44,9 +49,9 @@ class ArticleControllerTest {
 
  ArticleController 에 있는 실제 "private final ArticleService articleService;" 부분의 articleService 를 배제하기 위해서 @MockBean 을 사용했다. 배재하는 이유는 이 테스트에서 MockMvc 가 api 의 입출력만 보게 하기 위해서 서비스 로직을 끊어줘야 하는데 이때 @MockBean 애너테이션을 사용한다.*/
 
-/** 이제 페이징을 사용하는 부분에 모두 paginationService 를 이용하게 될거다. Page 를 리턴하는 곳엔 다 들어가야한다. */
+/* 새로 생성 - 이제 페이징을 사용하는 부분에 모두 paginationService 를 이용하게 될거다. Page 를 리턴하는 곳엔 다 들어가야한다. */
     @MockBean private PaginationService paginationService;
-    public ArticleControllerTest(@Autowired MockMvc mvc) {
+    public Ex31_4_ArticleControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
 
@@ -59,9 +64,9 @@ class ArticleControllerTest {
 * return 은 데이터 검증하려는게 아니기 때문에 그냥 empty 페이지 리턴해주면 된다. (Page.empty())  */
         given(articleService.searchArticles(eq(null), eq(null), any(Pageable.class))).willReturn(Page.empty());
 
-
+/* 새로 생성 */
         given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0,1,2,3,4));
-        /** 여기서는 페이징을 하는 기능 자체가 테스트 대상이 아니고 정상적인 호출이 되는지 보는거고
+        /* 여기서는 페이징을 하는 기능 자체가 테스트 대상이 아니고 정상적인 호출이 되는지 보는거고
            매개변수 보내야 하는데 getPaginationBarNumbers(정수, 정수) 로 매개변수를 보내야 하는데
             그렇다고 any() 를 쓸 수는 없다. 왜냐면 null 을 허용하니까.
             그래서 아무 숫자를 의미하는 anyInt 를 넣어준다.
@@ -74,9 +79,9 @@ class ArticleControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/index"))
                 .andExpect(model().attributeExists("articles"))
-                .andExpect(model().attributeExists("paginationBarNumbers"));
+/* 새로 생성 */   .andExpect(model().attributeExists("paginationBarNumbers"));
 
-
+/* 새로 생성 */
         then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
         // then: 어떤 mock 이 호출할건지 명시하는 부분. 지금은 articleService mock 을 사용할거다 라는 뜻
@@ -85,31 +90,30 @@ class ArticleControllerTest {
         // 한마디로 articleService 가 searchArticles() 메서드를 한번 호출했냐 나는 뜻.
     }
 
-    /** 아래에 있는 상세 페이지(articlesOne() 메서드) 에서는 '이전' '다음' 버튼만 있으면 되서 페이징은 필요 없다.
+    /* 아래에 있는 상세 페이지(articlesOne() 메서드) 에서는 '이전' '다음' 버튼만 있으면 되서 페이징은 필요 없다.
     * 페이징을 하는 테스트 하는 메서드 만들어보다 (아래) */
 
-/** 페이징이나 정렬을 하는 테스트를 만들긴 할건데, 원래 정렬 기능 구현은 칸반보드에 보면 바로 다음차례에 있긴 한데 이미 ArticleService.java 에서 Page 를 사용하고 있어서 페이징이랑 sorting(정렬) 기능이 이미 준비 되어 있다. ( Page<ArticleDto> 이부분) 그래서 잠깐 맛보기로도 테스트를 할 수 있다.
+/* 새로 생성 - 페이징이나 정렬을 하는 테스트를 만들긴 할건데, 원래 정렬 기능 구현은 칸반보드에 보면 바로 다음차례에 있긴 한데 이미 ArticleService.java 에서 Page 를 사용하고 있어서 페이징이랑 sorting(정렬) 기능이 이미 준비 되어 있다. ( Page<ArticleDto> 이부분) 그래서 잠깐 맛보기로도 테스트를 할 수 있다.
   이것도 구현부가 없어서 테스트를 돌리면 실패할거다. 테스트 코드 작성하고 실제 구현부 만들러 갈거다. (ArticleController.java)
-
-    28분  */
+ */
     @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 페이징, 정렬 기능")
     @Test
     void givenPagingAndSortingParams_whenSearchingArticlesPage_thenReturnsArticlesPage() throws Exception {
         // Given
-        /** sort 관련 */
+        /* sort 관련 */
         String sortName = "title";
         String direction = "desc";
 
-        /** paging 관련 */
+        /* paging 관련 */
         int pageNumber = 0;
         int pageSize = 5;
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Order.desc(sortName)));
         List<Integer> barNumbers = List.of(1, 2, 3, 4, 5); /* 이번에는 검증 대상이 페이징 기능이니까 따로 페이지 리스트를 따로 빼서 만들었음 */
 
-        /** 이건 위에 테스트꺼랑 똑같음 */
+        /* 이건 위에 테스트꺼랑 똑같음 */
         given(articleService.searchArticles(null, null, pageable)).willReturn(Page.empty());
 
-        /** 이번엔 anyInt 대신 실제로 값을 보낼거임 */
+        /* 이번엔 anyInt 대신 실제로 값을 보낼거임 */
         given(paginationService.getPaginationBarNumbers(pageable.getPageNumber(), Page.empty().getTotalPages())).willReturn(barNumbers);
 
         // When & Then
@@ -126,11 +130,16 @@ class ArticleControllerTest {
         then(articleService).should().searchArticles(null, null, pageable);
         then(paginationService).should().getPaginationBarNumbers(pageable.getPageNumber(), Page.empty().getTotalPages());
         
-
+        /* 요거 하고 Ex31_5_ArticleController.java ㄱㄱ*/
     }
 
 
 
+
+
+
+    /**아직 실제 ArticleController 에 구현 안했으니까 테스트 해봤자 에러난다.
+    아래 테스트까지 하고 ArticleController 가서 구현부 만들고 테스트 해보자.*/
     //@Disabled("구현 중")
     @Test
     @DisplayName("[view][GET] 게시글 상세 페이지 - 정상호출")
@@ -138,16 +147,9 @@ class ArticleControllerTest {
         // Given
 /**  상세페이지니까 기본 게시글 번호 1번 으로 줄거다. */
         Long articleId = 1L;
-
-/* 새로 입력 - 상세페이지니까 기본 게시글 개수 1개 있다고 가정할거다. */
-        long totalCount = 1L; /* Long 은 null 사용 가능, long 은 불가.  ( int 와 Integer 와 같음) */
-
         given(articleService.getArticle(articleId)).willReturn(createArticleWithCommentsDto());
                                                 // willReturn( 검사를 위한 Dto 를 넣어줘야함)
                                                 // dto 를 만들어야 해서 createArticleWithCommentsDto() 메서드를 만들었다.
-
-/* 새로 입력 - 게시글 개수 구하기 */
-        given(articleService.getArticleCount()).willReturn(totalCount);
 
         // When & Then
         mvc.perform(get("/articles/" + articleId)) /* 테스트니까 그냥 1번글 가져와라 할거임 */
@@ -155,18 +157,13 @@ class ArticleControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/detail")) // 이건 해당 뷰 파일명이 detail 인지 확인
                 .andExpect(model().attributeExists("article"))
-                .andExpect(model().attributeExists("articleComments")) // 상세페이지에는 댓글들도 여러개 있을수도 있으니까 모델 어트리뷰트에 articleComments 라는 키값으로 된게 있냐 라고 물어보는거
-/* 새로 생성*/    .andExpect(model().attribute("totalCount", totalCount)); /* 뷰 파일에 totalCount 라는 이름으로 모델 넘길거임*/
-
+                .andExpect(model().attributeExists("articleComments")); // 상세페이지에는 댓글들도 여러개 있을수도 있으니까 모델 어트리뷰트에 articleComments 라는 키값으로 된게 있냐 라고 물어보는거
         then(articleService).should().getArticle(articleId);
-
-/* 새로 생성*/
-        then(articleService).should().getArticleCount();
-
-/* ArticleController 에 ("[view][GET] 게시글 상세 페이지 - 정상호출") 관련 부분에 새로 map.addAttribute("totalCount", articleService.getArticleCount()); 해줘야 함 */
+        // articleService 가 한번 호출해야 한다 getArticle(articleId) 를.
     }
 
-
+/** '게시글 검색 전용 페이지' 와  '해시태그'는 아직 계획이 분명하진 않으니까 넘어간다.
+   이제 ArticleController 가서 구현부 만들고 테스트 해보자.*/
 
 
 /**************************************************************/
