@@ -24,7 +24,7 @@ import java.util.List;
         //@RequiredArgsConstructor는 초기화 되지않은 final 필드나, @NonNull 이 붙은 필드에 대해 생성자를 생성해 줍니다.
 @Controller
 @RequestMapping("/articles") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
-public class ArticleController {
+public class Ex34_2_ArticleController_게시판_검색_구현 {
 
     /** @RequiredArgsConstructor 로 만들어진 생성자(여기선 articlaService)를 사용할거다.
          쉽게 말하면 @RequiredArgsConstructor 로 만들어진 생성자를 얘가 읽어서 정보의 전달을 할 수 있게 해준다.
@@ -70,7 +70,7 @@ public class ArticleController {
 
 /* 이거 하고 테스트 돌리면 패스함
 * 테스트 통과 하고
-* index.html  ㄱㄱ
+* Ex34_3_index_게시판_검색_구현.html  ㄱㄱ
 * */
     }
 

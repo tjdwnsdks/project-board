@@ -6,7 +6,6 @@ import com.bitstudy.app.dto.ArticleWithCommentsDto;
 import com.bitstudy.app.dto.UserAccountDto;
 import com.bitstudy.app.service.ArticleService;
 import com.bitstudy.app.service.PaginationService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +29,12 @@ import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/*   */
+/*  할일: 제목, 본문, 이름 들로 검색되게 해볼거다. */
 
 @Import(SecurityConfig.class)
 @WebMvcTest(ArticleController.class)
 @DisplayName("view 컨트롤러 - 게시글")
-class ArticleControllerTest {
+class Ex34_1_ArticleControllerTest_게시판_검색_구현 {
 
     private final MockMvc mvc;
 
@@ -47,7 +46,7 @@ class ArticleControllerTest {
 
     /** 이제 페이징을 사용하는 부분에 모두 paginationService 를 이용하게 될거다. Page 를 리턴하는 곳엔 다 들어가야한다. */
     @MockBean private PaginationService paginationService;
-    public ArticleControllerTest(@Autowired MockMvc mvc) {
+    public Ex34_1_ArticleControllerTest_게시판_검색_구현(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
 
@@ -130,7 +129,7 @@ class ArticleControllerTest {
         int pageNumber = 0;
         int pageSize = 5;
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Order.desc(sortName)));
-        List<Integer> barNumbers = List.of(1, 2, 3, 4, 5); /** 이번에는 검증 대상이 페이징 기능이니까 따로 페이지 리스트를 따로 빼서 만들었음 */
+        List<Integer> barNumbers = List.of(1, 2, 3, 4, 5); /* 이번에는 검증 대상이 페이징 기능이니까 따로 페이지 리스트를 따로 빼서 만들었음 */
 
         /** 이건 위에 테스트꺼랑 똑같음 */
         given(articleService.searchArticles(null, null, pageable)).willReturn(Page.empty());
@@ -172,7 +171,7 @@ class ArticleControllerTest {
                                                 // willReturn( 검사를 위한 Dto 를 넣어줘야함)
                                                 // dto 를 만들어야 해서 createArticleWithCommentsDto() 메서드를 만들었다.
 
-        /**게시글 개수 구하기 */
+/* 새로 입력 - 게시글 개수 구하기 */
         given(articleService.getArticleCount()).willReturn(totalCount);
 
         // When & Then
@@ -182,11 +181,14 @@ class ArticleControllerTest {
                 .andExpect(view().name("articles/detail")) // 이건 해당 뷰 파일명이 detail 인지 확인
                 .andExpect(model().attributeExists("article"))
                 .andExpect(model().attributeExists("articleComments")) // 상세페이지에는 댓글들도 여러개 있을수도 있으니까 모델 어트리뷰트에 articleComments 라는 키값으로 된게 있냐 라고 물어보는거
-                .andExpect(model().attribute("totalCount", totalCount)); /* 뷰 파일에 totalCount 라는 이름으로 모델 넘길거임*/
+/* 새로 생성*/    .andExpect(model().attribute("totalCount", totalCount)); /* 뷰 파일에 totalCount 라는 이름으로 모델 넘길거임*/
 
         then(articleService).should().getArticle(articleId);
+
+/* 새로 생성*/
         then(articleService).should().getArticleCount();
 
+/* ArticleController 에 ("[view][GET] 게시글 상세 페이지 - 정상호출") 관련 부분에 새로 map.addAttribute("totalCount", articleService.getArticleCount()); 해줘야 함 */
     }
 
 
