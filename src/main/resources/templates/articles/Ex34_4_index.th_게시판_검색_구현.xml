@@ -20,7 +20,7 @@
             1) th:each 에서 ${searchTypes} 을 받아서 searchType 에 넣고 반복문으로 돌린다.
             2) th:value="${searchType.name}"
                th:text="${searchType.description}"
-               * domain > type > SearchType.java 파일 가서 한글로 가능하게 수정하고 오면 name 이랑 description 사용 가능
+               * domain > type > Ex34_5_SearchType_게시판_검색_구현.java 파일 가서 한글로 가능하게 수정하고 오면 name 이랑 description 사용 가능
             3) th:selected: 이걸 넣어서 현재 url에 searchType 이 null 이 아니면 select option 부분 그대로 유지되도록 해주는거임
         -->
     </attr>
