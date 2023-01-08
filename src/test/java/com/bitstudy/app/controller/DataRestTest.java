@@ -1,5 +1,6 @@
 package com.bitstudy.app.controller;
 
+import com.bitstudy.app.service.PaginationService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,6 @@ data rest 와 관련된 AutoConfigration을 불러올수 있게끔 @SpringBootTe
 @AutoConfigureMockMvc
 @DisplayName("Data REST - API 테스트 4")
 @Transactional
-
 public class DataRestTest {
 
     private final MockMvc mvc;
