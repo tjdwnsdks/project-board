@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<thlogic>
+    <attr sel="#header" th:replace="header :: #header" />
+    <attr sel="#footer" th:replace="footer :: #footer" />
+
+
+    <attr sel="#article-main" th:object="${article}">
+        <attr sel="#article-header/h1" th:text="*{title}" />
+        <attr sel="#nickname" th:text="*{nickname}" />
+        <attr sel="#email" th:text="*{email}" />
+        <attr sel="#created-at" th:datetime="*{createdAt}" th:text="*{#temporals.format(createdAt, 'yyyy-MM-dd HH:mm:ss')}" /><!-- 해설: temporals 라는 유틸리티가 있는데 여러가지 포맷팅 기능을 지원하고 시간관련 정보를 다루는 함수들을 제공하는데, 그중에 하나가 format 이다.-->
+        <attr sel="#hashtag" th:text="*{hashtag}" />
+        <attr sel="#article-content/p" th:text="*{content}" />
+
+<!-- ******************************************************* -->
+<!-- 새로 추가 - 수정 삭제 버튼 -->
+<!-- ******************************************************* -->
+        <attr sel="#article-buttons">
+            <attr sel="#delete-article-form" th:action="'/articles/' + *{id} + '/delete'" th:method="post">
+                <attr sel="#update-article" th:href="'/articles/' + *{id} + '/form'" />
+            </attr>
+        </attr>
+
+    </attr>
+
+
+    <attr sel="#article-comments" th:remove="all-but-first">
+        <attr sel="li[0]" th:each="articleComment : ${articleComments}">
+            <attr sel="div/strong" th:text="${articleComment.nickname}" />
+            <attr sel="div/small/time" th:datetime="${articleComment.createdAt}" th:text="${#temporals.format(articleComment.createdAt, 'yyyy-MM-dd HH:mm:ss')}" />s
+            <attr sel="div/p" th:text="${articleComment.content}" />
+        </attr>
+    </attr>
+
+    <!-- 페이징 부분-->
+    <attr sel="#pagination">
+        <attr sel="ul">
+            <attr sel="li[0]/a"
+                  th:href="*{id} - 1 <= 0 ? '#' : |/articles/*{id - 1}|"
+                  th:class="'page-link' + (*{id} - 1 <= 0 ? ' disabled' : '')"
+            />
+            <attr sel="li[1]/a"
+                  th:href="*{id} + 1 > ${totalCount} ? '#' : |/articles/*{id + 1}|"
+                  th:class="'page-link' + (*{id} + 1 > ${totalCount} ? ' disabled' : '')"
+            />
+        </attr>
+    </attr>
+</thlogic>
+
+<!-- 다 했으면 저장하고 리컴파일(ctrl + shift + F9) 하고
+    서비스 올리기(pojectApplication.java 파일 실행)
+-->
