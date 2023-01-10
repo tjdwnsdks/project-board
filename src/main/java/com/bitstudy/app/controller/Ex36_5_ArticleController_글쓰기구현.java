@@ -1,6 +1,9 @@
 package com.bitstudy.app.controller;
 
+import com.bitstudy.app.domain.type.FormStatus;
 import com.bitstudy.app.domain.type.SearchType;
+import com.bitstudy.app.dto.UserAccountDto;
+import com.bitstudy.app.dto.request.ArticleRequest;
 import com.bitstudy.app.dto.response.ArticleResponse;
 import com.bitstudy.app.dto.response.ArticleWithCommentsResponse;
 import com.bitstudy.app.service.ArticleService;
@@ -12,10 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,15 +23,15 @@ import java.util.List;
 @RequiredArgsConstructor // 필수 필드에 대한 생성자를 자동으로 만들어주는 롬복 애너테이션
         //@RequiredArgsConstructor는 초기화 되지않은 final 필드나, @NonNull 이 붙은 필드에 대해 생성자를 생성해 줍니다.
 @Controller
-@RequestMapping("/articles31") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
-public class Ex31_5_ArticleController {
+@RequestMapping("/articles") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
+public class Ex36_5_ArticleController_글쓰기구현 {
 
     /** @RequiredArgsConstructor 로 만들어진 생성자(여기선 articlaService)를 사용할거다.
          쉽게 말하면 @RequiredArgsConstructor 로 만들어진 생성자를 얘가 읽어서 정보의 전달을 할 수 있게 해준다.
          (articleService 에 생성자를 통해 정보들이 다 들어가게 된다.) */
     private final ArticleService articleService;
 
-/* 새로 생성 - 페이징 기능 달꺼니까 PaginationService 주입받자 */
+    /** 페이징 기능 달꺼니까 PaginationService 주입받자 */
     private final PaginationService paginationService;
 
     @GetMapping
@@ -46,16 +46,13 @@ public class Ex31_5_ArticleController {
             ModelMap map
     ) {
         
-        
-/* 이거 삭제 - 아래꺼로 대체됨*/ //map.addAttribute("articles", articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from)); // 이젠 진짜로 넣어줘야 하니까 ArticleService.java 안에 만들어놓은 searchArticles() 메서드에 값 넣어주면 됨. 그런데 searchArticles 의 반환타입은 DTO 인데 dto 는 모든 엔티티의 데이터를 다 다루고 있어서 그걸 한번 더 가공해서 필요한것만 쓸건데 그래서 게시글 내용만 가지고 있는 ArticleResponse 사용한다.
-
-/* 새로 생성 - 어짜피 이 아래 map 이나 List 에서 Page 정보가 똑같이 필요하기 때문에 그냥 원래 map 안에 있던 Page 정보를 밖으로 빼서 변수에 담아놓은것뿐임.   */
+        /**어짜피 이 아래 map 이나 List 에서 Page 정보가 똑같이 필요하기 때문에 그냥 원래 map 안에 있던 Page 정보를 밖으로 빼서 변수에 담아놓은것뿐임.   */
         Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from);
 
-/* 새로 생성 - 게시판 페이지에 attribute 를 넣어줘야한다. */
+        /**게시판 페이지에 attribute 를 넣어줘야한다. */
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages());
 
-        /* Page: 전체 데이터 건수를 조회하는 count  쿼리 결과를 포함 하는 페이징
+        /** Page: 전체 데이터 건수를 조회하는 count  쿼리 결과를 포함 하는 페이징
                  데이터 다 가져오기 때문에 getTotalElements() 를 이용해서 개수를뽑거나,
                  getTotalPages() 메서드에 별도의 size 를 줘서 총 페이지 개수를 구할수도 있다.
                  getNumber() 를 이용해서 가져온 페이지의 번호를 뽑을수도 있다.
@@ -65,12 +62,11 @@ public class Ex31_5_ArticleController {
 
         map.addAttribute("articles", articles);
         map.addAttribute("paginationBarNumbers", barNumbers);
+        map.addAttribute("searchTypes", SearchType.values());
+        /** values() 를 이용해서 enum 인 요소들을 배열로 넘겨준다. */
 
         return "articles/index";
 
-/* 이거 하고 Ex31_4_ArticleControllerTest 테스트 하러 가기
-*
-* 그리고 뷰파일에 반영하기 index.html ㄱㄱ */
     }
 
     
@@ -78,18 +74,74 @@ public class Ex31_5_ArticleController {
     // ("[view][GET] 게시글 상세 페이지 - 정상호출") 관련
     @GetMapping("/{articleId}")
     public String article(@PathVariable Long articleId, ModelMap map) {
-        // 원래는 아래줄 코드인데 /* 새로생성 부분으로 바꿨음 */
-        // ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticle(articleId));
-/* 새로 생성 */ ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticleWithComments(articleId));
+/*이거 삭제*/ //ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticle(articleId));
+/*새로 생성*/ ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticleWithComments(articleId));
         map.addAttribute("article", article); // 이건 상세페이지용 이기 때문에 아티클이랑 코멘트까지 다 있는 dto를 가져다 쓸거다. 그래서 ArticleWithCommentsResponse 를 쓴다.
 
         map.addAttribute("articleComments", article.articleCommentsResponse());
                 // article.articleCommentsResponse() 해설: 현재 article 에 ArticleWithCommentsResponse 의 정보가 들어있으니까 article 안에 있는 articleComments를 꺼내면 된다.
 
+        /** 뷰 파일에 보낼 모델에 totalCount 라는거 넣어준다. */
+        map.addAttribute("totalCount", articleService.getArticleCount());
+
+
         return "articles/detail";
     }
 
+/* ------------------------------------------------------ */
+/* 새로 추가 - 글쓰기 관련임. 여기서부터 저 아래까지 다 새로 추가함 */
+/* ------------------------------------------------------- */
+    
+    // 주소창에 /form 이라고 친 경우
+    @GetMapping("/form")
+    public String articleForm(ModelMap map) {
+        map.addAttribute("formStatus", FormStatus.CREATE);
+
+        return "articles/form";
+    }
+
+    /* 게시글 등록 (글쓰기)*/
+    @PostMapping("/form")
+    public String postNewArticle(ArticleRequest articleRequest) {
+        // TODO: 인증 정보를 넣어줘야 한다.
+        articleService.saveArticle(articleRequest.toDto(UserAccountDto.of(
+                "bitstudy", "asdf1234", "bitstudy@email.com", "Uno", "memo", null, null, null, null
+        )));
+
+        return "redirect:/articles";
+    }
+
+    /* 게시글 수정화면 띄우기만 하기 */
+    @GetMapping("/{articleId}/form")
+    public String updateArticleForm(@PathVariable Long articleId, ModelMap map) {
+        ArticleResponse article = ArticleResponse.from(articleService.getArticle(articleId));
+
+        map.addAttribute("article", article);
+        map.addAttribute("formStatus", FormStatus.UPDATE);
+
+        return "articles/form";
+    }
+
+    /* 게시글 수정한거 업데이트(저장)하기 */
+    @PostMapping ("/{articleId}/form")
+    public String updateArticle(@PathVariable Long articleId, ArticleRequest articleRequest) {
+        // TODO: 인증 정보를 넣어줘야 한다.
+        articleService.updateArticle(articleId, articleRequest.toDto(UserAccountDto.of(
+                "bitstudy", "asdf1234", "bitstudy@email.com", "Uno", "memo", null, null, null, null
+        )));
+
+        return "redirect:/articles/" + articleId;
+    }
+
+    /* 게시글 삭제하기 */
+    @PostMapping ("/{articleId}/delete")
+    public String deleteArticle(@PathVariable Long articleId) {
+        // TODO: 인증 정보를 넣어줘야 한다.
+        articleService.deleteArticle(articleId);
+
+        return "redirect:/articles";
+    }
+
+
+
 }
-/* 이거 하고 Ex31_4_ArticleControllerTest 테스트 하러 가기
- *
- * 그리고 뷰파일에 반영하기 resource > templates > articles > Ex31_6_index.html ㄱㄱ */

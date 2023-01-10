@@ -72,7 +72,9 @@ public class Ex32_3_ArticleController_게시글_상세_페이징 {
     // ("[view][GET] 게시글 상세 페이지 - 정상호출") 관련
     @GetMapping("/{articleId}")
     public String article(@PathVariable Long articleId, ModelMap map) {
-        ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticle(articleId));
+        // 원래는 아래줄 코드인데 /* 새로생성 부분으로 바꿨음 */
+        // ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticle(articleId));
+        /* 새로 생성 */ ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticleWithComments(articleId));
         map.addAttribute("article", article); // 이건 상세페이지용 이기 때문에 아티클이랑 코멘트까지 다 있는 dto를 가져다 쓸거다. 그래서 ArticleWithCommentsResponse 를 쓴다.
 
         map.addAttribute("articleComments", article.articleCommentsResponse());

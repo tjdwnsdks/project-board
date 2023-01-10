@@ -23,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor // 필수 필드에 대한 생성자를 자동으로 만들어주는 롬복 애너테이션
         //@RequiredArgsConstructor는 초기화 되지않은 final 필드나, @NonNull 이 붙은 필드에 대해 생성자를 생성해 줍니다.
 @Controller
-@RequestMapping("/articles") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
+@RequestMapping("/articles34") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
 public class Ex34_2_ArticleController_게시판_검색_구현 {
 
     /** @RequiredArgsConstructor 로 만들어진 생성자(여기선 articlaService)를 사용할거다.
@@ -79,7 +79,9 @@ public class Ex34_2_ArticleController_게시판_검색_구현 {
     // ("[view][GET] 게시글 상세 페이지 - 정상호출") 관련
     @GetMapping("/{articleId}")
     public String article(@PathVariable Long articleId, ModelMap map) {
-        ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticle(articleId));
+        // 원래는 아래줄 코드인데 /* 새로생성 부분으로 바꿨음 */
+        // ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticle(articleId));
+        /* 새로 생성 */ ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticleWithComments(articleId));
         map.addAttribute("article", article); // 이건 상세페이지용 이기 때문에 아티클이랑 코멘트까지 다 있는 dto를 가져다 쓸거다. 그래서 ArticleWithCommentsResponse 를 쓴다.
 
         map.addAttribute("articleComments", article.articleCommentsResponse());
