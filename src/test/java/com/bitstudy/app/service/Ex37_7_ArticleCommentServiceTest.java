@@ -14,29 +14,26 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
-//import static org.junit.jupiter.api.Assertions.*;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.never;
 
 
-/*  service > Ex37_6_ArticleCommentService.java    랑 같이 볼것*/
+/*  service > Ex37_6_ArticleCommentService.java    랑 같이 볼것
+*
+* 다 하면 Ex37_8_detail_댓글Form  ㄱㄱ */
 
 /** 간단하게 댓글의 CRUD 관련된 테스트만 만들어볼거다 */
 
 
 @DisplayName("비지니스 로직 - 댓글")
 @ExtendWith(MockitoExtension.class)
-class ArticleCommentServiceTest {
+class Ex37_7_ArticleCommentServiceTest {
 
     @InjectMocks private ArticleCommentService sut;
 
@@ -119,10 +116,10 @@ class ArticleCommentServiceTest {
         given(articleCommentRepository.getReferenceById(dto.id())).willReturn(articleComment);
 
         // When
-        sut.updateArticleComment(dto); /* 업데이트 시도했을때 */
+        sut.updateArticleComment(dto); /** 업데이트 시도했을때 */
 
         // Then
-        assertThat(articleComment.getContent()) /* oldContent랑 다르고 updatedContent 랑 같으면 테스트 통과 */
+        assertThat(articleComment.getContent()) /** oldContent랑 다르고 updatedContent 랑 같으면 테스트 통과 */
                 .isNotEqualTo(oldContent)
                 .isEqualTo(updatedContent);
         then(articleCommentRepository).should().getReferenceById(dto.id()); // mock 이 제대로 불러와 졌는지 확인하는 용도

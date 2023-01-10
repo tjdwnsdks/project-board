@@ -134,6 +134,7 @@ public class Ex36_5_ArticleController_글쓰기구현 {
     }
 
     /* 게시글 삭제하기 */
+    /* 원래 delete 는 REST 방식에서는 delete 라고 했었지만 form 태그 쓸때는 get 과 Post만 허용되기 떄문에 어쩔수 없음. */
     @PostMapping ("/{articleId}/delete")
     public String deleteArticle(@PathVariable Long articleId) {
         // TODO: 인증 정보를 넣어줘야 한다.
