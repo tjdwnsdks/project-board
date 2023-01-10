@@ -8,9 +8,8 @@ import com.bitstudy.app.dto.ArticleDto;
 import com.bitstudy.app.dto.ArticleWithCommentsDto;
 import com.bitstudy.app.dto.UserAccountDto;
 import com.bitstudy.app.repository.ArticleRepository;
+import com.bitstudy.app.repository.UserAccountRepository;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,10 +22,7 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.catchThrowable;
@@ -50,6 +46,7 @@ class ArticleServiceTest {
 
     @Mock private ArticleRepository articleRepository; // 여기 의존하는 걸 가져와야함. 테스트 중간에 mocking 할때 필요함.
 
+/* 새로 생성*/ @Mock private UserAccountRepository userAccountRepository; /*- 게시글 정보 입력하면 게시글 생성할때 유저 필요함*/
 
     /** - 테스트 할 기능들 리스트(칸반보드에서 가져옴)
      1. 검색
@@ -103,8 +100,10 @@ class ArticleServiceTest {
     }
 
 
+
+
     /**  2. 각 게시글 페이지로 이동  */
-    @DisplayName("게시글을 조회하면, 게시글을(하나) 반환한다.")
+    @DisplayName("게시글 ID로 조회하면, 게시글을(하나) 반환한다.")
     @Test
     void givenArticleId_whenSearchingArticle_thenReturnsArticle() {
         // Given
@@ -113,7 +112,11 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
 
         // When
-        ArticleWithCommentsDto dto = sut.getArticle(articleId);
+/* 여기 ArticleWithCommentsDto 에서 ArticleDto 로 변경 - 이유: 게시글만 반환하는게 효율적인것 같아서 ArticleDto 로 변경함 */
+/*이거 삭제*/ //ArticleWithCommentsDto dto = sut.getArticle(articleId);
+/*새로 변경*/ ArticleDto dto = sut.getArticle(articleId);
+//게시글만 반환하는게 효율적인것 같아서 ArticleDto 로 변경함
+// 게시글이랑 댓글 같이 오는건 아래 새로 만들었음.
 
         // Then
         assertThat(dto)  /** 게시글을 하나 반환할건데, 그때 필드는 제목, 본문, 해시태그가 있을거다. */
@@ -122,6 +125,27 @@ class ArticleServiceTest {
                 .hasFieldOrPropertyWithValue("hashtag", article.getHashtag());
         then(articleRepository).should().findById(articleId);
     }
+
+/*새로 생성*/
+    @DisplayName("게시글 ID로 조회하면, 댓글 달긴 게시글을 반환한다.")
+    @Test
+    void givenArticleId_whenSearchingArticleWithComments_thenReturnsArticleWithComments() {
+        // Given
+        Long articleId = 1L;
+        Article article = createArticle();
+        given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
+
+        // When
+        ArticleWithCommentsDto dto = sut.getArticleWithComments(articleId);
+
+        // Then
+        assertThat(dto)
+                .hasFieldOrPropertyWithValue("title", article.getTitle())
+                .hasFieldOrPropertyWithValue("content", article.getContent())
+                .hasFieldOrPropertyWithValue("hashtag", article.getHashtag());
+        then(articleRepository).should().findById(articleId);
+    }
+
 
     @DisplayName("없는 게시글을 조회하면, 예외를 던진다.")
     @Test
@@ -146,12 +170,15 @@ class ArticleServiceTest {
         // Given
         ArticleDto dto = createArticleDto(); // 게시글 정보를 입력하면 게시글을 생성한다
         given(articleRepository.save(any(Article.class))).willReturn(createArticle());
+/* 새로 생성 */ given(userAccountRepository.getReferenceById(dto.userAccountDto().userId())).willReturn(createUserAccount());
 
         // When
         sut.saveArticle(dto);
 
         // Then
         then(articleRepository).should().save(any(Article.class));
+/* 새로 생성 */ then(userAccountRepository).should().getReferenceById(dto.userAccountDto().userId());
+            // 게시글정보 입력시 게시글 생성 여부 테스트
     }
 
     @DisplayName("게시글의 수정 정보를 입력하면, 게시글을 수정한다.")
@@ -171,7 +198,7 @@ class ArticleServiceTest {
         * */
 
         // When
-        sut.updateArticle(dto);
+        sut.updateArticle(dto.id(), dto);
 
         // Then
         assertThat(article)
@@ -189,7 +216,9 @@ class ArticleServiceTest {
         given(articleRepository.getReferenceById(dto.id())).willThrow(EntityNotFoundException.class);
 
         // When
-        sut.updateArticle(dto);
+/* 이거 없앰 - ArticleService.java 에서 updateArticle() 에서드 매개변수 부분 바꿔서 여기도 바꿔줘야함*/
+        //sut.updateArticle(dto);
+/* 새로 추가*/sut.updateArticle(dto.id(), dto);
 
         // Then
         then(articleRepository).should().getReferenceById(dto.id());
@@ -251,7 +280,8 @@ class ArticleServiceTest {
     }
 
     private ArticleDto createArticleDto(String title, String content, String hashtag) {
-        return ArticleDto.of(1L,
+        return ArticleDto.of(
+                1L,
                 createUserAccountDto(),
                 title,
                 content,
@@ -264,7 +294,7 @@ class ArticleServiceTest {
 
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
-                1L,
+/* 이거 삭제 */ // 1L,
                 "bitstudy",
                 "password",
                 "bitstudy@email.com",

@@ -3,14 +3,8 @@ package com.bitstudy.app.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 // 1) 엔티티 등록
@@ -22,7 +16,7 @@ import java.util.Objects;
         @Index(columnList = "createdBy")
 })
 @Entity
-public class ArticleComment extends AuditingFields {
+public class Ex36_2_ArticleComment_글쓰기_구현 extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,16 +29,16 @@ public class ArticleComment extends AuditingFields {
 
 
 
-    protected ArticleComment() {}
+    protected Ex36_2_ArticleComment_글쓰기_구현() {}
 
-    private ArticleComment(Article article, UserAccount userAccount, String content) { // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
+    private Ex36_2_ArticleComment_글쓰기_구현(Article article, UserAccount userAccount, String content) { // 내가 필요한 본문 관련 정보만 가진 생성자 만들자 (여기서는 사용자가 입력하는 값)
         this.article = article;
         this.userAccount = userAccount;
         this.content = content;
     }
 
-    public static ArticleComment of(Article article, UserAccount userAccount, String content) {
-        return new ArticleComment(article, userAccount, content);
+    public static Ex36_2_ArticleComment_글쓰기_구현 of(Article article, UserAccount userAccount, String content) {
+        return new Ex36_2_ArticleComment_글쓰기_구현(article, userAccount, content);
     }
 
     @Override
@@ -55,7 +49,7 @@ public class ArticleComment extends AuditingFields {
 //        return id.equals(that.id);
 
         if (this == o) return true;
-        if (!(o instanceof ArticleComment that)) return false;
+        if (!(o instanceof Ex36_2_ArticleComment_글쓰기_구현 that)) return false;
         return id != null && id.equals(that.id);
     }
 

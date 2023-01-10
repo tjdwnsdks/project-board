@@ -181,7 +181,7 @@ class ArticleCommentServiceTest {
 
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
-                1L,
+    /*이거 삭제 */// 1L,
                 "bitstudy",
                 "password",
                 "bitstudy@email.com",

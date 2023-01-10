@@ -10,7 +10,6 @@ import com.bitstudy.app.dto.request.ArticleRequest;
 import com.bitstudy.app.dto.response.ArticleResponse;
 import com.bitstudy.app.service.ArticleService;
 import com.bitstudy.app.service.PaginationService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 @WebMvcTest(ArticleController.class)
 @DisplayName("view 컨트롤러 - 게시글")
-class ArticleControllerTest {
+class Ex36_4_ArticleControllerTest {
 
     private final MockMvc mvc;
 
@@ -50,7 +49,7 @@ class ArticleControllerTest {
 
     /** 이제 페이징을 사용하는 부분에 모두 paginationService 를 이용하게 될거다. Page 를 리턴하는 곳엔 다 들어가야한다. */
     @MockBean private PaginationService paginationService;
-    public ArticleControllerTest(@Autowired MockMvc mvc) {
+    public Ex36_4_ArticleControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
 
@@ -193,7 +192,6 @@ class ArticleControllerTest {
     }
     /*/////////////////////////////////////////////////////////////*/
     /*새로 생성*/
-
     @DisplayName("[view][GET] 새 게시글 작성 페이지")
     @Test
     void givenNothing_whenRequesting_thenReturnsNewArticlePage() throws Exception {
@@ -220,7 +218,7 @@ class ArticleControllerTest {
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 //formDataEncoder 안쓸거임.content(formDataEncoder.encode(articleRequest))
                                 .with(csrf())
-                                /*  csrf(Cross Site Request Forgery)은 시큐리티에서 제공하는 보안 관련 메서드이다.
+                                /*  csrf(Cross Site Request Forgery)은 시큐리티에서 제공하는 보안 관련 메서드이다. 
                                     해커가 희생자의 권한을 도용해서 희생자 의지와는 무관하게 공젹자가 의도한 행위를 특정 웹사이트에 요청하게 하는 공격
                                     ex) 희생자 권한을 도용(뺏어서) 페이스북에 광고성 글을 계속 올리는거
                                 * */

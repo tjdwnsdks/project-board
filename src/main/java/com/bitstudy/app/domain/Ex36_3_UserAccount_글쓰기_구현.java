@@ -18,7 +18,7 @@ import java.util.Objects;
         @Index(columnList = "createdBy")
 })
 @Entity
-public class UserAccount extends AuditingFields {
+public class Ex36_3_UserAccount_글쓰기_구현 extends AuditingFields {
     /*이거 삭제*///
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,9 +36,9 @@ public class UserAccount extends AuditingFields {
     @Setter private String memo;
 
 
-    protected UserAccount() {}
+    protected Ex36_3_UserAccount_글쓰기_구현() {}
 
-    private UserAccount(String userId, String userPassword, String email, String nickname, String memo
+    private Ex36_3_UserAccount_글쓰기_구현(String userId, String userPassword, String email, String nickname, String memo
             /* 이거 없앰, String createdBy*/) {
         this.userId = userId;
         this.userPassword = userPassword;
@@ -50,9 +50,9 @@ public class UserAccount extends AuditingFields {
     }
 
 
-    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo) {
+    public static Ex36_3_UserAccount_글쓰기_구현 of(String userId, String userPassword, String email, String nickname, String memo) {
         /* 새로 추가 - new 키워드*/
-        return new UserAccount(userId, userPassword, email, nickname, memo /* 이거 없앰, null*/);
+        return new Ex36_3_UserAccount_글쓰기_구현(userId, userPassword, email, nickname, memo /* 이거 없앰, null*/);
     }
     /* 이거 없앰 */
     /**public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
@@ -62,7 +62,7 @@ public class UserAccount extends AuditingFields {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserAccount that)) return false;
+        if (!(o instanceof Ex36_3_UserAccount_글쓰기_구현 that)) return false;
         return this.getUserId() != null && this.getUserId().equals(that.getUserId());
     }
 

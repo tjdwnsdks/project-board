@@ -1,19 +1,10 @@
 package com.bitstudy.app.domain;
 
-import com.bitstudy.app.config.JpaConfig;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.core.annotation.Order;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -33,7 +24,7 @@ import java.util.Set;
 
 // @EntityListeners(AuditingEntityListener.class) /* AuditingFields.java 로 옮겨감 */
 @Entity
-public class Article extends AuditingFields {
+public class Ex36_1_Article_글쓰기_구현 extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,17 +46,17 @@ public class Article extends AuditingFields {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
-    protected Article() {}
+    protected Ex36_1_Article_글쓰기_구현() {}
 
-    private Article(UserAccount userAccount, String title, String content, String hashtag) {
+    private Ex36_1_Article_글쓰기_구현(UserAccount userAccount, String title, String content, String hashtag) {
         this.userAccount = userAccount;
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
     }
 
-    public static Article of(UserAccount userAccount, String title, String content, String hashtag) {
-        return new Article(userAccount, title, content, hashtag);
+    public static Ex36_1_Article_글쓰기_구현 of(UserAccount userAccount, String title, String content, String hashtag) {
+        return new Ex36_1_Article_글쓰기_구현(userAccount, title, content, hashtag);
     }
 
     @Override
@@ -76,7 +67,7 @@ public class Article extends AuditingFields {
 //        return id!= null &&  id.equals(article.id); // 이건 혹시라도 id가 null 이 아니면 해라. 라는 뜻
 
         if (this == o) return true;
-        if (!(o instanceof Article article)) return false;
+        if (!(o instanceof Ex36_1_Article_글쓰기_구현 article)) return false;
         return id != null && id.equals(article.id);
     }
 
