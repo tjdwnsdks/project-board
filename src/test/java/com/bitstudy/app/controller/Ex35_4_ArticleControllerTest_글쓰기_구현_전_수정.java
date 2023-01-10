@@ -1,16 +1,11 @@
 package com.bitstudy.app.controller;
 
 import com.bitstudy.app.config.SecurityConfig;
-import com.bitstudy.app.domain.type.FormStatus;
 import com.bitstudy.app.domain.type.SearchType;
-import com.bitstudy.app.dto.ArticleDto;
 import com.bitstudy.app.dto.ArticleWithCommentsDto;
 import com.bitstudy.app.dto.UserAccountDto;
-import com.bitstudy.app.dto.request.ArticleRequest;
-import com.bitstudy.app.dto.response.ArticleResponse;
 import com.bitstudy.app.service.ArticleService;
 import com.bitstudy.app.service.PaginationService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,28 +24,27 @@ import java.util.List;
 import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Import(SecurityConfig.class)
 @WebMvcTest(ArticleController.class)
 @DisplayName("view 컨트롤러 - 게시글")
-class ArticleControllerTest {
+class Ex35_4_ArticleControllerTest_글쓰기_구현_전_수정 {
 
     private final MockMvc mvc;
 
     @MockBean private ArticleService articleService;
     /** WebMvcTest 에 컨트롤러 단에 의존하는 의존성들은 ArticleController 에 실제로 넣어줘야 한다.
-     @MockBean 은 테스트 할때 테스트에 필요한 객체를 기존 객체 대신에 bean 으로 등록시켜서 사용할수 있게 만들어줌.
+        @MockBean 은 테스트 할때 테스트에 필요한 객체를 기존 객체 대신에 bean 으로 등록시켜서 사용할수 있게 만들어줌.
 
      ArticleController 에 있는 실제 "private final ArticleService articleService;" 부분의 articleService 를 배제하기 위해서 @MockBean 을 사용했다. 배재하는 이유는 이 테스트에서 MockMvc 가 api 의 입출력만 보게 하기 위해서 서비스 로직을 끊어줘야 하는데 이때 @MockBean 애너테이션을 사용한다.*/
 
     /** 이제 페이징을 사용하는 부분에 모두 paginationService 를 이용하게 될거다. Page 를 리턴하는 곳엔 다 들어가야한다. */
     @MockBean private PaginationService paginationService;
-    public ArticleControllerTest(@Autowired MockMvc mvc) {
+    public Ex35_4_ArticleControllerTest_글쓰기_구현_전_수정(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
 
@@ -60,17 +54,17 @@ class ArticleControllerTest {
     public void articlesAll() throws Exception {
         // Given
         /** searchKeyword 없을때. 검색어 없이 올거라서 SearchType 과 SearchKeyword 는 null 이고, pageable 은 아무거나 들어가게 any() 를 넣어줄거다.
-         근데 지금은 아무거나 있던말던 이 아니라 정확히 'null' 이라는게 딱 들어가야 하니까 eq(equal 이란 뜻) 를 써준다.
-         return 은 데이터 검증하려는게 아니기 때문에 그냥 empty 페이지 리턴해주면 된다. (Page.empty())  */
+            근데 지금은 아무거나 있던말던 이 아니라 정확히 'null' 이라는게 딱 들어가야 하니까 eq(equal 이란 뜻) 를 써준다.
+            return 은 데이터 검증하려는게 아니기 때문에 그냥 empty 페이지 리턴해주면 된다. (Page.empty())  */
         given(articleService.searchArticles(eq(null), eq(null), any(Pageable.class))).willReturn(Page.empty());
 
 
         given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0,1,2,3,4));
         /** 여기서는 페이징을 하는 기능 자체가 테스트 대상이 아니고 정상적인 호출이 되는지 보는거고
-         매개변수 보내야 하는데 getPaginationBarNumbers(정수, 정수) 로 매개변수를 보내야 하는데
-         그렇다고 any() 를 쓸 수는 없다. 왜냐면 null 을 허용하니까.
-         그래서 아무 숫자를 의미하는 anyInt 를 넣어준다.
-         그리고 예상하는 리턴도 아무 리스트 만들어서 보내면 된다.  */
+           매개변수 보내야 하는데 getPaginationBarNumbers(정수, 정수) 로 매개변수를 보내야 하는데
+            그렇다고 any() 를 쓸 수는 없다. 왜냐면 null 을 허용하니까.
+            그래서 아무 숫자를 의미하는 anyInt 를 넣어준다.
+            그리고 예상하는 리턴도 아무 리스트 만들어서 보내면 된다.  */
 
 
         // When & Then
@@ -79,8 +73,7 @@ class ArticleControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/index"))
                 .andExpect(model().attributeExists("articles"))
-                .andExpect(model().attributeExists("paginationBarNumbers"))
-                /* 새로 삽입*/.andExpect(model().attributeExists("searchTypes")); /* 검색 타임(유형)이 뭔지 뷰에 보내서 select option 부분도 현재 뭐로 검색된건지 바뀌게 하게*/
+                .andExpect(model().attributeExists("paginationBarNumbers"));
         then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
         // then: 어떤 mock 이 호출할건지 명시하는 부분. 지금은 articleService mock 을 사용할거다 라는 뜻
@@ -89,7 +82,7 @@ class ArticleControllerTest {
         // 한마디로 articleService 가 searchArticles() 메서드를 한번 호출했냐 나는 뜻.
     }
 
-    /* 새로 생성 */
+/* 새로 생성 */
     @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 검색어와 함께 호출")
     @Test
     public void givenSearchKeyword_whenSearchingArticlesView_thenReturnsArticlesView() throws Exception {
@@ -103,7 +96,7 @@ class ArticleControllerTest {
         // When & Then
         mvc.perform(get("/articles")
                         .queryParam("searchType", searchType.name()) /* get 파라미터 추가 - url에 /articles?searchType= 이런식 */
-                        .queryParam("searchValue", searchValue)
+                        .queryParam("searchValue", searchValue)     
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
@@ -112,7 +105,11 @@ class ArticleControllerTest {
                 .andExpect(model().attributeExists("searchTypes")); /* 검색 타임(유형)이 뭔지 뷰에 보내서 select option 부분도 현재 뭐로 검색된건지 바뀌게 하게*/
         then(articleService).should().searchArticles(eq(searchType), eq(searchValue), any(Pageable.class));
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
-
+        
+        /* 이상태로 테스트 돌리면 실패함. ArticleController 에서 구현해야 제대로 돌음
+        *
+        * Ex34_2_ArticleController.java  ㄱㄱ
+        * */
     }
 
 
@@ -151,7 +148,7 @@ class ArticleControllerTest {
                 .andExpect(model().attribute("paginationBarNumbers", barNumbers));
         then(articleService).should().searchArticles(null, null, pageable);
         then(paginationService).should().getPaginationBarNumbers(pageable.getPageNumber(), Page.empty().getTotalPages());
-
+        
 
     }
 
@@ -168,11 +165,11 @@ class ArticleControllerTest {
         /** 상세페이지니까 기본 게시글 개수 1개 있다고 가정할거다. */
         long totalCount = 1L; /* Long 은 null 사용 가능, long 은 불가.  ( int 와 Integer 와 같음) */
 
-        /* 이거 없앰*///given(articleService.getArticle(articleId)).willReturn(createArticleWithCommentsDto());
-        /* 새로 추가 - 게시글 상세 불러오는거라서 Article 이랑 Comments 둘 다 가져올거임*/
+/* 이거 없앰*///given(articleService.getArticle(articleId)).willReturn(createArticleWithCommentsDto());
+/* 새로 추가 - 게시글 상세 불러오는거라서 Article 이랑 Comments 둘 다 가져올거임*/
         given(articleService.getArticleWithComments(articleId)).willReturn(createArticleWithCommentsDto());
-        // willReturn( 검사를 위한 Dto 를 넣어줘야함)
-        // dto 를 만들어야 해서 createArticleWithCommentsDto() 메서드를 만들었다.
+                                                // willReturn( 검사를 위한 Dto 를 넣어줘야함)
+                                                // dto 를 만들어야 해서 createArticleWithCommentsDto() 메서드를 만들었다.
 
         /**게시글 개수 구하기 */
         given(articleService.getArticleCount()).willReturn(totalCount);
@@ -186,118 +183,20 @@ class ArticleControllerTest {
                 .andExpect(model().attributeExists("articleComments")) // 상세페이지에는 댓글들도 여러개 있을수도 있으니까 모델 어트리뷰트에 articleComments 라는 키값으로 된게 있냐 라고 물어보는거
                 .andExpect(model().attribute("totalCount", totalCount)); /* 뷰 파일에 totalCount 라는 이름으로 모델 넘길거임*/
 
-        /*이거 삭제*///then(articleService).should().getArticle(articleId);
-        /*새로 추가*/then(articleService).should().getArticleWithComments(articleId);
+/*이거 삭제*///then(articleService).should().getArticle(articleId);
+/*새로 추가*/then(articleService).should().getArticleWithComments(articleId);
         then(articleService).should().getArticleCount();
 
     }
-    /*/////////////////////////////////////////////////////////////*/
-    /*새로 생성*/
-
-    @DisplayName("[view][GET] 새 게시글 작성 페이지")
-    @Test
-    void givenNothing_whenRequesting_thenReturnsNewArticlePage() throws Exception {
-        // Given
-
-        // When & Then
-        mvc.perform(get("/articles/form"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
-                .andExpect(view().name("articles/form"))
-                .andExpect(model().attribute("formStatus", FormStatus.CREATE));
-    }
-
-    @DisplayName("[view][POST] 새 게시글 등록 - 정상 호출")
-    @Test
-    void givenNewArticleInfo_whenRequesting_thenSavesNewArticle() throws Exception {
-        // Given
-        ArticleRequest articleRequest = ArticleRequest.of("new title", "new content", "#new");
-        willDoNothing().given(articleService).saveArticle(any(ArticleDto.class));
-
-        // When & Then
-        mvc.perform(
-                        post("/articles/form")
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                                //formDataEncoder 안쓸거임.content(formDataEncoder.encode(articleRequest))
-                                .with(csrf())
-                                /*  csrf(Cross Site Request Forgery)은 시큐리티에서 제공하는 보안 관련 메서드이다.
-                                    해커가 희생자의 권한을 도용해서 희생자 의지와는 무관하게 공젹자가 의도한 행위를 특정 웹사이트에 요청하게 하는 공격
-                                    ex) 희생자 권한을 도용(뺏어서) 페이스북에 광고성 글을 계속 올리는거
-                                * */
-                )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/articles"))
-                .andExpect(redirectedUrl("/articles"));
-        then(articleService).should().saveArticle(any(ArticleDto.class));
-    }
-
-    @DisplayName("[view][GET] 게시글 수정 페이지")
-    @Test
-    void givenNothing_whenRequesting_thenReturnsUpdatedArticlePage() throws Exception {
-        // Given
-        long articleId = 1L;
-        ArticleDto dto = createArticleDto();
-        given(articleService.getArticle(articleId)).willReturn(dto);
-
-        // When & Then
-        mvc.perform(get("/articles/" + articleId + "/form"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
-                .andExpect(view().name("articles/form"))
-                .andExpect(model().attribute("article", ArticleResponse.from(dto)))
-                .andExpect(model().attribute("formStatus", FormStatus.UPDATE));
-        then(articleService).should().getArticle(articleId);
-    }
-
-    @DisplayName("[view][POST] 게시글 수정 - 정상 호출")
-    @Test
-    void givenUpdatedArticleInfo_whenRequesting_thenUpdatesNewArticle() throws Exception {
-        // Given
-        long articleId = 1L;
-        ArticleRequest articleRequest = ArticleRequest.of("new title", "new content", "#new");
-        willDoNothing().given(articleService).updateArticle(eq(articleId), any(ArticleDto.class));
-
-        // When & Then
-        mvc.perform(
-                        post("/articles/" + articleId + "/form")
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                                //.content(formDataEncoder.encode(articleRequest))
-                                .with(csrf())
-                                /*  csrf(Cross Site Request Forgery)은 시큐리티에서 제공하는 보안 관련 메서드이다.
-                                    해커가 희생자의 권한을 도용해서 희생자 의지와는 무관하게 공젹자가 의도한 행위를 특정 웹사이트에 요청하게 하는 공격
-                                    ex) 희생자 권한을 도용(뺏어서) 페이스북에 광고성 글을 계속 올리는거
-                                * */
-                )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/articles/" + articleId))
-                .andExpect(redirectedUrl("/articles/" + articleId));
-        then(articleService).should().updateArticle(eq(articleId), any(ArticleDto.class));
-    }
-
-    @DisplayName("[view][POST] 게시글 삭제 - 정상 호출")
-    @Test
-    void givenArticleIdToDelete_whenRequesting_thenDeletesArticle() throws Exception {
-        // Given
-        long articleId = 1L;
-        willDoNothing().given(articleService).deleteArticle(articleId);
-
-        // When & Then
-        mvc.perform(
-                        post("/articles/" + articleId + "/delete")
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                                .with(csrf())
-                                /*  csrf(Cross Site Request Forgery)은 시큐리티에서 제공하는 보안 관련 메서드이다.
-                                    해커가 희생자의 권한을 도용해서 희생자 의지와는 무관하게 공젹자가 의도한 행위를 특정 웹사이트에 요청하게 하는 공격
-                                    ex) 희생자 권한을 도용(뺏어서) 페이스북에 광고성 글을 계속 올리는거
-                                * */
-                )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/articles"))
-                .andExpect(redirectedUrl("/articles"));
-        then(articleService).should().deleteArticle(articleId);
-    }
 
 
+
+
+/**************************************************************/
+/**  다 하면 뷰 파일로 넘어가자.
+ main > resource > templates > articles > Ex30_5_index.html 랑 Ex30_6_index.th.xml 켜자
+ */
+    /**************************************************************/
 
     /** /////////////  '게시글 검색 전용 페이지' 와  '해시태그'는 아직 계획이 분명하진 않으니까 넘어간다.     ////////////////*/
     /** /////////////  '게시글 검색 전용 페이지' 와  '해시태그'는 아직 계획이 분명하진 않으니까 넘어간다.     ////////////////*/
@@ -333,20 +232,11 @@ class ArticleControllerTest {
 //
 ///* 새로 생성*/   .andExpect(model().attributeExists("articles/search-hashtag")); // 이건 해당 뷰 파일명이 search-hashtag 인지 확인
 //    }
-    /*/////////////  '게시글 검색 전용 페이지' 와  '해시태그'는 아직 계획이 분명하진 않으니까 넘어간다.     ////////////////*/
+/*/////////////  '게시글 검색 전용 페이지' 와  '해시태그'는 아직 계획이 분명하진 않으니까 넘어간다.     ////////////////*/
 
 
-    private ArticleDto createArticleDto() {
-        return ArticleDto.of(
-                createUserAccountDto(),
-                "title",
-                "content",
-                "#java"
-        );
-    }
 
-
-    /** 아티클 코멘트 만드는 메서드 */
+    /* 아티클 코멘트 만드는 메서드 */
     private ArticleWithCommentsDto createArticleWithCommentsDto() {
         return ArticleWithCommentsDto.of(
                 1L,
@@ -380,7 +270,7 @@ class ArticleControllerTest {
 
 }
 /* 이상태로 테스트를 돌려보면 해당 내용들이 DB에 없기 때문에 404 에러 나야한다.
- * 일단 테스트는 작성 되었다. 데이터는 깃크라켄 가서 커밋 하고 오자 -  워드파일 돌아가기*/
+* 일단 테스트는 작성 되었다. 데이터는 깃크라켄 가서 커밋 하고 오자 -  워드파일 돌아가기*/
 
 
 

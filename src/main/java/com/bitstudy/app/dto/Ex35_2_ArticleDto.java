@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * */
 
 
-public record ArticleDto(
+public record Ex35_2_ArticleDto(
         Long id,
         UserAccountDto userAccountDto, /** 회원정보는 꼭 가지고 있어서 억지로 땡겨와서 넣음 */
         String title,
@@ -24,26 +24,26 @@ public record ArticleDto(
 
 
 /* 새로 생성 */
-    public static ArticleDto of(UserAccountDto userAccountDto, String title, String content, String hashtag) {
-        return new ArticleDto(null, userAccountDto, title, content, hashtag, null, null, null, null);
+    public static Ex35_2_ArticleDto of(UserAccountDto userAccountDto, String title, String content, String hashtag) {
+        return new Ex35_2_ArticleDto(null, userAccountDto, title, content, hashtag, null, null, null, null);
     }
 
-    public static ArticleDto of(Long id,
-                                UserAccountDto userAccountDto,
-                                String title,
-                                String content,
-                                String hashtag,
-                                LocalDateTime createdAt,
-                                String createdBy,
-                                LocalDateTime modifiedAt,
-                                String modifiedBy) {
-        return new ArticleDto(id, userAccountDto, title, content, hashtag, createdAt, createdBy, modifiedAt, modifiedBy);
+    public static Ex35_2_ArticleDto of(Long id,
+                                       UserAccountDto userAccountDto,
+                                       String title,
+                                       String content,
+                                       String hashtag,
+                                       LocalDateTime createdAt,
+                                       String createdBy,
+                                       LocalDateTime modifiedAt,
+                                       String modifiedBy) {
+        return new Ex35_2_ArticleDto(id, userAccountDto, title, content, hashtag, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     
     /** entity 를 매개변수로 입력하면 ArticleDto 로 변환해주는 메서드. */
-    public static ArticleDto from(Article entity) {
-        return new ArticleDto( // 이게 저 위에 record ArticleDto 부르는거
+    public static Ex35_2_ArticleDto from(Article entity) {
+        return new Ex35_2_ArticleDto( // 이게 저 위에 record ArticleDto 부르는거
                 entity.getId(),
                 UserAccountDto.from(entity.getUserAccount()),
                 entity.getTitle(),

@@ -21,26 +21,15 @@
                 <attr sel="#update-article" th:href="'/articles/' + *{id} + '/form'" />
             </attr>
         </attr>
+
     </attr>
 
-
-    <!-- 댓글 쓰는 부분 form 에 action 달기 -->
-    <attr sel="#comment-form" th:action="@{/comments/new}" th:method="post">
-        <attr sel="#comment-textbox" th:name="content" />
-    </attr>
-    <!-- 각 댓글들에 달릴 현재 게시글 id-->
-    <attr sel=".article-id" th:name="articleId" th:value="*{id}" />
-<!-- 여기까지 -->
-<!-- ******************************************************* -->
 
     <attr sel="#article-comments" th:remove="all-but-first">
         <attr sel="li[0]" th:each="articleComment : ${articleComments}">
-<!-- form 에 삭제 버튼 관련 추가됨-->
-            <attr sel="form" th:action="'/comments/' + ${articleComment.id} + '/delete'" th:method="post">
-                <attr sel="div/strong" th:text="${articleComment.nickname}" />
-                <attr sel="div/small/time" th:datetime="${articleComment.createdAt}" th:text="${#temporals.format(articleComment.createdAt, 'yyyy-MM-dd HH:mm:ss')}" />s
-                <attr sel="div/p" th:text="${articleComment.content}" />
-            </attr>
+            <attr sel="div/strong" th:text="${articleComment.nickname}" />
+            <attr sel="div/small/time" th:datetime="${articleComment.createdAt}" th:text="${#temporals.format(articleComment.createdAt, 'yyyy-MM-dd HH:mm:ss')}" />s
+            <attr sel="div/p" th:text="${articleComment.content}" />
         </attr>
     </attr>
 
@@ -59,6 +48,6 @@
     </attr>
 </thlogic>
 
-        <!-- 다 했으면 저장하고 리컴파일(ctrl + shift + F9) 하고
-            서비스 올리기(pojectApplication.java 파일 실행)
-        -->
+<!-- 다 했으면 저장하고 리컴파일(ctrl + shift + F9) 하고
+    서비스 올리기(pojectApplication.java 파일 실행)
+-->

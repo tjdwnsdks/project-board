@@ -92,6 +92,9 @@ class Ex30_4_ArticleControllerTest {
                                                 // willReturn( 검사를 위한 Dto 를 넣어줘야함)
                                                 // dto 를 만들어야 해서 createArticleWithCommentsDto() 메서드를 만들었다.
 
+        // 원래는 위에 given 은 이거여야함
+        // given(articleService.getArticleWithComments(articleId)).willReturn(createArticleWithCommentsDto());
+
         // When & Then
         mvc.perform(get("/articles/" + articleId)) /* 테스트니까 그냥 1번글 가져와라 할거임 */
                 .andExpect(status().isOk())

@@ -6,7 +6,7 @@ import com.bitstudy.app.domain.UserAccount;
 
 import java.time.LocalDateTime;
 
-public record ArticleCommentDto(
+public record Ex37_4_ArticleCommentDto(
         Long id,
         Long articleId,
         UserAccountDto userAccountDto,
@@ -16,8 +16,8 @@ public record ArticleCommentDto(
         LocalDateTime modifiedAt,
         String modifiedBy
 ) {
-    public static ArticleCommentDto of(Long id, Long articleId, UserAccountDto userAccountDto, String content, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new ArticleCommentDto(id, articleId, userAccountDto, content, createdAt, createdBy, modifiedAt, modifiedBy);
+    public static Ex37_4_ArticleCommentDto of(Long id, Long articleId, UserAccountDto userAccountDto, String content, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return new Ex37_4_ArticleCommentDto(id, articleId, userAccountDto, content, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     /* 새로 추가
@@ -27,11 +27,11 @@ public record ArticleCommentDto(
              createdAt, createdBy, modifiedAt, modifiedBy 이 정보들은 데이터베이스에 영속화를 시킬때 DB에 의해서 자동으로 들어가는 값이다. 우리는 그걸 위해 JPA Auditing 을 사용해서 자동으로 값을 만들고 있다. 그래서 영속화된 정보를 불러올때는 문제가 없는데, save 를 위해서 DTO 를 만들고 repository에 저장을 할때에는 이 값들이 없다. 그래서 별도로 null 값을 가지는 메서드를 하나 더 만들었다.
 
           * */
-    public static ArticleCommentDto of(Long articleId, UserAccountDto userAccountDto, String content) {
-        return new ArticleCommentDto(null, articleId, userAccountDto, content, null, null, null, null);
+    public static Ex37_4_ArticleCommentDto of(Long articleId, UserAccountDto userAccountDto, String content) {
+        return new Ex37_4_ArticleCommentDto(null, articleId, userAccountDto, content, null, null, null, null);
     }
-    public static ArticleCommentDto from(ArticleComment entity) {
-        return new ArticleCommentDto(
+    public static Ex37_4_ArticleCommentDto from(ArticleComment entity) {
+        return new Ex37_4_ArticleCommentDto(
                 entity.getId(),
                 entity.getArticle().getId(),
                 UserAccountDto.from(entity.getUserAccount()),
@@ -61,6 +61,8 @@ public record ArticleCommentDto(
                 content
         );
     }
+
+    /* 다 하고  test > util > Ex37_5_FormDataEncoder.java  ㄱㄱ*/
 
 
 }
