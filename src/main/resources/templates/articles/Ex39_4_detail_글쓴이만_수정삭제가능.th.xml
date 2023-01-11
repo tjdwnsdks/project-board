@@ -1,5 +1,14 @@
 <?xml version="1.0"?>
 
+<!-- 할일:  로그인한 유저가  글쓴이일때만 수정 삭제 버튼이 보이도록 한다.
+
+    다 하고 브라우저에서 실행하면 userId 때문에 에러난다.
+    이유는 ArticleCommentResponse 와 ArticleWithCommentResponse 에서 userId 정보를 못꺼내와서 그렇다.
+    가보자
+
+-->
+
+
 <thlogic>
     <attr sel="#header" th:replace="header :: #header" />
     <attr sel="#footer" th:replace="footer :: #footer" />

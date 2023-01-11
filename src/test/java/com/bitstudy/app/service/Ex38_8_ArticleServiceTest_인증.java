@@ -16,7 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,7 +24,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.BDDAssertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
@@ -35,7 +33,7 @@ import static org.mockito.BDDMockito.*;
 
 @DisplayName("비지니스 로직 - 게시글")
 @ExtendWith(MockitoExtension.class)
-class ArticleServiceTest {
+class Ex38_8_ArticleServiceTest_인증 {
 
     /** Mock을 주입하는 거에다가 @InjectMocks 를 달아줘야 한다. 그 외의  Mock은 @Mock 을 달아준다. */
     @InjectMocks private ArticleService sut;
@@ -161,9 +159,7 @@ class ArticleServiceTest {
         Article article = createArticle();
         ArticleDto dto = createArticleDto("새 타이틀", "새 내용", "#springboot");
         given(articleRepository.getReferenceById(dto.id())).willReturn(article);
-/*새로추가*/ given(userAccountRepository.getReferenceById(dto.userAccountDto().userId())).willReturn(dto.userAccountDto().toEntity());
-/*해석: userAccountRepository에서 getReferenceById를 통해 사용자의 Id값을 가져오고,
-        userAccountDto의 toEntity로 데이터를 전송할 것이다.*/
+
         // When
         sut.updateArticle(dto.id(), dto);
 
@@ -173,7 +169,6 @@ class ArticleServiceTest {
                 .hasFieldOrPropertyWithValue("content", dto.content())
                 .hasFieldOrPropertyWithValue("hashtag", dto.hashtag());
         then(articleRepository).should().getReferenceById(dto.id());
-/*새로추가*/ then(userAccountRepository).should().getReferenceById(dto.userAccountDto().userId());
     }
 
     @DisplayName("없는 게시글의 수정 정보를 입력하면, 경고 로그를 찍고 아무 것도 하지 않는다.")

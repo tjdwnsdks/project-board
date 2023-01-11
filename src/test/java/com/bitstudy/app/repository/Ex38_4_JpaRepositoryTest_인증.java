@@ -1,6 +1,5 @@
 package com.bitstudy.app.repository;
 
-import com.bitstudy.app.config.JpaConfig;
 import com.bitstudy.app.domain.Article;
 import com.bitstudy.app.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;
@@ -31,19 +30,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 // @ActiveProfiles("testdb") /* 이건 당장 하지 말고, 다 끝난다음 application.yaml 파일의 맨 아래 testdb 부분 보고 와서 하기 */
 @DisplayName("JPA 연결 테스트") // 현재 테스트 이름- 이게 원래 나와야 하는데 버그가 있어서 현재 제트브레인에서 고치고 있다고 함. 다른 메서드 부분에서는 제대로 나옴
 //@Import(JpaConfig.class)
-@Import(JpaRepositoryTest.TestJpaConfig.class)
+@Import(Ex38_4_JpaRepositoryTest_인증.TestJpaConfig.class)
 @DataJpaTest // 슬라이스 테스트를 할거다(지난번 TDD 때 각 메서드들은 다 남남으로 각각 테스트한 결과를 못보게 만들어야 한다.). 그런데 이거는 우리가 만들었던 config 패키지의 JpaConfig 파일을 읽어오지 못한다. (우리가 따로 만들거라서 그렇다.)
         // 그래서 따로 import 해줘야 한다. 안하면 config 안에 명시해놨던 JpaAuditing 기능이 안먹는다.
         // 그리고 테스트 범위의 메소드 들은 테스트가 끝나면 롤백으로 원래 기본값으로 돌아가게 한다.
         // (이부분은 아래 update 관련 메소드 에서 한번 더 말해야함)
-class JpaRepositoryTest {
+class Ex38_4_JpaRepositoryTest_인증 {
     private final ArticleRepository articleRepository;
     private final ArticleCommentRepository articleCommentRepository;
     private final UserAccountRepository userAccountRepository;
 
 
     // 생성자 만들기. 여기선 다른 파일에서 매개변수로 보내주는거를 받는거라서 위에랑 상관 없이 @Autowired 붙여야함
-    public JpaRepositoryTest(
+    public Ex38_4_JpaRepositoryTest_인증(
                 /**@Autowired Ex04_ArticleRepository articleRepository,
                 @Autowired Ex05_ArticleCommentRepository articleCommentRepository,*/
                 @Autowired ArticleRepository articleRepository,

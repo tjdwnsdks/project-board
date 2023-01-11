@@ -1,6 +1,5 @@
 package com.bitstudy.app.controller;
 
-import com.bitstudy.app.dto.UserAccountDto;
 import com.bitstudy.app.dto.request.ArticleCommentRequest;
 import com.bitstudy.app.dto.serucity.BoardPrincipal;
 import com.bitstudy.app.service.ArticleCommentService;
@@ -11,13 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/** 할일:   */
+/** 할일:  댓글 쓰기, 삭제 시 유저정보 추가함.  */
+/* 다 하면 워드로 돌아가기*/
 
 
 @RequiredArgsConstructor
 @RequestMapping("/comments")
 @Controller
-public class ArticleCommentController {
+public class Ex38_16_ArticleCommentController_댓글_사용자인증 {
 
     private final ArticleCommentService articleCommentService;
     

@@ -24,7 +24,7 @@ import java.util.List;
 @Service // 이렇게 하면 서비스 빈으로 등록되어서 사용할 수 있게 된다.
 @RequiredArgsConstructor  // 필수 필드에 대한 생성자를 자동으로 만들어주는 롬복 애너테이션
 @Transactional // 이 클래스 동작할때 하나라도 잘못되면 다시 롤백 시켜라 라는말
-public class ArticleCommentService {
+public class Ex38_14_ArticleCommentService_댓글_사용자인증 {
 
     private final ArticleRepository articleRepository;
     private final ArticleCommentRepository articleCommentRepository;
