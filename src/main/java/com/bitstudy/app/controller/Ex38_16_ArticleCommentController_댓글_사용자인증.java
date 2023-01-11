@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/** 할일:   */
+/** 할일:  댓글 쓰기, 삭제 시 유저정보 추가함.  */
+/* 다 하면 워드로 돌아가기*/
 
 
 @RequiredArgsConstructor

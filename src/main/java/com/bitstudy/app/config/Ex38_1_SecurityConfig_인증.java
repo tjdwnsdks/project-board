@@ -99,6 +99,9 @@ public class Ex38_1_SecurityConfig_인증 {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        // createDelegatingPasswordEncoder 이거 Ctrl + B 로 들어가보면 어떤 방식으로 할 수 있는지 다 나온다.
+        // 나중에 data.sql 에 비번 부분에 '{암호화방식}암호' 형식으로 넣으면 된다.
+        // ex) {noop}asdf
     }
 }
 
