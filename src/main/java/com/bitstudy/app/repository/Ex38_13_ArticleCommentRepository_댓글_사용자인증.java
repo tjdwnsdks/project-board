@@ -16,7 +16,7 @@ import java.util.List;
 /*  service > Ex38_12_ArticleCommentServiceTest.java  랑  Ex38_14_ArticleCommentService.java  랑 같이 볼것*/
 
 @RepositoryRestResource
-public interface ArticleCommentRepository extends
+public interface Ex38_13_ArticleCommentRepository_댓글_사용자인증 extends
         JpaRepository<ArticleComment, Long>,
         QuerydslPredicateExecutor<ArticleComment>
         , QuerydslBinderCustomizer<QArticleComment> // 이부분 처음에는 주석처리 하고 아래 빨간 '설명' 부분 설명하기

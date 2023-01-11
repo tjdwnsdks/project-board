@@ -1,6 +1,5 @@
 package com.bitstudy.app.controller;
 
-import com.bitstudy.app.config.SecurityConfig;
 import com.bitstudy.app.config.TestSecurityConfig;
 import com.bitstudy.app.dto.ArticleCommentDto;
 import com.bitstudy.app.dto.request.ArticleCommentRequest;
@@ -35,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@Import({SecurityConfig.class, FormDataEncoder.class})
 
 @WebMvcTest(ArticleCommentController.class)
-class ArticleCommentControllerTest {
+class Ex38_15_ArticleCommentControllerTest_댓글_사용자인증 {
 
     private final MockMvc mvc;
     private final FormDataEncoder formDataEncoder;
@@ -43,7 +42,7 @@ class ArticleCommentControllerTest {
     @MockBean
     private ArticleCommentService articleCommentService;
 
-    public ArticleCommentControllerTest(
+    public Ex38_15_ArticleCommentControllerTest_댓글_사용자인증(
             @Autowired MockMvc mvc,
             @Autowired FormDataEncoder formDataEncoder
     ) {

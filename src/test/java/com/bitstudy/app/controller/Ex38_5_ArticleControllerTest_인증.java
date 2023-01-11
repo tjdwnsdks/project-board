@@ -1,6 +1,5 @@
 package com.bitstudy.app.controller;
 
-import com.bitstudy.app.config.SecurityConfig;
 import com.bitstudy.app.config.TestSecurityConfig;
 import com.bitstudy.app.domain.type.FormStatus;
 import com.bitstudy.app.domain.type.SearchType;
@@ -12,7 +11,6 @@ import com.bitstudy.app.dto.response.ArticleResponse;
 import com.bitstudy.app.service.ArticleService;
 import com.bitstudy.app.service.PaginationService;
 import com.bitstudy.app.util.FormDataEncoder;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,14 +52,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ArticleController.class)
 @DisplayName("view 컨트롤러 - 게시글")
-class ArticleControllerTest {
+class Ex38_5_ArticleControllerTest_인증 {
 
     private final MockMvc mvc;
     private final FormDataEncoder formDataEncoder;
 
     @MockBean private ArticleService articleService;
     @MockBean private PaginationService paginationService;
-    public ArticleControllerTest(
+    public Ex38_5_ArticleControllerTest_인증(
             @Autowired MockMvc mvc,
             @Autowired FormDataEncoder formDataEncoder
     ) {
@@ -321,7 +319,7 @@ class ArticleControllerTest {
 /*  ArticleController.java
 *   ArticleService.java
 *   ArticleRepository.java
-*   ArticleService.java
+*   ArticleServiceTest.java
 *   ArticleController.java    다 수정 하고 전체 테스트 돌리면 다 통과할거임 */
 
 

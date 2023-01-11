@@ -17,28 +17,42 @@
 
  import javax.persistence.EntityNotFoundException;
 
- /** 할일: 아까 deleteArticle 처럼 update쪽도 userId 를 넣어줘야한다. */
+ /** 게시글 상세페이지에 페이지네이션 달아줄거임 */
 
- @Slf4j
+ @Slf4j /** 맨 아래쪽에 updateArticle() 메서드의 catch 에서 log() 메서드 쓸때 필요 */
  @Service // 이렇게 하면 서비스 빈으로 등록되어서 사용할 수 있게 된다.
  @RequiredArgsConstructor  // 필수 필드에 대한 생성자를 자동으로 만들어주는 롬복 애너테이션
  @Transactional // 이 클래스 동작할때 하나라도 잘못되면 다시 롤백 시켜라 라는말
- public class ArticleService {
+ public class Ex38_6_ArricleService_인증 {
 
      private final ArticleRepository articleRepository; // 아티클 서비스는 당연히 ArticleRepository 쓸거다.
 
-
+ /*새로 생성*/
     private final UserAccountRepository userAccountRepository; // 유저 정보 사용
 
 
      @Transactional(readOnly = true) // 트랜잭션을 읽기 전용 모드로 설정하면 트랜잭션을 커밋하더라도 영속성 컨텍스트가 flush 되지 않아서 엔티티가 등록, 수정, 삭제 가 동작하지 않는다.
      public Page<ArticleDto> searchArticles(SearchType searchType, String searchKeyword, Pageable pageable) {
 
+         /** ArticleServiceTest 의 첫번째 메서드때 만들었던 ("검색어 없이 게시글을 검색하면, 게시글 페이지를 반환한다.") 부분을 구현할거다.
+            When 부분에서 searchArticles() 메서드에 보면 searchType, searchKeyword, pageable 이 매개변수로 전달될건데, 사실 검색 관련된 부분이기 때문에 검색어인 searchKeyword 를 가지고 코드를 짜볼거다.
+
+          searchKeyword 가 있을때가 있을거고, 없을때도 있을건데
+
+          우선은 없을때꺼를 짜볼거다.
+            */
+
+         /** searchKeyword 없을때 */
+         // searchKeyword 가 비어있거나 빈칸으로만 구성되서 넘어올때는 그냥 검색을 안하면 된다. 그래서 굳이 검색쿼리를 내보낼게 아니라 그냥 전체 페이지 긁어오는 paging 쿼리 한번 더 날려주면 된다. findAll(pageable) 부분이 그거임.
          if (searchKeyword == null || searchKeyword.isBlank()) {
-             return articleRepository.findAll(pageable).map(ArticleDto::from);
+             return articleRepository.findAll(pageable).map(ArticleDto::from); // Page 클래스 맨 아래에 map이 있는데, Page 안의 내용물을 형변환 해서 다시 페이지로 새로 만들어준다. map(ArticleDto::from); 부분이 그건데 article 을 articleDto 로 바꿔서 리턴해주는거다.
+             // 안해도됨:   이렇게 해서 서비스는 도메인코드와 articleDto 까지만 아는거다. 컨트롤러에서 실제로 무슨 데이터를 보여줄지는 모른다.
          }
 
          /** searchKeyword 있을때 */
+         // searchType 이 enum 으로 되어있다. (domain > type > SearchType.java)
+         // enum 을 주제로 서로 다른 쿼리를 만들거다.
+         // title 검색 할때는 제목 검색 쿼리, id 검색 할때는 id 검색 쿼리를 반환하게 할거다.
          return switch (searchType) {
              /** 원래 자바에서 switch case문 짤때
              case TITLE:
@@ -121,20 +135,9 @@
      public void updateArticle(Long articleId, ArticleDto dto) {
          try {
              Article article = articleRepository.getReferenceById(articleId);
- /*추가*/     UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
-
-/*추가 - 유저가 동일한지 검사하는거. article에서 영속성으로 게시글정보랑 같이 가져온 유저정보가
-*       userAccount 에 담겨있는 유저정보와 같은지 동일한지 확인하는거*/
-             if (article.getUserAccount().equals(userAccount)) {
-                 if (dto.title() != null) {
-                     article.setTitle(dto.title());
-                 }/** title 은 notNull 필드이기 때문에 만약(if) null 이 아닐때만 동작하게 해줄거다. 아래 content 도 동일 */
-
-                 if (dto.content() != null) {
-                     article.setContent(dto.content());
-                 }
-                 article.setHashtag(dto.hashtag()); /** 해시태그는 null 가능 필드라서 그냥 입력받은 dto에 있는 값을 쓰면 된다.  */
-             }
+             if (dto.title() != null) { article.setTitle(dto.title()); }/** title 은 notNull 필드이기 때문에 만약(if) null 이 아닐때만 동작하게 해줄거다. 아래 content 도 동일 */
+             if (dto.content() != null) { article.setContent(dto.content()); }
+             article.setHashtag(dto.hashtag()); /** 해시태그는 null 가능 필드라서 그냥 입력받은 dto에 있는 값을 쓰면 된다.  */
          } catch (EntityNotFoundException e) {
              /** log 는 맨 위 클래스레벨에 @Slf4j 애너테이션 붙이면 됨*/
              //log.warn("게시글 업데이트 실패. 게시글을 찾을 수 없습니다 - dto: " + dto); // 이렇게 써도 되고

@@ -16,7 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,7 +24,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.BDDAssertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
@@ -35,7 +33,7 @@ import static org.mockito.BDDMockito.*;
 
 @DisplayName("비지니스 로직 - 게시글")
 @ExtendWith(MockitoExtension.class)
-class ArticleServiceTest {
+class Ex38_10_ArticleServiceTest_업데이트에_유저정보_추가 {
 
     /** Mock을 주입하는 거에다가 @InjectMocks 를 달아줘야 한다. 그 외의  Mock은 @Mock 을 달아준다. */
     @InjectMocks private ArticleService sut;

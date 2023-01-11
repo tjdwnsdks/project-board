@@ -9,9 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 /** - 할일 -
@@ -21,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 //@EnableWebSecurity // 블로그나 책에 이 스프링 시큐리티 쓸땐 무조건 이거 넣으라고 하는데, 이제 안넣어도 된다. 스프링부트에서 시큐리티 쓸때는 autoConfigration에 들어가져 있다.
 @Configuration // 설정파일로 등록
-public class SecurityConfig {
+public class Ex38_1_SecurityConfig_인증 {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -93,9 +94,18 @@ public class SecurityConfig {
                 .map(BoardPrincipal::from) /* BoardPrincipal: 사용자 정보를 가져올 수 있는 record. userDetail 을 받아옴 */
                 .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다 - username: " + username)); /* 혹시라도 인증된 사용자를 못찾을때에 대한 대안으로 UsernameNotFoundException 사용함.*/
     }
+
+/*추가 - 지금 바로는 안씀. 일단 가지고 있기. 패스워드 인코더임.  */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 }
 
 /* 다 하면 브라우저에서 실행해보기. 
  
  주의: 게시판 페이지 들어가는 주소는 괜찮음. 
-    다만 거기서 글을 눌렀을때 로그인 화면 나와야 성공하는거임. */
+    다만 거기서 글을 눌렀을때 로그인 화면 나와야 성공하는거임.
+
+ 다 하면 Ex38_3_JpaConfig 가기
+    */

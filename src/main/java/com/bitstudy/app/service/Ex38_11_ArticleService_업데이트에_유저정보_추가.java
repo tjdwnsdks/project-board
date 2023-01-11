@@ -23,7 +23,7 @@
  @Service // 이렇게 하면 서비스 빈으로 등록되어서 사용할 수 있게 된다.
  @RequiredArgsConstructor  // 필수 필드에 대한 생성자를 자동으로 만들어주는 롬복 애너테이션
  @Transactional // 이 클래스 동작할때 하나라도 잘못되면 다시 롤백 시켜라 라는말
- public class ArticleService {
+ public class Ex38_11_ArticleService_업데이트에_유저정보_추가 {
 
      private final ArticleRepository articleRepository; // 아티클 서비스는 당연히 ArticleRepository 쓸거다.
 

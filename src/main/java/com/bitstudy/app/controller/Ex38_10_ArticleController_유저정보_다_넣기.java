@@ -2,7 +2,6 @@ package com.bitstudy.app.controller;
 
 import com.bitstudy.app.domain.type.FormStatus;
 import com.bitstudy.app.domain.type.SearchType;
-import com.bitstudy.app.dto.UserAccountDto;
 import com.bitstudy.app.dto.request.ArticleRequest;
 import com.bitstudy.app.dto.response.ArticleResponse;
 import com.bitstudy.app.dto.response.ArticleWithCommentsResponse;
@@ -27,7 +26,7 @@ import java.util.List;
 //@RequiredArgsConstructor는 초기화 되지않은 final 필드나, @NonNull 이 붙은 필드에 대해 생성자를 생성해 줍니다.
 @Controller
 @RequestMapping("/articles") // 모든 경로들은 /articles 들어가니까 클래스 레벨에 1차로 @RequestMapping("/articles") 걸어놓자
-public class ArticleController {
+public class Ex38_10_ArticleController_유저정보_다_넣기 {
 
     private final ArticleService articleService;
 

@@ -1,6 +1,5 @@
 package com.bitstudy.app.controller;
 
-import com.bitstudy.app.dto.UserAccountDto;
 import com.bitstudy.app.dto.request.ArticleCommentRequest;
 import com.bitstudy.app.dto.serucity.BoardPrincipal;
 import com.bitstudy.app.service.ArticleCommentService;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/comments")
 @Controller
-public class ArticleCommentController {
+public class Ex38_16_ArticleCommentController_댓글_사용자인증 {
 
     private final ArticleCommentService articleCommentService;
     

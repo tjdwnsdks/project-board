@@ -14,19 +14,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
-//import static org.junit.jupiter.api.Assertions.*;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.never;
 
 
 /*  service > Ex38_14_ArticleCommentService.java    랑 같이 볼것*/
@@ -36,7 +31,7 @@ import static org.mockito.Mockito.never;
 
 @DisplayName("비지니스 로직 - 댓글")
 @ExtendWith(MockitoExtension.class)
-class ArticleCommentServiceTest {
+class Ex38_12_ArticleCommentServiceTest_댓글_사용자인증 {
 
     @InjectMocks private ArticleCommentService sut;
 
